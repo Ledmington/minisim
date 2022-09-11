@@ -2,10 +2,10 @@ package minisim;
 
 // A class representing a 2D vector
 public class V2 {
-	private final double x;
-	private final double y;
+	public double x;
+	public double y;
 
-	public static final V2 origin = new V2(0.0, 0.0);
+	public static final V2 ORIGIN = new V2(0.0, 0.0);
 
 	public V2(final double _x, final double _y) {
 		x = _x;
@@ -14,13 +14,6 @@ public class V2 {
 
 	public V2() {
 		this(0.0, 0.0);
-	}
-
-	public double x() {
-		return x;
-	}
-	public double y() {
-		return y;
 	}
 
 	public V2 add(final V2 other) {

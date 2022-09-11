@@ -13,8 +13,8 @@ class TestV2 {
 	@Test
 	public void defaultIsOrigin() {
 		V2 v = new V2();
-		assertEquals(0, v.x(), EPSILON);
-		assertEquals(0, v.y(), EPSILON);
+		assertEquals(0, v.x, EPSILON);
+		assertEquals(0, v.y, EPSILON);
 	}
 
 	@Test
@@ -22,8 +22,8 @@ class TestV2 {
 		V2 v = new V2();
 		V2 w = new V2(1, 1);
 		V2 r = v.add(w);
-		assertEquals(r.x(), w.x(), EPSILON);
-		assertEquals(r.y(), w.y(), EPSILON);
+		assertEquals(r.x, w.x, EPSILON);
+		assertEquals(r.y, w.y, EPSILON);
 	}
 
 	@Test
@@ -31,8 +31,8 @@ class TestV2 {
 		V2 v = new V2();
 		V2 w = new V2(1, 1);
 		V2 r = v.sub(w);
-		assertEquals(r.x(), -w.x(), EPSILON);
-		assertEquals(r.y(), -w.y(), EPSILON);
+		assertEquals(r.x, -w.x, EPSILON);
+		assertEquals(r.y, -w.y, EPSILON);
 	}
 
 	@Test
@@ -40,32 +40,32 @@ class TestV2 {
 		V2 v = new V2();
 		V2 w = new V2(1, 1);
 		V2 r = v.add(w).sub(w);
-		assertEquals(0, r.x(), EPSILON);
-		assertEquals(0, r.y(), EPSILON);
+		assertEquals(0, r.x, EPSILON);
+		assertEquals(0, r.y, EPSILON);
 	}
 
 	@Test
 	public void simpleMul() {
 		V2 v = new V2(1, 2);
 		V2 r = v.mul(2);
-		assertEquals(2, r.x(), EPSILON);
-		assertEquals(4, r.y(), EPSILON);
+		assertEquals(2, r.x, EPSILON);
+		assertEquals(4, r.y, EPSILON);
 	}
 
 	@Test
 	public void simpleDiv() {
 		V2 v = new V2(2, 4);
 		V2 r = v.div(2);
-		assertEquals(1, r.x(), EPSILON);
-		assertEquals(2, r.y(), EPSILON);
+		assertEquals(1, r.x, EPSILON);
+		assertEquals(2, r.y, EPSILON);
 	}
 
 	@Test
 	public void mulDiv() {
 		V2 v = new V2(1, 1);
 		V2 r = v.mul(2).div(2);
-		assertEquals(1, r.x(), EPSILON);
-		assertEquals(1, r.y(), EPSILON);
+		assertEquals(1, r.x, EPSILON);
+		assertEquals(1, r.y, EPSILON);
 	}
 
 	@Test
@@ -98,8 +98,8 @@ class TestV2 {
 	public void vectorNorm() {
 		V2 v = new V2(0, 2);
 		V2 n = v.norm();
-		assertEquals(0, n.x(), EPSILON);
-		assertEquals(1, n.y(), EPSILON);
+		assertEquals(0, n.x, EPSILON);
+		assertEquals(1, n.y, EPSILON);
 	}
 
 	@Test
