@@ -28,7 +28,14 @@ application {
 
 launch4j {
 	mainClassName = mainClassName
+	headerType = 'console'
 	icon = "${projectDir}/src/main/resources/atom.ico"
+	outfile = 'MiniSim.exe'
+	windowTitle = 'MiniSim'
+	productName = 'MiniSim'
+	fileDescription = 'MiniSim'
+	language = 'ENGLISH_US'
+	//bundledJrePath = "/Users/user/Downloads/jdk" // TODO solve problem of bundling JRE into exe file
 }
 
 tasks.named('test') {
@@ -60,13 +67,8 @@ spotless {
 
 	java {
 		target 'src/*/java/**/*.java'
-		importOrder()
+		//importOrder()
 		removeUnusedImports()
-		googleJavaFormat()
-
-		// This is needed to transform the 2-spaces indentation of GJFto a single tab
-		// check here: https://github.com/diffplug/spotless/issues/420#issuecomment-512350756
-		indentWithSpaces(4)
-		indentWithTabs()
+		eclipse()
 	}
 }
