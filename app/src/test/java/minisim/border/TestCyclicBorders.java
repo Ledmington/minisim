@@ -34,48 +34,48 @@ public class TestCyclicBorders {
 	public void noChangesIfInside() {
 		Body b = new Body(new V2(1, 1), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(1, 1));
+		assertEquals(b.position, new V2(1, 1));
 	}
 
 	@Test
 	public void outOnRight() {
 		Body b = new Body(new V2(11, 1), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(1, 1));
+		assertEquals(b.position, new V2(1, 1));
 	}
 
 	@Test
 	public void outOnLeft() {
 		Body b = new Body(new V2(-1, 1), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(9, 1));
+		assertEquals(b.position, new V2(9, 1));
 	}
 
 	@Test
 	public void outOnTop() {
 		Body b = new Body(new V2(1, -1), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(1, 9));
+		assertEquals(b.position, new V2(1, 9));
 	}
 
 	@Test
 	public void outOnBottom() {
 		Body b = new Body(new V2(1, 11), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(1, 1));
+		assertEquals(b.position, new V2(1, 1));
 	}
 
 	@Test
 	public void bottomRightCorner() {
 		Body b = new Body(new V2(11, 11), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(1, 1));
+		assertEquals(b.position, new V2(1, 1));
 	}
 
 	@Test
 	public void topLeftCorner() {
 		Body b = new Body(new V2(-1, -1), V2.ORIGIN, 1, 1);
 		cb.apply(b);
-		assertEquals(b.position(), new V2(9, 9));
+		assertEquals(b.position, new V2(9, 9));
 	}
 }

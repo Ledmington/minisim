@@ -3,8 +3,8 @@ package minisim.border;
 import minisim.Body;
 
 public abstract class Borders {
-	protected final double w;
-	protected final double h;
+	public final double w;
+	public final double h;
 
 	public Borders(final double width, final double height) {
 		if (width <= 0 || height <= 0) {
@@ -14,5 +14,5 @@ public abstract class Borders {
 		h = height;
 	}
 
-	abstract void apply(final Body b);
+	public abstract void apply(final Body b);
 }

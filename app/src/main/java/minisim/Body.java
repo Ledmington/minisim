@@ -1,12 +1,12 @@
 package minisim;
 
 public class Body {
-	private double mass;
-	private double radius;
-	private V2 position;
-	private V2 speed;
-	private V2 acc;
-	private V2 force;
+	public double mass;
+	public double radius;
+	public V2 position;
+	public V2 speed;
+	public V2 acc;
+	public V2 force;
 
 	public Body(final V2 pos, final V2 speed, final double mass, final double radius) {
 		if (mass <= 0.0) {
@@ -29,34 +29,6 @@ public class Body {
 
 	public Body() {
 		this(new V2(0.0, 0.0), new V2(0.0, 0.0), 1.0, 1.0);
-	}
-
-	public double mass() {
-		return mass;
-	}
-
-	public double radius() {
-		return radius;
-	}
-
-	public V2 position() {
-		return position;
-	}
-
-	public void setPosition(final V2 newPosition) {
-		position = newPosition;
-	}
-
-	public V2 speed() {
-		return speed;
-	}
-
-	public V2 acceleration() {
-		return acc;
-	}
-
-	public V2 force() {
-		return force;
 	}
 
 	public double dist(final Body other) {

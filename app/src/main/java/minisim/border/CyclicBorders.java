@@ -1,7 +1,6 @@
 package minisim.border;
 
 import minisim.Body;
-import minisim.V2;
 
 /**
  * By using CyclicBorders, each body that would go otherwise go out of bounds,
@@ -15,6 +14,7 @@ public class CyclicBorders extends Borders {
 
 	@Override
 	public void apply(final Body b) {
-		b.setPosition(new V2((w + b.position().x) % w, (h + b.position().y) % h));
+		b.position.x = (w + b.position.x) % w;
+		b.position.y = (h + b.position.y) % h;
 	}
 }

@@ -14,20 +14,20 @@ public class SolidBorders extends Borders {
 
 	@Override
 	public void apply(final Body b) {
-		if (b.position().x < 0) {
-			b.position().x = 0;
-			b.speed().x *= -1;
-		} else if (b.position().x > w) {
-			b.position().x = w;
-			b.speed().x *= -1;
+		if (b.position.x < 0) {
+			b.position.x = 0;
+			b.speed.x *= -1;
+		} else if (b.position.x > w) {
+			b.position.x = w;
+			b.speed.x *= -1;
 		}
 
-		if (b.position().y < 0) {
-			b.position().y = 0;
-			b.speed().y *= -1;
-		} else if (b.position().y > h) {
-			b.position().y = h;
-			b.speed().y *= -1;
+		if (b.position.y < 0) {
+			b.position.y = 0;
+			b.speed.y *= -1;
+		} else if (b.position.y > h) {
+			b.position.y = h;
+			b.speed.y *= -1;
 		}
 	}
 }
