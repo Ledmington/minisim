@@ -1,0 +1,72 @@
+plugins {
+	id 'application'
+	id 'java'
+	id 'jacoco'
+	id "com.diffplug.spotless" version "6.10.0"
+	id 'org.openjfx.javafxplugin' version '0.0.10'
+
+	// For .exe creation
+	id 'edu.sc.seis.launch4j' version '2.5.3'
+}
+
+sourceCompatibility = '17'
+def mainClassName = 'minisim.App'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+
+	implementation 'com.google.guava:guava:31.0.1-jre'
+}
+
+application {
+	mainClass = mainClassName
+}
+
+launch4j {
+	mainClassName = mainClassName
+	icon = "${projectDir}/src/main/resources/atom.ico"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// Format code always before compiling
+tasks.compileJava.dependsOn(spotlessApply)
+
+javafx {
+	version = "18.0.2"
+	modules = [ 'javafx.controls' ]
+}
+
+spotless {
+	// optional: limit format enforcement to just the files changed by this feature branch
+	//ratchetFrom 'origin/main'
+
+	format 'misc', {
+		// define the files to apply `misc` to
+		target '*.gradle', '*.md', '.gitignore'
+
+		// define the steps to apply to those files
+		trimTrailingWhitespace()
+		indentWithTabs()
+		endWithNewline()
+		setEncoding('utf-8')
+	}
+
+	java {
+		target 'src/*/java/**/*.java'
+		importOrder()
+		removeUnusedImports()
+		googleJavaFormat()
+
+		// This is needed to transform the 2-spaces indentation of GJFto a single tab
+		// check here: https://github.com/diffplug/spotless/issues/420#issuecomment-512350756
+		indentWithSpaces(4)
+		indentWithTabs()
+	}
+}
