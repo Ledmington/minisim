@@ -94,7 +94,11 @@ public class V2 {
 		return x == otherVector.x && y == otherVector.y;
 	}
 
+	public boolean equals(final V2 other, final double epsilon) {
+		return Math.abs(x - other.x) < epsilon && Math.abs(y - other.y) < epsilon;
+	}
+
 	public String toString() {
 		return "V2(" + x + ", " + y + ")";
 	}
-};
+}
