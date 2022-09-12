@@ -1,10 +1,8 @@
 package minisim;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBody {
 
@@ -44,6 +42,6 @@ public class TestBody {
 	public void twoBodyNoCollision() {
 		Body a = new Body(new V2(0, 0), new V2(0, 0), 1, 1);
 		Body b = new Body(new V2(2, 2), new V2(0, 0), 1, 1);
-		assertTrue(!a.collidesWith(b));
+		assertFalse(a.collidesWith(b));
 	}
 }

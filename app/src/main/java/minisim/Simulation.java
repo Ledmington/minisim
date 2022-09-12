@@ -12,7 +12,12 @@ import java.util.ArrayList;
 import minisim.border.Borders;
 
 public class Simulation {
+
 	public static final double NEWTON_GRAVITY = 6.6743e-11;
+
+	public static SimulationBuilder builder() {
+		return new SimulationBuilder();
+	}
 
 	private static final Random rnd = new Random();
 
@@ -22,8 +27,8 @@ public class Simulation {
 	private final double friction_constant;
 
 	public Simulation(final int nBodies, final Borders b, final double G, final double friction) {
-		if (nBodies <= 0) {
-			throw new IllegalArgumentException("At least one Body is needed for the simulation");
+		if (nBodies < 0) {
+			throw new IllegalArgumentException("Can't have negative bodies");
 		}
 		Objects.requireNonNull(b);
 		if (G <= 0) {
@@ -48,6 +53,10 @@ public class Simulation {
 
 	public void addBody(final Body b) {
 		bodies.add(b);
+	}
+
+	public List<Body> getBodies() {
+		return bodies;
 	}
 
 	// TODO: move this inside body and change visibility of fields

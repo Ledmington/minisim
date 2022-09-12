@@ -68,9 +68,9 @@ public class App extends Application {
 
 		final Simulation sim = new Simulation(1000, new SolidBorders(500, 500), 1e-4, 0.99);
 
-		final Task<Integer> task = new Task<Integer>() {
+		final Task<Integer> task = new Task<>() {
 			@Override
-			protected Integer call() throws Exception {
+			protected Integer call() {
 				int iterations;
 				for (iterations = 0; iterations < 1000; iterations++) {
 					if (isCancelled()) {
@@ -84,17 +84,6 @@ public class App extends Application {
 
 					sim.update();
 					sim.render(gc);
-
-					// Now block the thread for a short time, but be sure
-					// to check the interrupted exception for cancellation!
-					// try {
-					// Thread.sleep(100);
-					// } catch (InterruptedException interrupted) {
-					// if (isCancelled()) {
-					// updateMessage("Cancelled");
-					// break;
-					// }
-					// }
 				}
 				return iterations;
 			}
@@ -104,7 +93,7 @@ public class App extends Application {
 		th.setDaemon(true);
 		th.start();
 	}
-	public static void main(String args[]) {
+	public static void main(final String[] args) {
 		logger.info("MiniSim is running on:");
 		logger.info(" - Java " + javaVersion);
 		logger.info(" - JavaFX " + javafxVersion);

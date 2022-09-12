@@ -48,7 +48,6 @@ public class V2 {
 
 	/**
 	 * Computes the Euclidean distance between this point and the "other" point.
-	 * 
 	 * Note: if you don't need the exact distance, use "distsq". It's faster.
 	 * 
 	 * @param other
@@ -63,9 +62,7 @@ public class V2 {
 
 	/**
 	 * Computes the square of the Euclidean distance between this point and the
-	 * "other" point.
-	 * 
-	 * Note: this is faster than calling "dist".
+	 * "other" point. Note: this is faster than calling "dist".
 	 * 
 	 * @param other
 	 *            The other point

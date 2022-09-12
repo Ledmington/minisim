@@ -1,10 +1,8 @@
 package minisim;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestV2 {
 
@@ -140,20 +138,20 @@ class TestV2 {
 	@Test
 	public void vectorEqualsItself() {
 		V2 v = new V2(3, 5);
-		assertTrue(v.equals(v));
+		assertEquals(v, v);
 	}
 
 	@Test
 	public void vectorDoesNotEqualString() {
 		V2 v = new V2(3, 5);
-		assertFalse(v.equals("ciao"));
+		assertNotEquals("ciao", v);
 	}
 
 	@Test
 	public void twoVectorsWithSameCoordinatesAreTheSameVector() {
 		V2 v = new V2(3, 5);
 		V2 w = new V2(3, 5);
-		assertFalse(v == w);
-		assertTrue(v.equals(w));
+		assertNotSame(v, w);
+		assertEquals(v, w);
 	}
 }
