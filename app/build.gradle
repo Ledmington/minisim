@@ -10,7 +10,7 @@ plugins {
 }
 
 sourceCompatibility = '17'
-def mainClassName = 'minisim.App'
+def mainClassFullName = 'minisim.App'
 
 repositories {
 	mavenCentral()
@@ -23,11 +23,11 @@ dependencies {
 }
 
 application {
-	mainClass = mainClassName
+	mainClass = mainClassFullName
 }
 
 launch4j {
-	mainClassName = mainClassName
+	mainClassName = mainClassFullName
 	headerType = 'console'
 	icon = "${projectDir}/src/main/resources/atom.ico"
 	outfile = 'MiniSim.exe'

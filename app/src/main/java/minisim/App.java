@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import minisim.border.SolidBorders;
 
 public class App extends Application {
 
@@ -66,7 +65,8 @@ public class App extends Application {
 		stage.setScene(scene);
 		stage.show();
 
-		final Simulation sim = new Simulation(1000, new SolidBorders(500, 500), 1e-4, 0.99);
+		final Simulation sim = Simulation.builder().nBodies(1000).width(500).height(500).gravity(1e-4).friction(0.99)
+				.solidBorders().build();
 
 		final Task<Integer> task = new Task<>() {
 			@Override
@@ -75,10 +75,10 @@ public class App extends Application {
 				for (iterations = 0; iterations < 1000; iterations++) {
 					if (isCancelled()) {
 						updateMessage("Cancelled");
-						System.out.println("cancelled");
+						logger.info("cancelled");
 						break;
 					}
-					System.out.println("iteration: " + iterations);
+					logger.info("iteration: " + iterations);
 					updateMessage("Iteration " + iterations);
 					updateProgress(iterations, 1000);
 
