@@ -83,6 +83,25 @@ public class TestGravity {
 	}
 
 	@Test
+	public void furtherObjectsShouldProduceWeakerForce() {
+		final Body left = new Body(new V2(-1, 5), V2.origin(), 1, 1);
+		final Body middle = new Body(new V2(0, 5), V2.origin(), 1, 1);
+		final Body rightAndFurther = new Body(new V2(2, 5), V2.origin(), 1, 1);
+
+		gravity.accept(left, middle);
+
+		final double closerForce = middle.force.mod();
+
+		middle.force = V2.origin();
+
+		gravity.accept(middle, rightAndFurther);
+
+		final double furtherForce = middle.force.mod();
+
+		assertEquals(closerForce, furtherForce * 4, 1e-12);
+	}
+
+	@Test
 	public void twoBodies() {
 		final double up = 40;
 		final double down = -40;
