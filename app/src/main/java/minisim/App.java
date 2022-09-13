@@ -17,6 +17,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import minisim.simulation.Simulation;
+import minisim.simulation.force.Friction;
+import minisim.simulation.force.Gravity;
 
 public class App extends Application {
 
@@ -37,7 +39,7 @@ public class App extends Application {
 	}
 
 	@Override
-	public void start(Stage stage) {
+	public void start(final Stage stage) {
 		BorderPane bPane = new BorderPane();
 
 		final Button aboutButton = new Button("About");
@@ -66,8 +68,8 @@ public class App extends Application {
 		stage.setScene(scene);
 		stage.show();
 
-		final Simulation sim = Simulation.builder().nBodies(1000).width(500).height(500).gravity(1e-4).friction(0.99)
-				.solidBorders().build();
+		final Simulation sim = Simulation.builder().nBodies(1000).width(500).height(500).addForce(new Gravity(1e-4))
+				.addForce(new Friction(0.99)).solidBorders().build();
 
 		final Task<Integer> task = new Task<>() {
 			@Override

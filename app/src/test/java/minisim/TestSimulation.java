@@ -3,6 +3,8 @@ package minisim;
 import minisim.simulation.Body;
 import minisim.simulation.Simulation;
 import minisim.simulation.V2;
+import minisim.simulation.force.Friction;
+import minisim.simulation.force.Gravity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,8 @@ public class TestSimulation {
 
 	@BeforeEach
 	public void setup() {
-		sim = Simulation.builder().width(100).height(100).gravity(1e-8).friction(0.99).solidBorders().build();
+		sim = Simulation.builder().width(100).height(100).addForce(new Gravity(1e-8)).addForce(new Friction(0.99))
+				.solidBorders().build();
 	}
 
 	@Test

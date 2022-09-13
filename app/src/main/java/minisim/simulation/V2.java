@@ -25,6 +25,7 @@ public class V2 {
 	}
 
 	public V2 mul(final double k) {
+		// TODO refactor this to change internal state
 		return new V2(x * k, y * k);
 	}
 

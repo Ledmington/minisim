@@ -3,14 +3,19 @@ package minisim.simulation;
 import minisim.simulation.border.Borders;
 import minisim.simulation.border.CyclicBorders;
 import minisim.simulation.border.SolidBorders;
+import minisim.simulation.force.Force;
+import minisim.simulation.force.UnaryForce;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class SimulationBuilder {
 
 	private int n = 0;
 	private int w;
 	private int h;
-	private double g;
-	private double f;
+	private List<Force> forces = new LinkedList<>();
+	private List<UnaryForce> unaryForces = new LinkedList<>();
 
 	private enum BorderType {
 		SOLID, CYCLIC
@@ -35,13 +40,13 @@ public class SimulationBuilder {
 		return this;
 	}
 
-	public SimulationBuilder gravity(final double gravity) {
-		g = gravity;
+	public SimulationBuilder addForce(final Force force) {
+		forces.add(force);
 		return this;
 	}
 
-	public SimulationBuilder friction(final double friction) {
-		f = friction;
+	public SimulationBuilder addForce(final UnaryForce force) {
+		unaryForces.add(force);
 		return this;
 	}
 
@@ -62,6 +67,6 @@ public class SimulationBuilder {
 			case CYCLIC -> b = new CyclicBorders(w, h);
 			default -> b = null;
 		}
-		return new Simulation(n, b, g, f);
+		return new Simulation(n, b, forces, unaryForces);
 	}
 }

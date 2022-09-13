@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import minisim.simulation.border.Borders;
+import minisim.simulation.force.Force;
+import minisim.simulation.force.UnaryForce;
 
 public class Simulation {
-
-	public static final double NEWTON_GRAVITY = 6.6743e-11;
 
 	public static SimulationBuilder builder() {
 		return new SimulationBuilder();
@@ -22,21 +22,20 @@ public class Simulation {
 	private static final Random rnd = new Random();
 
 	private final List<Body> bodies = new ArrayList<>();
+	private final List<Force> forces = new ArrayList<>();
+	private final List<UnaryForce> unaryForces = new ArrayList<>();
 	private final Borders bounds;
-	private final double gravitational_constant;
-	private final double friction_constant;
 
-	public Simulation(final int nBodies, final Borders b, final double G, final double friction) {
+	public Simulation(final int nBodies, final Borders b, final List<Force> forces,
+			final List<UnaryForce> unaryForces) {
 		if (nBodies < 0) {
 			throw new IllegalArgumentException("Can't have negative bodies");
 		}
 		Objects.requireNonNull(b);
-		if (G <= 0) {
-			throw new IllegalArgumentException("The gravitational constant needs to be strictly positive");
-		}
-		if (friction < 0 || friction > 1) {
-			throw new IllegalArgumentException("THe friction constant needs to be between 0 and 1");
-		}
+		Objects.requireNonNull(forces);
+		Objects.requireNonNull(unaryForces);
+		this.forces.addAll(forces);
+		this.unaryForces.addAll(unaryForces);
 
 		bounds = b;
 		for (int i = 0; i < nBodies; i++) {
@@ -47,8 +46,6 @@ public class Simulation {
 					new V2(0, 0), 1, 1);
 			bodies.add(body);
 		}
-		gravitational_constant = G;
-		friction_constant = friction;
 	}
 
 	public void addBody(final Body b) {
@@ -69,21 +66,6 @@ public class Simulation {
 		b.force = V2.ORIGIN;
 
 		bounds.accept(b);
-	}
-
-	public void computeForceBetweenBodies(final Body first, final Body second) {
-		// vector pointing first (but centered in origin)
-		final V2 diff = first.position.sub(second.position);
-		final double distance = first.dist(second);
-		final double force = friction_constant * gravitational_constant * first.mass * second.mass
-				/ (distance * distance);
-		first.force = first.force.sub(diff.mul(force));
-		second.force = second.force.sub(diff.mul(force));
-	}
-
-	public void computeForceOnBody(final int i) {
-		final Body body = bodies.get(i);
-		bodies.subList(i + 1, bodies.size()).forEach(b -> computeForceBetweenBodies(body, b));
 	}
 
 	/*
@@ -133,13 +115,31 @@ public class Simulation {
 		}
 
 		// compute forces
-		for (int i = 0; i < bodies.size(); i++) {
-			computeForceOnBody(i);
-		}
+		computeAllForces();
 
 		// apply forces
 		for (int i = 0; i < bodies.size(); i++) {
 			updateBody(i);
+		}
+	}
+
+	private void computeAllForces() {
+		// All "double" forces
+		for (int i = 0; i < bodies.size(); i++) {
+			final Body first = bodies.get(i);
+			for (int j = i + 1; j < bodies.size(); j++) {
+				final Body second = bodies.get(j);
+				for (Force f : forces) {
+					f.accept(first, second);
+				}
+			}
+		}
+
+		// All unary forces
+		for (Body b : bodies) {
+			for (UnaryForce uf : unaryForces) {
+				uf.accept(b);
+			}
 		}
 	}
 
