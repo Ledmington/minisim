@@ -19,10 +19,13 @@ public class Gravity implements Force {
 
 	@Override
 	public void accept(final Body first, final Body second) {
-		final V2 diff = first.position.copy().sub(second.position);
+		// TODO: can refactor the squared distance with a method inside V2
 		final double distance = first.dist(second);
 		final double force = constant * first.mass * second.mass / (distance * distance);
-		first.force.sub(diff.copy().mul(force));
-		second.force.add(diff.copy().mul(force));
+
+		final V2 diff = first.position.copy().sub(second.position).mul(force);
+
+		first.force.add(diff);
+		second.force.sub(diff);
 	}
 }

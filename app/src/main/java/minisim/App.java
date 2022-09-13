@@ -24,7 +24,10 @@ public class App extends Application {
 
 	public static Logger logger = null;
 
+	public static final String OSName = System.getProperty("os.name");
+	public static final String OSVersion = System.getProperty("os.version");
 	public static final String javaVersion = System.getProperty("java.version");
+	public static final String jvmVersion = System.getProperty("java.vm.version");
 	public static final String javafxVersion = System.getProperty("javafx.version");
 
 	static {
@@ -46,8 +49,8 @@ public class App extends Application {
 		aboutButton.setOnAction(e -> {
 			final Dialog<String> dialog = new Dialog<>();
 			dialog.setHeaderText("About MiniSim");
-			dialog.setContentText(
-					String.join("\n", "MiniSim is running on:", "Java " + javaVersion, "JavaFX " + javafxVersion));
+			dialog.setContentText(String.join("\n", "MiniSim is running on:", OSName + " " + OSVersion,
+					"Java " + javaVersion, "JVM " + jvmVersion, "JavaFX " + javafxVersion));
 			dialog.setResizable(false);
 			Window window = dialog.getDialogPane().getScene().getWindow();
 			window.setOnCloseRequest(event -> window.hide());
@@ -68,7 +71,10 @@ public class App extends Application {
 		stage.setScene(scene);
 		stage.show();
 
-		final Simulation sim = Simulation.builder().nBodies(1000).width(500).height(500).addForce(new Gravity(1e-4))
+		final Simulation sim = Simulation.builder().nBodies(1000).width(500).height(500)
+				// .addForce(new Gravity(-1e-4))
+				.addForce(new Gravity(1e-4))
+				// .addForce(new GravityDown(0.1))
 				.addForce(new Friction(0.99)).solidBorders().build();
 
 		final Task<Integer> task = new Task<>() {
@@ -98,7 +104,9 @@ public class App extends Application {
 	}
 	public static void main(final String[] args) {
 		logger.info("MiniSim is running on:");
+		logger.info(" - " + OSName + " " + OSVersion);
 		logger.info(" - Java " + javaVersion);
+		logger.info(" - JVM " + jvmVersion);
 		logger.info(" - JavaFX " + javafxVersion);
 		launch(args);
 	}

@@ -39,11 +39,8 @@ public class Simulation {
 
 		bounds = b;
 		for (int i = 0; i < nBodies; i++) {
-			final Body body = new Body(
-					// V2(randab(0, bounds->w), randab(0, bounds->h)),
-					new V2(rnd.nextDouble(bounds.w * 0.4, bounds.w * 0.6),
-							rnd.nextDouble(bounds.h * 0.4, bounds.h * 0.6)),
-					new V2(0, 0), 1, 1);
+			final Body body = new Body(new V2(rnd.nextDouble(bounds.w * 0.4, bounds.w * 0.6),
+					rnd.nextDouble(bounds.h * 0.4, bounds.h * 0.6)), new V2(0, 0), 1, 1);
 			bodies.add(body);
 		}
 	}
@@ -89,6 +86,7 @@ public class Simulation {
 		}
 
 		// All unary forces
+		// TODO: highly parallelizable
 		for (Body b : bodies) {
 			for (UnaryForce uf : unaryForces) {
 				uf.accept(b);

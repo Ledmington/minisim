@@ -16,10 +16,6 @@ public class Body {
 			throw new IllegalArgumentException("Radius can't be negative or zero");
 		}
 
-		// TODO remove when no more needed
-		// circle = sf::CircleShape(radius);
-		// circle.setFillColor(sf::Color::Red);
-		// circle.setRadius(radius);
 		this.mass = mass;
 		this.radius = radius;
 		this.position = pos;
@@ -41,7 +37,7 @@ public class Body {
 		speed.add(acc);
 		position.add(speed);
 
-		force = V2.origin().copy();
+		force = V2.origin();
 	}
 
 	public boolean collidesWith(final Body other) {
