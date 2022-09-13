@@ -1,4 +1,4 @@
-package minisim;
+package minisim.simulation;
 
 public class Body {
 	public double mass;

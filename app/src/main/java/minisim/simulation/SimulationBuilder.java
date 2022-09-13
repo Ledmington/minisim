@@ -1,8 +1,8 @@
-package minisim;
+package minisim.simulation;
 
-import minisim.border.Borders;
-import minisim.border.CyclicBorders;
-import minisim.border.SolidBorders;
+import minisim.simulation.border.Borders;
+import minisim.simulation.border.CyclicBorders;
+import minisim.simulation.border.SolidBorders;
 
 public class SimulationBuilder {
 

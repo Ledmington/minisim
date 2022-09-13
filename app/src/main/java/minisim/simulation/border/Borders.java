@@ -1,6 +1,6 @@
-package minisim.border;
+package minisim.simulation.border;
 
-import minisim.Body;
+import minisim.simulation.Body;
 
 public abstract class Borders {
 	public final double w;

@@ -1,5 +1,8 @@
 package minisim;
 
+import minisim.simulation.Body;
+import minisim.simulation.Simulation;
+import minisim.simulation.V2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +34,9 @@ public class TestSimulation {
 		sim.addBody(second);
 
 		sim.update();
+
+		System.out.println(first.position);
+		System.out.println(second.position);
 
 		assertTrue(first.position.x > left);
 		assertTrue(second.position.x < right);

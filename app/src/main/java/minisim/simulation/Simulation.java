@@ -1,4 +1,4 @@
-package minisim;
+package minisim.simulation;
 
 import java.util.Objects;
 import java.util.Random;
@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import java.util.List;
 import java.util.ArrayList;
 
-import minisim.border.Borders;
+import minisim.simulation.border.Borders;
 
 public class Simulation {
 

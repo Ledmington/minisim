@@ -1,4 +1,4 @@
-package minisim;
+package minisim.simulation;
 
 // A class representing a 2D vector
 public class V2 {

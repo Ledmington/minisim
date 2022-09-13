@@ -3,11 +3,13 @@ package minisim.border;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import minisim.simulation.border.Borders;
+import minisim.simulation.border.SolidBorders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import minisim.Body;
-import minisim.V2;
+import minisim.simulation.Body;
+import minisim.simulation.V2;
 
 public class TestSolidBorders {
 
