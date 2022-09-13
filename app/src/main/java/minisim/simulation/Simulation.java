@@ -68,7 +68,7 @@ public class Simulation {
 
 		b.force = V2.ORIGIN;
 
-		bounds.apply(b);
+		bounds.accept(b);
 	}
 
 	public void computeForceBetweenBodies(final Body first, final Body second) {

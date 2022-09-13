@@ -2,7 +2,9 @@ package minisim.simulation.border;
 
 import minisim.simulation.Body;
 
-public abstract class Borders {
+import java.util.function.Consumer;
+
+public abstract class Borders implements Consumer<Body> {
 	public final double w;
 	public final double h;
 
@@ -13,6 +15,4 @@ public abstract class Borders {
 		w = width;
 		h = height;
 	}
-
-	public abstract void apply(final Body b);
 }

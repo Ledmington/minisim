@@ -13,7 +13,7 @@ public class CyclicBorders extends Borders {
 	}
 
 	@Override
-	public void apply(final Body b) {
+	public void accept(final Body b) {
 		b.position.x = (w + b.position.x) % w;
 		b.position.y = (h + b.position.y) % h;
 	}

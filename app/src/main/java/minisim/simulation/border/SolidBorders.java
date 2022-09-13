@@ -13,7 +13,7 @@ public class SolidBorders extends Borders {
 	}
 
 	@Override
-	public void apply(final Body b) {
+	public void accept(final Body b) {
 		if (b.position.x < 0) {
 			b.position.x = 0;
 			b.speed.x *= -1;
