@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // TODO: these tests exists just to test performance, delete it when no more needed
 public class TestStreams {
-	// @Test
+	// @Test // uncomment to execute
 	public void mammamia() {
 		// This test checks what stream is faster to iterate over unique pairs of
 		// coordinates

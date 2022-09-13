@@ -123,20 +123,6 @@ class TestV2 {
 	}
 
 	@Test
-	public void distanceSquaredFromOrigin() {
-		V2 v = new V2();
-		V2 w = new V2(1, 2);
-		assertEquals(5, w.distsq(v), EPSILON);
-	}
-
-	@Test
-	public void distanceSquaredTwoPoints() {
-		V2 v = new V2(2, 1);
-		V2 w = new V2(1, 1);
-		assertEquals(1, w.distsq(v), EPSILON);
-	}
-
-	@Test
 	public void vectorEqualsItself() {
 		V2 v = new V2(3, 5);
 		assertEquals(v, v);

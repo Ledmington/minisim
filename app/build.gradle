@@ -5,6 +5,9 @@ plugins {
 	id "com.diffplug.spotless" version "6.10.0"
 	id 'org.openjfx.javafxplugin' version '0.0.10'
 
+	// mutation testing
+	id "info.solidsoft.pitest" version "1.9.0"
+
 	// For .exe creation
 	id 'edu.sc.seis.launch4j' version '2.5.3'
 }

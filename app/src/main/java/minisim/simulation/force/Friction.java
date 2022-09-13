@@ -11,7 +11,7 @@ public class Friction implements UnaryForce {
 	}
 
 	@Override
-	public void accept(Body body) {
-		body.force = body.force.mul(-constant);
+	public void accept(final Body body) {
+		body.force.mul(-constant);
 	}
 }

@@ -17,20 +17,27 @@ public class V2 {
 	}
 
 	public V2 add(final V2 other) {
-		return new V2(x + other.x, y + other.y);
+		x += other.x;
+		y += other.y;
+		return this;
 	}
 
 	public V2 sub(final V2 other) {
-		return new V2(x - other.x, y - other.y);
+		x -= other.x;
+		y -= other.y;
+		return this;
 	}
 
 	public V2 mul(final double k) {
-		// TODO refactor this to change internal state
-		return new V2(x * k, y * k);
+		x *= k;
+		y *= k;
+		return this;
 	}
 
 	public V2 div(final double k) {
-		return new V2(x / k, y / k);
+		x /= k;
+		y /= k;
+		return this;
 	}
 
 	public double mod() {
@@ -41,7 +48,11 @@ public class V2 {
 		return x * other.x + y * other.y;
 	}
 
-	// returns the normalized vector
+	/**
+	 * Normalizes the V2 vector and returns it.
+	 * 
+	 * @return The normalized vector
+	 */
 	public V2 norm() {
 		final double m = mod();
 		return new V2(x / m, y / m);
@@ -49,29 +60,18 @@ public class V2 {
 
 	/**
 	 * Computes the Euclidean distance between this point and the "other" point.
-	 * Note: if you don't need the exact distance, use "distsq". It's faster.
 	 * 
 	 * @param other
 	 *            The other point
 	 * @return The euclidean distance
 	 */
 	public double dist(final V2 other) {
-		// TODO: can be optimized without calling sub (because it creates a new
-		// temporary V2)
-		return sub(other).mod();
+		// return copy().sub(other).mod(); // uses a temporary V2 (but it's elegant)
+		return Math.hypot(x - other.x, y - other.y);
 	}
 
-	/**
-	 * Computes the square of the Euclidean distance between this point and the
-	 * "other" point. Note: this is faster than calling "dist".
-	 * 
-	 * @param other
-	 *            The other point
-	 * @return The euclidean distance
-	 */
-	public double distsq(final V2 other) {
-		V2 diff = sub(other);
-		return diff.x * diff.x + diff.y * diff.y;
+	public V2 copy() {
+		return new V2(x, y);
 	}
 
 	public boolean equals(Object other) {

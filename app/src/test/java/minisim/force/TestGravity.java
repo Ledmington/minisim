@@ -6,6 +6,7 @@ import minisim.simulation.force.Gravity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestGravity {
@@ -14,6 +15,39 @@ public class TestGravity {
 	@BeforeEach
 	public void setup() {
 		gravity = new Gravity();
+	}
+
+	@Test
+	public void distanceShouldDecrease() {
+		final Body first = new Body(new V2(3, 5), V2.ORIGIN, 1, 1);
+		final Body second = new Body(new V2(-7, 9), V2.ORIGIN, 1, 1);
+
+		final double initialDistance = first.position.dist(second.position);
+
+		gravity.accept(first, second);
+
+		final double finalDistance = first.position.dist(second.position);
+
+		assertTrue(finalDistance < initialDistance);
+	}
+
+	@Test
+	public void heavierObjectsShouldProduceStrongerForce() {
+		final Body left = new Body(new V2(-6, 5), V2.ORIGIN, 1, 1);
+		final Body middle = new Body(new V2(0, 5), V2.ORIGIN, 1, 1);
+		final Body rightAndHeavy = new Body(new V2(6, 5), V2.ORIGIN, 3, 1);
+
+		gravity.accept(left, middle);
+
+		final double lighterForce = middle.force.mod();
+
+		middle.force = V2.ORIGIN;
+
+		gravity.accept(middle, rightAndHeavy);
+
+		final double heavyForce = middle.force.mod();
+
+		assertEquals(lighterForce * rightAndHeavy.mass, heavyForce, 1e-12);
 	}
 
 	@Test

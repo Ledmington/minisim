@@ -16,6 +16,7 @@ public class Body {
 			throw new IllegalArgumentException("Radius can't be negative or zero");
 		}
 
+		// TODO remove when no more needed
 		// circle = sf::CircleShape(radius);
 		// circle.setFillColor(sf::Color::Red);
 		// circle.setRadius(radius);
@@ -35,6 +36,14 @@ public class Body {
 		return position.dist(other.position);
 	}
 
+	public void applyForce() {
+		acc = force.copy().div(mass);// * DT; // TODO fix later
+		speed.add(acc);
+		position.add(speed);
+
+		force = V2.ORIGIN;
+	}
+
 	public boolean collidesWith(final Body other) {
 		final double Rsum = radius + other.radius;
 		if (Math.abs(position.x - other.position.x) > Rsum) {
@@ -43,7 +52,8 @@ public class Body {
 		if (Math.abs(position.y - other.position.y) > Rsum) {
 			return false;
 		}
-		return position.distsq(other.position) < Rsum * Rsum; // faster way (maybe): doesn't use a sqrt
-		// return dist(other) < Rsum; <-- correct way
+		// return position.distsq(other.position) < Rsum * Rsum; // faster way (maybe):
+		// doesn't use a sqrt
+		return dist(other) < Rsum; // <-- correct way
 	}
 }
