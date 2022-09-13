@@ -84,12 +84,9 @@ public class TestGravity {
 
 	@Test
 	public void twoBodies() {
-		// the origin (0,0) is in the upper left corner
-		// the x-axis is placed as usual
-		// the y-axis points down (so to go "up", you need to decrease the y coordinate)
-		final double down = 40;
-		final double up = 30;
-		final double left = 20;
+		final double up = 40;
+		final double down = -40;
+		final double left = -30;
 		final double right = 30;
 
 		final Body first = new Body(new V2(left, down), new V2(0, 0), 1, 1);
@@ -101,7 +98,8 @@ public class TestGravity {
 
 		assertTrue(first.position.x > left);
 		assertTrue(second.position.x < right);
-		assertTrue(first.position.y < down);
-		assertTrue(second.position.y > up);
+
+		assertTrue(first.position.y > down);
+		assertTrue(second.position.y < up);
 	}
 }

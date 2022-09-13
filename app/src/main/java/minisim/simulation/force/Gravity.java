@@ -23,7 +23,7 @@ public class Gravity implements Force {
 		final double distance = first.dist(second);
 		final double force = constant * first.mass * second.mass / (distance * distance);
 
-		final V2 diff = first.position.copy().sub(second.position).mul(force);
+		final V2 diff = first.position.copy().sub(second.position).mul(-force);
 
 		first.force.add(diff);
 		second.force.sub(diff);
