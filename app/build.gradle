@@ -1,16 +1,25 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		gradlePluginPortal()
+	}
+	dependencies {
+		classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.7.4'
+	}
+}
+
 plugins {
 	id 'application'
 	id 'java'
 	id 'jacoco'
-	id "com.diffplug.spotless" version "6.10.0"
+	id 'com.diffplug.spotless' version '6.10.0'
 	id 'org.openjfx.javafxplugin' version '0.0.10'
-
-	// mutation testing
-	id "info.solidsoft.pitest" version "1.9.0"
 
 	// For .exe creation
 	id 'edu.sc.seis.launch4j' version '2.5.3'
 }
+
+apply plugin: 'info.solidsoft.pitest'
 
 sourceCompatibility = '17'
 def mainClassFullName = 'minisim.App'
@@ -32,13 +41,13 @@ application {
 launch4j {
 	mainClassName = mainClassFullName
 	headerType = 'console'
-	icon = "${projectDir}/src/main/resources/atom.ico"
+	icon = '${projectDir}/src/main/resources/atom.ico'
 	outfile = 'MiniSim.exe'
 	windowTitle = 'MiniSim'
 	productName = 'MiniSim'
 	fileDescription = 'MiniSim'
 	language = 'ENGLISH_US'
-	//bundledJrePath = "/Users/user/Downloads/jdk" // TODO solve problem of bundling JRE into exe file
+	//bundledJrePath = '/Users/user/Downloads/jdk' // TODO solve problem of bundling JRE into exe file
 }
 
 tasks.named('test') {
@@ -49,8 +58,8 @@ tasks.named('test') {
 tasks.compileJava.dependsOn(spotlessApply)
 
 javafx {
-	version = "18.0.2"
-	modules = [ 'javafx.controls' ]
+	version = '18.0.2'
+	modules = [ 'javafx.controls', 'javafx.graphics' ]
 }
 
 spotless {
@@ -74,4 +83,15 @@ spotless {
 		removeUnusedImports()
 		eclipse()
 	}
+}
+
+pitest {
+	targetClasses = ['minisim.*']  //by default "${project.group}.*"
+	//targetTests = []
+	pitestVersion = '1.7.4' //not needed when a default PIT version should be used
+	junit5PluginVersion = '0.15'
+	//threads = 4
+	outputFormats = ['HTML']
+	verbose = true
+	timestampedReports = false
 }
