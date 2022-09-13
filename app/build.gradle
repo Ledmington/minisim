@@ -92,6 +92,6 @@ pitest {
 	junit5PluginVersion = '0.15'
 	//threads = 4
 	outputFormats = ['HTML']
-	verbose = true
+	//verbose = true
 	timestampedReports = false
 }

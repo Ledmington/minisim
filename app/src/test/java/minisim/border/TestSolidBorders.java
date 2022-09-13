@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import minisim.simulation.Body;
 import minisim.simulation.V2;
 
+import java.util.List;
+
 public class TestSolidBorders {
 
 	private Borders sb;
@@ -34,50 +36,81 @@ public class TestSolidBorders {
 
 	@Test
 	public void noChangesIfInside() {
-		Body b = new Body(new V2(1, 1), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(1, 1), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(1, 1));
+		assertEquals(b.speed, oldSpeed);
+	}
+
+	@Test
+	public void cornersAreInside() {
+		for (Double x : List.of(sb.LEFT_BORDER, sb.RIGHT_BORDER)) {
+			for (Double y : List.of(sb.BOTTOM_BORDER, sb.UP_BORDER)) {
+				final Body b = new Body(new V2(x, y), new V2(1, 2), 1, 1);
+				final V2 oldSpeed = b.speed.copy();
+				sb.accept(b);
+				assertEquals(b.position, new V2(x, y));
+				assertEquals(b.speed, oldSpeed);
+			}
+		}
 	}
 
 	@Test
 	public void outOnRight() {
-		Body b = new Body(new V2(11, 1), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(11, 1), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(10, 1));
+		assertEquals(b.speed.x, -oldSpeed.x, 1e-12);
+		assertEquals(b.speed.y, oldSpeed.y, 1e-12);
 	}
 
 	@Test
 	public void outOnLeft() {
-		Body b = new Body(new V2(-1, 1), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(-1, 1), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(0, 1));
+		assertEquals(b.speed.x, -oldSpeed.x, 1e-12);
+		assertEquals(b.speed.y, oldSpeed.y, 1e-12);
 	}
 
 	@Test
 	public void outOnTop() {
-		Body b = new Body(new V2(1, -1), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(1, -1), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(1, 0));
+		assertEquals(b.speed.x, oldSpeed.x, 1e-12);
+		assertEquals(b.speed.y, -oldSpeed.y, 1e-12);
 	}
 
 	@Test
 	public void outOnBottom() {
-		Body b = new Body(new V2(1, 11), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(1, 11), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(1, 10));
+		assertEquals(b.speed.x, oldSpeed.x, 1e-12);
+		assertEquals(b.speed.y, -oldSpeed.y, 1e-12);
 	}
 
 	@Test
 	public void bottomRightCorner() {
-		Body b = new Body(new V2(11, 11), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(11, 11), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(10, 10));
+		assertEquals(b.speed, oldSpeed.mul(-1));
 	}
 
 	@Test
 	public void topLeftCorner() {
-		Body b = new Body(new V2(-1, -1), V2.origin(), 1, 1);
+		final Body b = new Body(new V2(-1, -1), new V2(1, 2), 1, 1);
+		final V2 oldSpeed = b.speed.copy();
 		sb.accept(b);
 		assertEquals(b.position, new V2(0, 0));
+		assertEquals(b.speed, oldSpeed.mul(-1));
 	}
 }

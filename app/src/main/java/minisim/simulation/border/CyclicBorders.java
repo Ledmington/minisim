@@ -14,7 +14,7 @@ public class CyclicBorders extends Borders {
 
 	@Override
 	public void accept(final Body b) {
-		b.position.x = (w + b.position.x) % w;
-		b.position.y = (h + b.position.y) % h;
+		b.position.x = (RIGHT_BORDER + b.position.x) % RIGHT_BORDER;
+		b.position.y = (UP_BORDER + b.position.y) % UP_BORDER;
 	}
 }

@@ -39,8 +39,8 @@ public class Simulation {
 
 		bounds = b;
 		for (int i = 0; i < nBodies; i++) {
-			final Body body = new Body(new V2(rnd.nextDouble(bounds.w * 0.4, bounds.w * 0.6),
-					rnd.nextDouble(bounds.h * 0.4, bounds.h * 0.6)), new V2(0, 0), 1, 1);
+			final Body body = new Body(new V2(rnd.nextDouble(bounds.RIGHT_BORDER * 0.4, bounds.RIGHT_BORDER * 0.6),
+					rnd.nextDouble(bounds.UP_BORDER * 0.4, bounds.UP_BORDER * 0.6)), new V2(0, 0), 1, 1);
 			bodies.add(body);
 		}
 	}
@@ -95,7 +95,7 @@ public class Simulation {
 	}
 
 	public void render(final GraphicsContext gc) {
-		gc.clearRect(0, 0, bounds.w, bounds.h);
+		gc.clearRect(0, 0, bounds.RIGHT_BORDER, bounds.UP_BORDER);
 		gc.setFill(Color.RED);
 		bodies.forEach(b -> gc.fillOval(b.position.x, b.position.y, b.radius, b.radius));
 	}
