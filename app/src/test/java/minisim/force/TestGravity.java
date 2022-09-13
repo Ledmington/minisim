@@ -18,30 +18,62 @@ public class TestGravity {
 	}
 
 	@Test
-	public void distanceShouldDecrease() {
-		final Body first = new Body(new V2(3, 5), V2.ORIGIN, 1, 1);
-		final Body second = new Body(new V2(-7, 9), V2.ORIGIN, 1, 1);
+	public void forceShouldBeEqual() {
+		final Body first = new Body(new V2(3, 5), V2.origin(), 1, 1);
+		final Body second = new Body(new V2(-7, 9), V2.origin(), 1, 1);
+		gravity.accept(first, second);
+		assertEquals(first.force.mod(), second.force.mod(), 1e-12);
+		assertEquals(first.force.x, -second.force.x, 1e-12);
+		assertEquals(first.force.y, -second.force.y, 1e-12);
+	}
 
-		final double initialDistance = first.position.dist(second.position);
+	@Test
+	public void forceShouldBeEqualWithDifferentMasses() {
+		final Body first = new Body(new V2(3, 5), V2.origin(), 2, 1);
+		final Body second = new Body(new V2(-7, 9), V2.origin(), 3, 1);
+		gravity.accept(first, second);
+		assertEquals(first.force.mod(), second.force.mod(), 1e-12);
+		assertEquals(first.force.x, -second.force.x, 1e-12);
+		assertEquals(first.force.y, -second.force.y, 1e-12);
+	}
+
+	@Test
+	public void forceShouldBeEqualWithDifferentRadii() {
+		final Body first = new Body(new V2(3, 5), V2.origin(), 1, 2);
+		final Body second = new Body(new V2(-7, 9), V2.origin(), 1, 3);
+		gravity.accept(first, second);
+		assertEquals(first.force.mod(), second.force.mod(), 1e-12);
+		assertEquals(first.force.x, -second.force.x, 1e-12);
+		assertEquals(first.force.y, -second.force.y, 1e-12);
+	}
+
+	@Test
+	public void distanceShouldDecrease() {
+		final Body first = new Body(new V2(3, 5), V2.origin(), 1, 1);
+		final Body second = new Body(new V2(-7, 9), V2.origin(), 1, 1);
+
+		final double initialDistance = first.dist(second);
 
 		gravity.accept(first, second);
+		first.applyForce();
+		second.applyForce();
 
-		final double finalDistance = first.position.dist(second.position);
+		final double finalDistance = first.dist(second);
 
 		assertTrue(finalDistance < initialDistance);
 	}
 
 	@Test
 	public void heavierObjectsShouldProduceStrongerForce() {
-		final Body left = new Body(new V2(-6, 5), V2.ORIGIN, 1, 1);
-		final Body middle = new Body(new V2(0, 5), V2.ORIGIN, 1, 1);
-		final Body rightAndHeavy = new Body(new V2(6, 5), V2.ORIGIN, 3, 1);
+		final Body left = new Body(new V2(-6, 5), V2.origin(), 1, 1);
+		final Body middle = new Body(new V2(0, 5), V2.origin(), 1, 1);
+		final Body rightAndHeavy = new Body(new V2(6, 5), V2.origin(), 3, 1);
 
 		gravity.accept(left, middle);
 
 		final double lighterForce = middle.force.mod();
 
-		middle.force = V2.ORIGIN;
+		middle.force = V2.origin();
 
 		gravity.accept(middle, rightAndHeavy);
 
@@ -64,6 +96,8 @@ public class TestGravity {
 		final Body second = new Body(new V2(right, up), new V2(0, 0), 1, 1);
 
 		gravity.accept(first, second);
+		first.applyForce();
+		second.applyForce();
 
 		assertTrue(first.position.x > left);
 		assertTrue(second.position.x < right);

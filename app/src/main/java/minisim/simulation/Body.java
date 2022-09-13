@@ -41,7 +41,7 @@ public class Body {
 		speed.add(acc);
 		position.add(speed);
 
-		force = V2.ORIGIN;
+		force = V2.origin().copy();
 	}
 
 	public boolean collidesWith(final Body other) {

@@ -1,11 +1,15 @@
 package minisim.simulation;
 
-// A class representing a 2D vector
+/**
+ * A class representing a bidimensional vector.
+ */
 public class V2 {
 	public double x;
 	public double y;
 
-	public static final V2 ORIGIN = new V2(0.0, 0.0);
+	public static V2 origin() {
+		return new V2(0.0, 0.0);
+	}
 
 	public V2(final double _x, final double _y) {
 		x = _x;
