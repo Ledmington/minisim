@@ -22,10 +22,11 @@ public class Gravity implements Force {
 		// TODO: can refactor the squared distance with a method inside V2
 		final double distance = first.dist(second);
 		final double force = constant * first.mass * second.mass / (distance * distance);
+		final V2 forceDirection = first.position.copy().sub(second.position).norm();
 
-		final V2 diff = first.position.copy().sub(second.position).mul(-force);
+		final V2 diff = forceDirection.mul(force);
 
-		first.force.add(diff);
-		second.force.sub(diff);
+		first.force.sub(diff);
+		second.force.add(diff);
 	}
 }

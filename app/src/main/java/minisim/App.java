@@ -73,7 +73,7 @@ public class App extends Application {
 
 		final Simulation sim = Simulation.builder().nBodies(1000).width(500).height(500)
 				// .addForce(new Gravity(-1e-4))
-				.addForce(new Gravity(1e-4))
+				.addForce(new Gravity(1e-3))
 				// .addForce(new GravityDown(0.1))
 				.addForce(new Friction(0.99)).solidBorders().build();
 
