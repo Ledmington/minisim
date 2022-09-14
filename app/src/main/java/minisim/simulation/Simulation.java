@@ -39,8 +39,8 @@ public class Simulation {
 
 		bounds = b;
 		for (int i = 0; i < nBodies; i++) {
-			final Body body = new Body(new V2(rnd.nextDouble(bounds.RIGHT_BORDER * 0.4, bounds.RIGHT_BORDER * 0.6),
-					rnd.nextDouble(bounds.UP_BORDER * 0.4, bounds.UP_BORDER * 0.6)), new V2(0, 0), 1, 1);
+			final Body body = new Body(new V2(rnd.nextDouble(bounds.RIGHT_BORDER * 0.2, bounds.RIGHT_BORDER * 0.8),
+					rnd.nextDouble(bounds.UP_BORDER * 0.2, bounds.UP_BORDER * 0.8)), new V2(0, 0), 1, 1);
 			bodies.add(body);
 		}
 	}

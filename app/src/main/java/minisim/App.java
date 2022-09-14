@@ -11,24 +11,19 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import minisim.simulation.Simulation;
 import minisim.simulation.force.Friction;
 import minisim.simulation.force.Gravity;
+import minisim.view.AboutButton;
+
+import static minisim.AppConstants.*;
 
 public class App extends Application {
 
 	public static Logger logger = null;
-
-	public static final String OSName = System.getProperty("os.name");
-	public static final String OSVersion = System.getProperty("os.version");
-	public static final String javaVersion = System.getProperty("java.version");
-	public static final String jvmVersion = System.getProperty("java.vm.version");
-	public static final String javafxVersion = System.getProperty("javafx.version");
 
 	static {
 		InputStream stream = App.class.getClassLoader().getResourceAsStream("logging.properties");
@@ -45,17 +40,7 @@ public class App extends Application {
 	public void start(final Stage stage) {
 		BorderPane bPane = new BorderPane();
 
-		final Button aboutButton = new Button("About");
-		aboutButton.setOnAction(e -> {
-			final Dialog<String> dialog = new Dialog<>();
-			dialog.setHeaderText("About MiniSim");
-			dialog.setContentText(String.join("\n", "MiniSim is running on:", OSName + " " + OSVersion,
-					"Java " + javaVersion, "JVM " + jvmVersion, "JavaFX " + javafxVersion));
-			dialog.setResizable(false);
-			Window window = dialog.getDialogPane().getScene().getWindow();
-			window.setOnCloseRequest(event -> window.hide());
-			dialog.showAndWait();
-		});
+		final Button aboutButton = new AboutButton();
 
 		bPane.setTop(aboutButton);
 		bPane.setBottom(new Label("MiniSim v0.1.0"));
