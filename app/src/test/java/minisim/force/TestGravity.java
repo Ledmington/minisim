@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestGravity {
+
 	private Gravity gravity;
 
 	@BeforeEach
@@ -66,8 +67,8 @@ public class TestGravity {
 	@Test
 	public void heavierObjectsShouldProduceStrongerForce() {
 		final Body left = new Body(new V2(-6, 5), V2.origin(), 1, 1);
-		final Body middle = new Body(new V2(0, 5), V2.origin(), 1, 1);
-		final Body rightAndHeavy = new Body(new V2(6, 5), V2.origin(), 3, 1);
+		final Body middle = new Body(new V2(0, 5), V2.origin(), 2, 1);
+		final Body rightAndHeavy = new Body(new V2(6, 5), V2.origin(), 6, 1);
 
 		gravity.accept(left, middle);
 
