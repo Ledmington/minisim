@@ -10,14 +10,14 @@ import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import minisim.simulation.Simulation;
 import minisim.simulation.force.Friction;
 import minisim.simulation.force.Gravity;
-import minisim.view.AboutButton;
+import minisim.view.BottomBar;
+import minisim.view.TopBar;
 
 import static minisim.AppConstants.*;
 
@@ -40,10 +40,8 @@ public class App extends Application {
 	public void start(final Stage stage) {
 		BorderPane bPane = new BorderPane();
 
-		final Button aboutButton = new AboutButton();
-
-		bPane.setTop(aboutButton);
-		bPane.setBottom(new Label("MiniSim v0.1.0"));
+		bPane.setTop(new TopBar());
+		bPane.setBottom(new BottomBar());
 
 		final Canvas canvas = new Canvas(500, 500);
 		final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -66,7 +64,8 @@ public class App extends Application {
 			@Override
 			protected Integer call() {
 				int iterations;
-				for (iterations = 0; iterations < 1000; iterations++) {
+				final int maxIterations = 10;
+				for (iterations = 0; iterations < maxIterations; iterations++) {
 					if (isCancelled()) {
 						updateMessage("Cancelled");
 						logger.info("cancelled");
