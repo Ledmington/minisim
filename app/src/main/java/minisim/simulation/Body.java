@@ -1,6 +1,11 @@
 package minisim.simulation;
 
 public class Body {
+
+	public static BodyBuilder builder() {
+		return new BodyBuilder();
+	}
+
 	public double mass;
 	public double radius;
 	public V2 position;
@@ -8,7 +13,8 @@ public class Body {
 	public V2 acc;
 	public V2 force;
 
-	public Body(final V2 pos, final V2 speed, final double mass, final double radius) {
+	public Body(final V2 position, final V2 speed, final V2 acceleration, final V2 force, final double mass,
+			final double radius) {
 		if (mass <= 0.0) {
 			throw new IllegalArgumentException("Mass can't be negative or zero");
 		}
@@ -18,10 +24,14 @@ public class Body {
 
 		this.mass = mass;
 		this.radius = radius;
-		this.position = pos;
+		this.position = position;
 		this.speed = speed;
-		this.acc = new V2(0, 0);
-		this.force = new V2(0, 0);
+		this.acc = acceleration;
+		this.force = force;
+	}
+
+	public Body(final V2 pos, final V2 speed, final double mass, final double radius) {
+		this(pos, speed, V2.origin(), V2.origin(), mass, radius);
 	}
 
 	public Body() {
