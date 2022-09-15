@@ -3,7 +3,6 @@ package minisim.simulation.force;
 import minisim.simulation.Body;
 import minisim.simulation.V2;
 
-// TODO: needs testing
 public class GravityDown implements UnaryForce {
 
 	private final V2 vectorDown;
