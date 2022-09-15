@@ -41,7 +41,7 @@ application {
 launch4j {
 	mainClassName = mainClassFullName
 	headerType = 'console'
-	icon = '${projectDir}/src/main/resources/atom.ico'
+	icon = '${projectDir}/src/main/resources/icons/atom.ico'
 	outfile = 'MiniSim.exe'
 	windowTitle = 'MiniSim'
 	productName = 'MiniSim'

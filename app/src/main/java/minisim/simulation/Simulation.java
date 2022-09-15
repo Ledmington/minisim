@@ -3,9 +3,6 @@ package minisim.simulation;
 import java.util.Objects;
 import java.util.Random;
 
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,6 +50,10 @@ public class Simulation {
 		return bodies;
 	}
 
+	public Borders getBounds() {
+		return bounds;
+	}
+
 	public void update() {
 		// while(detectAndResolveCollisions()) {}
 		// TODO: if you do too many iterations, some body will be pushed outside the
@@ -92,11 +93,5 @@ public class Simulation {
 				uf.accept(b);
 			}
 		}
-	}
-
-	public void render(final GraphicsContext gc) {
-		gc.clearRect(0, 0, bounds.RIGHT_BORDER, bounds.UP_BORDER);
-		gc.setFill(Color.RED);
-		bodies.forEach(b -> gc.fillOval(b.position.x, b.position.y, b.radius, b.radius));
 	}
 }
