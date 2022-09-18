@@ -12,10 +12,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.minisim.App;
 import org.minisim.simulation.Simulation;
+import org.minisim.view.images.ImageManager;
+import org.minisim.view.images.ImageName;
 
 public class SimulationView extends BorderPane {
 
-    private boolean isSimulationPlaying = false;
+    private boolean isSimulationPlaying = true;
 
     public SimulationView() {
         final Canvas canvas = new Canvas(500, 500);
@@ -23,13 +25,13 @@ public class SimulationView extends BorderPane {
         setCenter(canvas);
 
         final GridPane controlButtons = new GridPane();
-        final Button playbackButton = new IconButton("/icons/back.png", 20, 20);
-        final IconButton playButton = new IconButton("/icons/play.png", 20, 20);
+        final Button playbackButton = new IconButton(ImageManager.getImage(ImageName.PLAYBACK), 20, 20);
+        final IconButton playButton = new IconButton(ImageManager.getImage(ImageName.PLAY), 20, 20);
         playButton.setOnAction(event -> {
             if (isSimulationPlaying) {
-                playButton.changeImage("/icons/pause.png");
+                playButton.changeImage(ImageManager.getImage(ImageName.PAUSE));
             } else {
-                playButton.changeImage("/icons/play.png");
+                playButton.changeImage(ImageManager.getImage(ImageName.PLAY));
             }
             isSimulationPlaying = !isSimulationPlaying;
         });

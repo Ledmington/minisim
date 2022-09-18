@@ -1,4 +1,4 @@
-package org.minisim.view.iamges;
+package org.minisim.view.images;
 
 public enum ImageName {
     PLAY("/icons/play.png"),
