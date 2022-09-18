@@ -1,4 +1,4 @@
-package minisim.view;
+package org.minisim.view;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;

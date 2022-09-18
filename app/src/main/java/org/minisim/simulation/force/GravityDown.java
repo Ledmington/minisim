@@ -1,7 +1,7 @@
-package minisim.simulation.force;
+package org.minisim.simulation.force;
 
-import minisim.simulation.Body;
-import minisim.simulation.V2;
+import org.minisim.simulation.Body;
+import org.minisim.simulation.V2;
 
 public class GravityDown implements UnaryForce {
 

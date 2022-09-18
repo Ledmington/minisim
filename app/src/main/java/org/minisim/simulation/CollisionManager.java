@@ -1,4 +1,4 @@
-package minisim.simulation;
+package org.minisim.simulation;
 
 import java.util.List;
 

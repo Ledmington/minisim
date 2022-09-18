@@ -1,15 +1,15 @@
-package minisim.border;
+package org.minisim.border;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
-import minisim.simulation.Body;
-import minisim.simulation.V2;
-import minisim.simulation.border.Borders;
-import minisim.simulation.border.SolidBorders;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.Body;
+import org.minisim.simulation.V2;
+import org.minisim.simulation.border.Borders;
+import org.minisim.simulation.border.SolidBorders;
 
 public class TestSolidBorders {
 

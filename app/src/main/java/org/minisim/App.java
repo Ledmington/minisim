@@ -1,6 +1,6 @@
-package minisim;
+package org.minisim;
 
-import static minisim.AppConstants.*;
+import static org.minisim.AppConstants.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,12 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import minisim.simulation.Simulation;
-import minisim.simulation.force.Friction;
-import minisim.simulation.force.Gravity;
-import minisim.view.BottomBar;
-import minisim.view.SimulationView;
-import minisim.view.TopBar;
+import org.minisim.simulation.Simulation;
+import org.minisim.simulation.force.Friction;
+import org.minisim.simulation.force.Gravity;
+import org.minisim.view.BottomBar;
+import org.minisim.view.SimulationView;
+import org.minisim.view.TopBar;
 
 public class App extends Application {
 

@@ -1,4 +1,4 @@
-package minisim;
+package org.minisim;
 
 public class AppConstants {
     public static final String OSName = System.getProperty("os.name");

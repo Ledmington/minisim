@@ -1,14 +1,14 @@
-package minisim;
+package org.minisim;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.LinkedList;
 import java.util.List;
-import minisim.simulation.Body;
-import minisim.simulation.CollisionManager;
-import minisim.simulation.V2;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.Body;
+import org.minisim.simulation.CollisionManager;
+import org.minisim.simulation.V2;
 
 public class TestCollisionManager {
 

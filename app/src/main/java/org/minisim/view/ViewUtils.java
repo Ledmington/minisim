@@ -1,6 +1,6 @@
-package minisim.view;
+package org.minisim.view;
 
-import static minisim.AppConstants.*;
+import static org.minisim.AppConstants.*;
 
 import java.util.Optional;
 import javafx.event.ActionEvent;

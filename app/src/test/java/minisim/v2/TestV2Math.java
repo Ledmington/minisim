@@ -1,9 +1,9 @@
-package minisim.v2;
+package org.minisim.v2;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import minisim.simulation.V2;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.V2;
 
 class TestV2Math {
 

@@ -1,6 +1,6 @@
-package minisim.simulation.force;
+package org.minisim.simulation.force;
 
 import java.util.function.Consumer;
-import minisim.simulation.Body;
+import org.minisim.simulation.Body;
 
 public interface UnaryForce extends Consumer<Body> {}

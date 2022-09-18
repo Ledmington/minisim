@@ -1,6 +1,6 @@
-package minisim.simulation.force;
+package org.minisim.simulation.force;
 
-import minisim.simulation.Body;
+import org.minisim.simulation.Body;
 
 public class Friction implements UnaryForce {
 

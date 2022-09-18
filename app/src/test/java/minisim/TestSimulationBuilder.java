@@ -1,11 +1,11 @@
-package minisim;
+package org.minisim;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import minisim.simulation.Simulation;
-import minisim.simulation.force.Friction;
-import minisim.simulation.force.Gravity;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.Simulation;
+import org.minisim.simulation.force.Friction;
+import org.minisim.simulation.force.Gravity;
 
 public class TestSimulationBuilder {
     @Test

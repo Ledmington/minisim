@@ -1,4 +1,4 @@
-package minisim.view;
+package org.minisim.view;
 
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

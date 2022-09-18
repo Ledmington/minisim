@@ -1,14 +1,14 @@
-package minisim.v2;
+package org.minisim.v2;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.stream.Stream;
-import minisim.Pair;
-import minisim.simulation.V2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.minisim.Pair;
+import org.minisim.simulation.V2;
 
 class TestV2Equals {
 

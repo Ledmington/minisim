@@ -1,6 +1,6 @@
-package minisim.view;
+package org.minisim.view;
 
-import static minisim.App.logger;
+import static org.minisim.App.logger;
 
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
@@ -10,8 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import minisim.App;
-import minisim.simulation.Simulation;
+import org.minisim.App;
+import org.minisim.simulation.Simulation;
 
 public class SimulationView extends BorderPane {
     public SimulationView() {

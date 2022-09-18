@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import minisim.Pair;
+import org.minisim.Pair;
 
 // TODO: these tests exists just to test performance, delete it when no more needed
 public class TestStreams {

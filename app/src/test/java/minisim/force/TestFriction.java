@@ -1,12 +1,12 @@
-package minisim.force;
+package org.minisim.force;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import minisim.simulation.Body;
-import minisim.simulation.V2;
-import minisim.simulation.force.Friction;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.Body;
+import org.minisim.simulation.V2;
+import org.minisim.simulation.force.Friction;
 
 public class TestFriction {
 

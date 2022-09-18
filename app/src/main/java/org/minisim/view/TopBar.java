@@ -1,4 +1,4 @@
-package minisim.view;
+package org.minisim.view;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;

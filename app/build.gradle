@@ -22,7 +22,7 @@ plugins {
 apply plugin: 'info.solidsoft.pitest'
 
 sourceCompatibility = '17'
-def mainClassFullName = 'minisim.App'
+def mainClassFullName = 'org.minisim.App'
 
 repositories {
 	mavenCentral()

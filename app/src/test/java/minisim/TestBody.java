@@ -1,11 +1,11 @@
-package minisim;
+package org.minisim;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import minisim.simulation.Body;
-import minisim.simulation.V2;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.Body;
+import org.minisim.simulation.V2;
 
 public class TestBody {
 

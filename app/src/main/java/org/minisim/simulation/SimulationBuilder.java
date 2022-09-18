@@ -1,12 +1,12 @@
-package minisim.simulation;
+package org.minisim.simulation;
 
 import java.util.LinkedList;
 import java.util.List;
-import minisim.simulation.border.Borders;
-import minisim.simulation.border.CyclicBorders;
-import minisim.simulation.border.SolidBorders;
-import minisim.simulation.force.Force;
-import minisim.simulation.force.UnaryForce;
+import org.minisim.simulation.border.Borders;
+import org.minisim.simulation.border.CyclicBorders;
+import org.minisim.simulation.border.SolidBorders;
+import org.minisim.simulation.force.Force;
+import org.minisim.simulation.force.UnaryForce;
 
 public class SimulationBuilder {
 

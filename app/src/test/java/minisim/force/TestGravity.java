@@ -1,13 +1,13 @@
-package minisim.force;
+package org.minisim.force;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import minisim.simulation.Body;
-import minisim.simulation.V2;
-import minisim.simulation.force.Gravity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.minisim.simulation.Body;
+import org.minisim.simulation.V2;
+import org.minisim.simulation.force.Gravity;
 
 public class TestGravity {
 

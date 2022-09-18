@@ -1,12 +1,12 @@
-package minisim.simulation;
+package org.minisim.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import minisim.simulation.border.Borders;
-import minisim.simulation.force.Force;
-import minisim.simulation.force.UnaryForce;
+import org.minisim.simulation.border.Borders;
+import org.minisim.simulation.force.Force;
+import org.minisim.simulation.force.UnaryForce;
 
 public class Simulation {
 

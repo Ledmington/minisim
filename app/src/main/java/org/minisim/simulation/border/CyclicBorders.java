@@ -1,6 +1,6 @@
-package minisim.simulation.border;
+package org.minisim.simulation.border;
 
-import minisim.simulation.Body;
+import org.minisim.simulation.Body;
 
 /**
  * By using CyclicBorders, each body that would go otherwise go out of bounds,
