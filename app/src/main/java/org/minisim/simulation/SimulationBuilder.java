@@ -13,8 +13,8 @@ public class SimulationBuilder {
     private int n = 0;
     private int w;
     private int h;
-    private List<Force> forces = new LinkedList<>();
-    private List<UnaryForce> unaryForces = new LinkedList<>();
+    private final List<Force> forces = new LinkedList<>();
+    private final List<UnaryForce> unaryForces = new LinkedList<>();
 
     private enum BorderType {
         SOLID,
@@ -67,6 +67,6 @@ public class SimulationBuilder {
             case CYCLIC -> b = new CyclicBorders(w, h);
             default -> b = null;
         }
-        return new Simulation(n, b, forces, unaryForces);
+        return new SerialSimulation(n, b, forces, unaryForces);
     }
 }
