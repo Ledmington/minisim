@@ -42,10 +42,11 @@ public class SimulationView extends BorderPane {
         final Task<Integer> task = new Task<>() {
             @Override
             protected Integer call() {
-                int iterations;
+                int iterations = 0;
                 final int maxIterations = 1000;
                 final Simulation sim = App.getSimulation();
-                for (iterations = 0; iterations < maxIterations; iterations++) {
+                boolean paused = true;
+                while (!paused && iterations < maxIterations) {
                     if (isCancelled()) {
                         updateMessage("Cancelled");
                         logger.info("cancelled");
@@ -79,6 +80,7 @@ public class SimulationView extends BorderPane {
                         throw new RuntimeException(e);
                     }
                     */
+                    iterations++;
                 }
                 return iterations;
             }
