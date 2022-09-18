@@ -5,28 +5,28 @@ import minisim.simulation.V2;
 
 public class Gravity implements Force {
 
-	public static final double NEWTON_GRAVITY = 6.6743e-11;
+    public static final double NEWTON_GRAVITY = 6.6743e-11;
 
-	private final double constant;
+    private final double constant;
 
-	public Gravity(final double constant) {
-		this.constant = constant;
-	}
+    public Gravity(final double constant) {
+        this.constant = constant;
+    }
 
-	public Gravity() {
-		this(NEWTON_GRAVITY);
-	}
+    public Gravity() {
+        this(NEWTON_GRAVITY);
+    }
 
-	@Override
-	public void accept(final Body first, final Body second) {
-		// TODO: can refactor the squared distance with a method inside V2
-		final double distance = first.dist(second);
-		final double force = constant * first.mass * second.mass / (distance * distance);
-		final V2 forceDirection = first.position.copy().sub(second.position).norm();
+    @Override
+    public void accept(final Body first, final Body second) {
+        // TODO: can refactor the squared distance with a method inside V2
+        final double distance = first.dist(second);
+        final double force = constant * first.mass * second.mass / (distance * distance);
+        final V2 forceDirection = first.position.copy().sub(second.position).norm();
 
-		final V2 diff = forceDirection.mul(force);
+        final V2 diff = forceDirection.mul(force);
 
-		first.force.sub(diff);
-		second.force.add(diff);
-	}
+        first.force.sub(diff);
+        second.force.add(diff);
+    }
 }

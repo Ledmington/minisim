@@ -79,9 +79,9 @@ spotless {
 
 	java {
 		target 'src/*/java/**/*.java'
-		//importOrder()
+		importOrder()
 		removeUnusedImports()
-		eclipse()
+		palantirJavaFormat('2.26.0')
 	}
 }
 
