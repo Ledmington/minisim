@@ -12,8 +12,8 @@ plugins {
 	id 'application'
 	id 'java'
 	id 'jacoco'
-	id 'com.diffplug.spotless' version '6.10.0'
-	id 'org.openjfx.javafxplugin' version '0.0.10'
+	id 'com.diffplug.spotless' version '6.11.0'
+	id 'org.openjfx.javafxplugin' version '0.0.13'
 
 	// For .exe creation
 	id 'edu.sc.seis.launch4j' version '2.5.3'
@@ -78,15 +78,15 @@ spotless {
 	}
 
 	java {
-		target 'src/*/java/**/*.java'
 		importOrder()
 		removeUnusedImports()
+		formatAnnotations()
 		palantirJavaFormat('2.26.0')
 	}
 }
 
 pitest {
-	targetClasses = ['minisim.*']  //by default "${project.group}.*"
+	targetClasses = ['minisim.simulation.*']  //by default "${project.group}.*"
 	//targetTests = []
 	pitestVersion = '1.7.4' //not needed when a default PIT version should be used
 	junit5PluginVersion = '0.15'
