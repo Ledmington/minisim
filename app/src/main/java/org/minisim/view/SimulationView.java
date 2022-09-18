@@ -57,6 +57,28 @@ public class SimulationView extends BorderPane {
 
                     sim.update();
                     renderSimulation(gc);
+                    /* This doesn't work for some reason
+                    logger.info("finished rendering simulation");
+                    final WritableImage snapshot = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+                    canvas.snapshot(new SnapshotParameters(), snapshot); // can be async with a callback
+                    final File imageFile = new File(String.format("snapshot-%04d.png", iterations));
+                    logger.info("Prepared snapshot and file");
+                    try {
+                        if (imageFile.createNewFile()) {
+                            logger.info("File " + imageFile.getAbsolutePath() + " didn't exist");
+                        } else {
+                            logger.info("File " + imageFile.getAbsolutePath() + " already existed");
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    final RenderedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+                    try {
+                        ImageIO.write(image, "png", imageFile);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    */
                 }
                 return iterations;
             }
