@@ -14,6 +14,9 @@ import org.minisim.App;
 import org.minisim.simulation.Simulation;
 
 public class SimulationView extends BorderPane {
+
+    private boolean isSimulationPlaying = false;
+
     public SimulationView() {
         final Canvas canvas = new Canvas(500, 500);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -21,7 +24,15 @@ public class SimulationView extends BorderPane {
 
         final GridPane controlButtons = new GridPane();
         final Button playbackButton = new IconButton("/icons/back.png", 20, 20);
-        final Button playButton = new IconButton("/icons/play.png", 20, 20);
+        final IconButton playButton = new IconButton("/icons/play.png", 20, 20);
+        playButton.setOnAction(event -> {
+            if (isSimulationPlaying) {
+                playButton.changeImage("/icons/pause.png");
+            } else {
+                playButton.changeImage("/icons/play.png");
+            }
+            isSimulationPlaying = !isSimulationPlaying;
+        });
         controlButtons.addRow(0, playbackButton, playButton);
         controlButtons.setAlignment(Pos.CENTER);
         setBottom(controlButtons);

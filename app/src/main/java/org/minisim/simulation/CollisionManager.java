@@ -3,6 +3,9 @@ package org.minisim.simulation;
 import java.util.List;
 
 public class CollisionManager {
+
+    private CollisionManager() {}
+
     /**
      * Looks for collisions between the given bodies. If at least one collision is
      * found, this method returns true and bodies get updated. A possible way to use
