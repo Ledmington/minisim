@@ -1,8 +1,5 @@
 package org.minisim.view;
 
-import static org.minisim.App.logger;
-
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -12,83 +9,40 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.minisim.App;
 import org.minisim.simulation.Simulation;
+import org.minisim.utils.Worker;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
 
 public class SimulationView extends BorderPane {
 
-    private boolean isSimulationPlaying = true;
+    private final Worker simulationUpdaterWorker;
 
     public SimulationView() {
         final Canvas canvas = new Canvas(500, 500);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         setCenter(canvas);
 
+        simulationUpdaterWorker = new Worker("simulationUpdater", () -> {
+            final Simulation sim = App.getSimulation();
+            sim.update();
+            renderSimulation(gc);
+        });
+
         final GridPane controlButtons = new GridPane();
         final Button playbackButton = new IconButton(ImageManager.getImage(ImageName.PLAYBACK), 20, 20);
         final IconButton playButton = new IconButton(ImageManager.getImage(ImageName.PLAY), 20, 20);
         playButton.setOnAction(event -> {
-            if (isSimulationPlaying) {
+            if (simulationUpdaterWorker.isStopped()) {
                 playButton.changeImage(ImageManager.getImage(ImageName.PAUSE));
+                simulationUpdaterWorker.start();
             } else {
                 playButton.changeImage(ImageManager.getImage(ImageName.PLAY));
+                simulationUpdaterWorker.stop();
             }
-            isSimulationPlaying = !isSimulationPlaying;
         });
         controlButtons.addRow(0, playbackButton, playButton);
         controlButtons.setAlignment(Pos.CENTER);
         setBottom(controlButtons);
-
-        final Task<Integer> task = new Task<>() {
-            @Override
-            protected Integer call() {
-                int iterations = 0;
-                final int maxIterations = 1000;
-                final Simulation sim = App.getSimulation();
-                boolean paused = false;
-                while (!paused && iterations < maxIterations) {
-                    if (isCancelled()) {
-                        updateMessage("Cancelled");
-                        logger.info("cancelled");
-                        break;
-                    }
-                    logger.info("iteration: " + iterations);
-                    updateMessage("Iteration " + iterations);
-                    updateProgress(iterations, maxIterations);
-
-                    sim.update();
-                    renderSimulation(gc);
-                    /* This doesn't work for some reason
-                    logger.info("finished rendering simulation");
-                    final WritableImage snapshot = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
-                    canvas.snapshot(new SnapshotParameters(), snapshot); // can be async with a callback
-                    final File imageFile = new File(String.format("snapshot-%04d.png", iterations));
-                    logger.info("Prepared snapshot and file");
-                    try {
-                        if (imageFile.createNewFile()) {
-                            logger.info("File " + imageFile.getAbsolutePath() + " didn't exist");
-                        } else {
-                            logger.info("File " + imageFile.getAbsolutePath() + " already existed");
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    final RenderedImage image = SwingFXUtils.fromFXImage(snapshot, null);
-                    try {
-                        ImageIO.write(image, "png", imageFile);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    */
-                    iterations++;
-                }
-                return iterations;
-            }
-        };
-
-        final Thread th = new Thread(task);
-        th.setDaemon(false);
-        th.start();
     }
 
     public void renderSimulation(final GraphicsContext gc) {
