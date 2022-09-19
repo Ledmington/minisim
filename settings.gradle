@@ -1,2 +1,2 @@
-rootProject.name = 'minisim-java'
+rootProject.name = 'minisim'
 include('app')
