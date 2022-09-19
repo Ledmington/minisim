@@ -9,7 +9,7 @@ public class Worker {
     private final Thread thread;
     private final String name;
     private final Runnable task;
-    private AtomicBoolean stopped = new AtomicBoolean(true);
+    private final AtomicBoolean stopped = new AtomicBoolean(true);
 
     public Worker(final String name, final Runnable task) {
         this.name = name;
@@ -36,11 +36,7 @@ public class Worker {
 
     public void stop() {
         stopped.set(true);
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ThreadUtils.safeJoin(thread);
     }
 
     public boolean isStopped() {
@@ -51,10 +47,6 @@ public class Worker {
         if (!stopped.get()) {
             stop();
         }
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ThreadUtils.safeJoin(thread);
     }
 }
