@@ -47,4 +47,36 @@ public class TestWorker {
         w.join();
         assertTrue(w.isStopped());
     }
+
+    @Test
+    public void canBeRestarted() {
+        w.start();
+        ThreadUtils.safeSleep(100);
+        w.stop();
+        ThreadUtils.safeSleep(100);
+        w.start();
+        assertFalse(w.isStopped());
+    }
+
+    @Test
+    public void cannotBeStartedTwice() {
+        w.start();
+        assertThrows(IllegalThreadStateException.class, () -> w.start());
+    }
+
+    @Test
+    public void canBeStoppedTwice() {
+        w.start();
+        ThreadUtils.safeSleep(100);
+        w.stop();
+        w.stop();
+    }
+
+    @Test
+    public void canBeJoinedTwice() {
+        w.start();
+        ThreadUtils.safeSleep(100);
+        w.join();
+        w.join();
+    }
 }
