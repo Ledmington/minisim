@@ -45,7 +45,7 @@ public class SimulationView extends BorderPane {
                 int iterations = 0;
                 final int maxIterations = 1000;
                 final Simulation sim = App.getSimulation();
-                boolean paused = true;
+                boolean paused = false;
                 while (!paused && iterations < maxIterations) {
                     if (isCancelled()) {
                         updateMessage("Cancelled");
@@ -95,6 +95,7 @@ public class SimulationView extends BorderPane {
         final Simulation sim = App.getSimulation();
         gc.clearRect(0, 0, sim.getBounds().RIGHT_BORDER, sim.getBounds().UP_BORDER);
         gc.setFill(Color.RED);
-        sim.getBodies().forEach(b -> gc.fillOval(b.position.x, b.position.y, b.radius, b.radius));
+        sim.getBodies()
+                .forEach(b -> gc.fillOval(b.position.x, sim.getBounds().UP_BORDER - b.position.y, b.radius, b.radius));
     }
 }
