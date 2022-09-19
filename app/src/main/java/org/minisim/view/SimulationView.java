@@ -43,6 +43,9 @@ public class SimulationView extends BorderPane {
         controlButtons.addRow(0, playbackButton, playButton);
         controlButtons.setAlignment(Pos.CENTER);
         setBottom(controlButtons);
+
+        // We render it one time before starting it to allow the user to see that it's ready
+        renderSimulation(gc);
     }
 
     public void renderSimulation(final GraphicsContext gc) {
