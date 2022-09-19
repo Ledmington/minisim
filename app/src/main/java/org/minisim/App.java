@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.minisim.simulation.Simulation;
 import org.minisim.simulation.force.Friction;
-import org.minisim.simulation.force.Gravity;
+import org.minisim.simulation.force.GravityDown;
 import org.minisim.view.BottomBar;
 import org.minisim.view.SimulationView;
 import org.minisim.view.TopBar;
@@ -33,13 +33,13 @@ public class App extends Application {
     }
 
     public static Simulation sim = Simulation.builder()
-            .nBodies(1000)
+            .nBodies(2000)
             .width(500)
             .height(500)
             // .addForce(new Gravity(-1e-4))
-            .addForce(new Gravity(-1e-2))
-            // .addForce(new GravityDown(0.1))
-            .addForce(new Friction(0.99))
+            // .addForce(new Gravity(-1e-2))
+            .addForce(new GravityDown(0.1))
+            .addForce(new Friction(0.5))
             .solidBorders()
             .build();
 

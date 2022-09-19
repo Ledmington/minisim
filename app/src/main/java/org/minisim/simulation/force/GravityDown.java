@@ -8,7 +8,7 @@ public class GravityDown implements UnaryForce {
     private final V2 vectorDown;
 
     public GravityDown(final double modulo) {
-        this.vectorDown = new V2(0, modulo);
+        this.vectorDown = new V2(0, -modulo);
     }
 
     @Override
