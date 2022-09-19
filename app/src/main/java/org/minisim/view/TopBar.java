@@ -15,6 +15,7 @@ public class TopBar extends MenuBar {
         fileMenu.getItems().add(exitButton);
 
         final Menu optionsMenu = new Menu("Options");
+        optionsMenu.getItems().add(new MenuItem("Appearance"));
 
         final Menu helpMenu = new Menu("Help");
         final MenuItem authorsButton = new MenuItem("Authors & Contributions");

@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -30,13 +31,17 @@ public class SimulationView extends BorderPane {
 
         final GridPane controlButtons = new GridPane();
         final Button playbackButton = new IconButton(ImageManager.getImage(ImageName.PLAYBACK), 20, 20);
+        playbackButton.setTooltip(new Tooltip("Playback"));
         final IconButton playButton = new IconButton(ImageManager.getImage(ImageName.PLAY), 20, 20);
+        playButton.setTooltip(new Tooltip("Play simulation"));
         playButton.setOnAction(event -> {
             if (simulationUpdaterWorker.isStopped()) {
                 playButton.changeImage(ImageManager.getImage(ImageName.PAUSE));
+                playButton.setTooltip(new Tooltip("Pause simulation"));
                 simulationUpdaterWorker.start();
             } else {
                 playButton.changeImage(ImageManager.getImage(ImageName.PLAY));
+                playButton.setTooltip(new Tooltip("Play simulation"));
                 simulationUpdaterWorker.stop();
             }
         });

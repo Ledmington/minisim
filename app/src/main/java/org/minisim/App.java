@@ -12,8 +12,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.minisim.simulation.Simulation;
 import org.minisim.simulation.force.Friction;
-import org.minisim.simulation.force.GravityDown;
+import org.minisim.simulation.force.Gravity;
 import org.minisim.view.BottomBar;
+import org.minisim.view.IconsToolBar;
 import org.minisim.view.SimulationView;
 import org.minisim.view.TopBar;
 
@@ -37,9 +38,8 @@ public class App extends Application {
             .randomBodyIn(240, 260, 0, 500)
             .width(500)
             .height(500)
-            // .addForce(new Gravity(-1e-4))
-            // .addForce(new Gravity(-1e-2))
-            .addForce(new GravityDown(0.1))
+            .addForce(new Gravity(-1e-2))
+            // .addForce(new GravityDown(0.1))
             .addForce(new Friction(0.5))
             .solidBorders()
             .build();
@@ -50,9 +50,13 @@ public class App extends Application {
 
     @Override
     public void start(final Stage stage) {
-        BorderPane bPane = new BorderPane();
+        final BorderPane bPane = new BorderPane();
 
-        bPane.setTop(new TopBar());
+        final BorderPane topPane = new BorderPane();
+        topPane.setTop(new TopBar());
+        topPane.setBottom(new IconsToolBar());
+
+        bPane.setTop(topPane);
         bPane.setBottom(new BottomBar());
         bPane.setCenter(new SimulationView());
 
