@@ -2,6 +2,8 @@ package org.minisim.simulation;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.border.CyclicBorders;
 import org.minisim.simulation.border.SolidBorders;
@@ -13,6 +15,7 @@ public class SimulationBuilder {
     private int n = 0;
     private int w;
     private int h;
+    private Supplier<Body> bodySupplier;
     private final List<Force> forces = new LinkedList<>();
     private final List<UnaryForce> unaryForces = new LinkedList<>();
 
@@ -27,6 +30,14 @@ public class SimulationBuilder {
 
     public SimulationBuilder nBodies(final int x) {
         n = x;
+        return this;
+    }
+
+    public SimulationBuilder randomBodyIn(final double xmin, final double xmax, final double ymin, final double ymax) {
+        final Random rnd = new Random();
+        bodySupplier = () -> Body.builder()
+                .position(new V2(rnd.nextDouble(xmin, xmax), rnd.nextDouble(ymin, ymax)))
+                .build();
         return this;
     }
 
@@ -67,6 +78,6 @@ public class SimulationBuilder {
             case CYCLIC -> b = new CyclicBorders(w, h);
             default -> b = null;
         }
-        return new SerialSimulation(n, b, forces, unaryForces);
+        return new SerialSimulation(n, bodySupplier, b, forces, unaryForces);
     }
 }

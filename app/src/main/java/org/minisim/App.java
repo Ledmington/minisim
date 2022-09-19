@@ -34,6 +34,7 @@ public class App extends Application {
 
     public static Simulation sim = Simulation.builder()
             .nBodies(2000)
+            .randomBodyIn(240, 260, 0, 500)
             .width(500)
             .height(500)
             // .addForce(new Gravity(-1e-4))

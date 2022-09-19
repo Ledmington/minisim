@@ -24,6 +24,7 @@ public class TestSimulationBuilderImpl {
     public void correctNumberOfBodies() {
         Simulation sim = Simulation.builder()
                 .nBodies(2)
+                .randomBodyIn(0, 10, 0, 10)
                 .width(100)
                 .height(100)
                 .addForce(new Gravity(1e-10))

@@ -1,13 +1,12 @@
 package org.minisim.simulation;
 
 import java.util.*;
+import java.util.function.Supplier;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.force.Force;
 import org.minisim.simulation.force.UnaryForce;
 
 public class SerialSimulation implements Simulation {
-
-    private static final Random rnd = new Random();
 
     private final List<Body> bodies = new ArrayList<>();
     private final List<Force> forces = new ArrayList<>();
@@ -15,7 +14,11 @@ public class SerialSimulation implements Simulation {
     private final Borders bounds;
 
     public SerialSimulation(
-            final int nBodies, final Borders b, final List<Force> forces, final List<UnaryForce> unaryForces) {
+            final int nBodies,
+            final Supplier<Body> createBody,
+            final Borders b,
+            final List<Force> forces,
+            final List<UnaryForce> unaryForces) {
         if (nBodies < 0) {
             throw new IllegalArgumentException("Can't have negative bodies");
         }
@@ -27,14 +30,7 @@ public class SerialSimulation implements Simulation {
 
         bounds = b;
         for (int i = 0; i < nBodies; i++) {
-            final Body body = new Body(
-                    new V2(
-                            rnd.nextDouble(bounds.RIGHT_BORDER * 0.2, bounds.RIGHT_BORDER * 0.8),
-                            rnd.nextDouble(bounds.UP_BORDER * 0.2, bounds.UP_BORDER * 0.8)),
-                    new V2(0, 0),
-                    1,
-                    1);
-            bodies.add(body);
+            bodies.add(createBody.get());
         }
     }
 
