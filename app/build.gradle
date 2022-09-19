@@ -86,7 +86,7 @@ spotless {
 }
 
 pitest {
-	targetClasses = ['minisim.simulation.*']  //by default "${project.group}.*"
+	targetClasses = [ 'org.minisim.simulation.*', 'org.minisim.utils.*']  //by default "${project.group}.*"
 	//targetTests = []
 	pitestVersion = '1.7.4' //not needed when a default PIT version should be used
 	junit5PluginVersion = '0.15'
