@@ -2,6 +2,7 @@ package org.minisim.simulation;
 
 import java.util.*;
 import java.util.function.Supplier;
+import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.force.Force;
 import org.minisim.simulation.force.UnaryForce;

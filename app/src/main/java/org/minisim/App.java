@@ -34,11 +34,11 @@ public class App extends Application {
     }
 
     public static Simulation sim = Simulation.builder()
-            .nBodies(2000)
-            .randomBodyIn(240, 260, 0, 500)
+            .nBodies(1000)
+            .randomBodyIn(0, 500, 0, 500)
             .width(500)
             .height(500)
-            .addForce(new Gravity(-1e-2))
+            .addForce(new Gravity(1e-2))
             // .addForce(new GravityDown(0.1))
             .addForce(new Friction(0.5))
             .solidBorders()

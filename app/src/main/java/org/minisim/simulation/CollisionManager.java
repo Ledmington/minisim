@@ -1,6 +1,7 @@
 package org.minisim.simulation;
 
 import java.util.List;
+import org.minisim.simulation.body.Body;
 
 public class CollisionManager {
 

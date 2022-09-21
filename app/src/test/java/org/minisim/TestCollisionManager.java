@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.minisim.simulation.Body;
 import org.minisim.simulation.CollisionManager;
 import org.minisim.simulation.V2;
+import org.minisim.simulation.body.Body;
 
 public class TestCollisionManager {
 

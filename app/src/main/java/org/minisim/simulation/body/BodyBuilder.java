@@ -1,4 +1,6 @@
-package org.minisim.simulation;
+package org.minisim.simulation.body;
+
+import org.minisim.simulation.V2;
 
 public class BodyBuilder {
 

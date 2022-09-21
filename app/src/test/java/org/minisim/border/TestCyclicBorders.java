@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.minisim.simulation.Body;
 import org.minisim.simulation.V2;
+import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.border.CyclicBorders;
 

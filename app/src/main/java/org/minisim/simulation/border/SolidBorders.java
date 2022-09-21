@@ -1,6 +1,6 @@
 package org.minisim.simulation.border;
 
-import org.minisim.simulation.Body;
+import org.minisim.simulation.body.Body;
 
 /**
  * By using SolidBorders, bodies will stick on simulation's borders and bounce

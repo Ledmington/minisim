@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.border.CyclicBorders;
 import org.minisim.simulation.border.SolidBorders;
@@ -37,6 +38,7 @@ public class SimulationBuilder {
         final Random rnd = new Random();
         bodySupplier = () -> Body.builder()
                 .position(new V2(rnd.nextDouble(xmin, xmax), rnd.nextDouble(ymin, ymax)))
+                .radius(2)
                 .build();
         return this;
     }

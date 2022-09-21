@@ -1,7 +1,7 @@
 package org.minisim.simulation.border;
 
 import java.util.function.Consumer;
-import org.minisim.simulation.Body;
+import org.minisim.simulation.body.Body;
 
 public abstract class Borders implements Consumer<Body> {
 
