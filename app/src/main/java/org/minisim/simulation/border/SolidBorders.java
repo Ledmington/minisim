@@ -6,7 +6,7 @@ import org.minisim.simulation.body.Body;
  * By using SolidBorders, bodies will stick on simulation's borders and bounce
  * back.
  */
-public class SolidBorders extends Borders {
+public final class SolidBorders extends Borders {
 
     public SolidBorders(final double width, final double height) {
         super(width, height);

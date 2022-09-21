@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestWorker {
+public final class TestWorker {
 
     private final Runnable dumbTask = () -> ThreadUtils.safeSleep(10);
     private Worker w;

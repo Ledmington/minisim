@@ -18,7 +18,7 @@ import org.minisim.view.IconsToolBar;
 import org.minisim.view.SimulationView;
 import org.minisim.view.TopBar;
 
-public class App extends Application {
+public final class App extends Application {
 
     public static Logger logger = null;
 

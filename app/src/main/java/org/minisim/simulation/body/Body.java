@@ -2,7 +2,7 @@ package org.minisim.simulation.body;
 
 import org.minisim.simulation.V2;
 
-public class Body {
+public final class Body {
 
     public static BodyBuilder builder() {
         return new BodyBuilder();

@@ -8,7 +8,7 @@ import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.force.Friction;
 
-public class TestFriction {
+public final class TestFriction {
 
     @Test
     public void invalidFrictionConstant() {

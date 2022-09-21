@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import org.minisim.Pair;
 
 // TODO: these tests exists just to test performance, delete it when no more needed
-public class TestStreams {
+public final class TestStreams {
     // @Test // uncomment to execute
     public void mammamia() {
         // This test checks what stream is faster to iterate over unique pairs of

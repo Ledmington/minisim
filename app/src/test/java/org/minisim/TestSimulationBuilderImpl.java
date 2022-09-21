@@ -7,7 +7,7 @@ import org.minisim.simulation.Simulation;
 import org.minisim.simulation.force.Friction;
 import org.minisim.simulation.force.Gravity;
 
-public class TestSimulationBuilderImpl {
+public final class TestSimulationBuilderImpl {
     @Test
     public void noBodiesIfNotSpecified() {
         Simulation sim = Simulation.builder()

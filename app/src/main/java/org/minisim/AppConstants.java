@@ -5,7 +5,7 @@ package org.minisim;
  * and environment information.
  * This class cannot be istantiated.
  */
-public class AppConstants {
+public final class AppConstants {
     private AppConstants() {}
 
     /**

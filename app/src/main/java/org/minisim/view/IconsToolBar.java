@@ -7,7 +7,7 @@ import javafx.scene.control.Tooltip;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
 
-public class IconsToolBar extends ToolBar {
+public final class IconsToolBar extends ToolBar {
     public IconsToolBar() {
         super();
 

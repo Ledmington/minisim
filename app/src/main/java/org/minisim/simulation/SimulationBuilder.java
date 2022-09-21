@@ -11,7 +11,7 @@ import org.minisim.simulation.border.SolidBorders;
 import org.minisim.simulation.force.Force;
 import org.minisim.simulation.force.UnaryForce;
 
-public class SimulationBuilder {
+public final class SimulationBuilder {
 
     private int n = 0;
     private int w;

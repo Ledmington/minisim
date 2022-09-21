@@ -9,7 +9,7 @@ import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.force.Gravity;
 
-public class TestGravity {
+public final class TestGravity {
 
     private Gravity gravity;
 

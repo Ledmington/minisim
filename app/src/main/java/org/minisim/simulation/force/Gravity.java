@@ -3,7 +3,7 @@ package org.minisim.simulation.force;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 
-public class Gravity implements Force {
+public final class Gravity implements Force {
 
     public static final double NEWTON_GRAVITY = 6.6743e-11;
 

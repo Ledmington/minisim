@@ -11,7 +11,7 @@ import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.border.SolidBorders;
 
-public class TestSolidBorders {
+public final class TestSolidBorders {
 
     private Borders sb;
 

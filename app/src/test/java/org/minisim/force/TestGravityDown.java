@@ -7,7 +7,7 @@ import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.force.GravityDown;
 
-public class TestGravityDown {
+public final class TestGravityDown {
 
     @Test
     public void stationaryObjectShouldFallDown() {

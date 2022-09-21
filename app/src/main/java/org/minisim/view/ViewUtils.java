@@ -14,7 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 // TODO: maybe this should be a singleton?
-public class ViewUtils {
+public final class ViewUtils {
     private ViewUtils() {}
 
     public static EventHandler<ActionEvent> showAboutDialog() {

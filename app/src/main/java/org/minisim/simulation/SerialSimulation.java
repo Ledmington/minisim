@@ -7,7 +7,7 @@ import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.force.Force;
 import org.minisim.simulation.force.UnaryForce;
 
-public class SerialSimulation implements Simulation {
+public final class SerialSimulation implements Simulation {
 
     private final List<Body> bodies = new ArrayList<>();
     private final List<Force> forces = new ArrayList<>();

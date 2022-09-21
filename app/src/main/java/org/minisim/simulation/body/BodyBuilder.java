@@ -2,7 +2,7 @@ package org.minisim.simulation.body;
 
 import org.minisim.simulation.V2;
 
-public class BodyBuilder {
+public final class BodyBuilder {
 
     private V2 position = V2.origin();
     private V2 speed = V2.origin();

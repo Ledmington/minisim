@@ -2,7 +2,7 @@ package org.minisim.simulation.force;
 
 import org.minisim.simulation.body.Body;
 
-public class Friction implements UnaryForce {
+public final class Friction implements UnaryForce {
 
     private final double constant;
 

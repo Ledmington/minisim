@@ -10,7 +10,7 @@ import org.minisim.simulation.CollisionManager;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 
-public class TestCollisionManager {
+public final class TestCollisionManager {
 
     private final List<Body> bodies = new LinkedList<>();
 

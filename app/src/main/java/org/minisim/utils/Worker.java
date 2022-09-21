@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * This class is a wrapper of the {@link Thread} class that allows to pause the execution
  * of an infinite task and to resume it.
  */
-public class Worker {
+public final class Worker {
 
     private static int ID = 0;
 

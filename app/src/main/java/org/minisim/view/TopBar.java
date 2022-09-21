@@ -4,7 +4,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
-public class TopBar extends MenuBar {
+public final class TopBar extends MenuBar {
     public TopBar() {
         final Menu fileMenu = new Menu("File");
         fileMenu.getItems().add(new MenuItem("New Simulation"));

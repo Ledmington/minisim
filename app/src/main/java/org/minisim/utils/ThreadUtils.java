@@ -4,7 +4,7 @@ package org.minisim.utils;
  * This class contains just static methods that wrap some calls to
  * the {@link Thread} API.
  */
-public class ThreadUtils {
+public final class ThreadUtils {
     private ThreadUtils() {}
 
     /**

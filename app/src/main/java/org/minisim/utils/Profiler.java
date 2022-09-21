@@ -4,7 +4,7 @@ package org.minisim.utils;
  * This class contain some useful static methods to measure execution times.
  */
 // TODO: maybe improve with reports
-public class Profiler {
+public final class Profiler {
     private Profiler() {}
 
     /**

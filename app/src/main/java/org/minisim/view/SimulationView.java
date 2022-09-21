@@ -14,7 +14,7 @@ import org.minisim.utils.Worker;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
 
-public class SimulationView extends BorderPane {
+public final class SimulationView extends BorderPane {
 
     private final Worker simulationUpdaterWorker;
 

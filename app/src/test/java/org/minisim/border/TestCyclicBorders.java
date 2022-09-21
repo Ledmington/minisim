@@ -10,7 +10,7 @@ import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.border.CyclicBorders;
 
-public class TestCyclicBorders {
+public final class TestCyclicBorders {
 
     private Borders cb;
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 
-public class TestBody {
+public final class TestBody {
 
     public final double EPSILON = 1e-12;
 

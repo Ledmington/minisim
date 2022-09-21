@@ -7,7 +7,7 @@ import java.util.Map;
 import javafx.scene.image.Image;
 import org.minisim.utils.Profiler;
 
-public class ImageManager {
+public final class ImageManager {
     private ImageManager() {}
 
     private static final Map<String, Image> images = new HashMap<>();

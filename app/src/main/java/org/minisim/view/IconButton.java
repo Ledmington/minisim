@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class IconButton extends Button {
+public final class IconButton extends Button {
 
     private final double width;
     private final double height;

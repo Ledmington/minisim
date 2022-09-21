@@ -6,7 +6,7 @@ import org.minisim.simulation.body.Body;
  * By using CyclicBorders, each body that would go otherwise go out of bounds,
  * will come back on the other side of the domain (Pac-Man effect).
  */
-public class CyclicBorders extends Borders {
+public final class CyclicBorders extends Borders {
 
     public CyclicBorders(final double width, final double height) {
         super(width, height);
