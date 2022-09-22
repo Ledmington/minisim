@@ -12,6 +12,11 @@ public final class Worker {
 
     private static int ID = 0;
 
+    private static int getAndIncrementID() {
+        ID++;
+        return ID - 1;
+    }
+
     private Thread thread = null;
     private final String name;
     private final Runnable task;
@@ -48,8 +53,7 @@ public final class Worker {
      *      The task to be executed.
      */
     public Worker(final Runnable task) {
-        this("worker-" + Worker.ID, task);
-        Worker.ID++;
+        this("worker-" + getAndIncrementID(), task);
     }
 
     public void start() {

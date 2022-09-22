@@ -1,5 +1,7 @@
 package org.minisim.simulation;
 
+import java.util.Objects;
+
 /**
  * A class representing a bidimensional vector.
  */
@@ -78,11 +80,12 @@ public final class V2 {
         return new V2(x, y);
     }
 
+    @Override
     public boolean equals(Object other) {
         if (this == other) {
             return true;
         }
-        if (!other.getClass().equals(this.getClass())) {
+        if (other == null || !other.getClass().equals(this.getClass())) {
             return false;
         }
         final V2 otherVector = (V2) other;
@@ -93,7 +96,13 @@ public final class V2 {
         return Math.abs(x - other.x) < epsilon && Math.abs(y - other.y) < epsilon;
     }
 
+    @Override
     public String toString() {
         return "V2(" + x + "," + y + ")";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

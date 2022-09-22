@@ -9,7 +9,7 @@ import org.minisim.simulation.body.Body;
 
 public final class TestBody {
 
-    public final double EPSILON = 1e-12;
+    public static final double EPSILON = 1e-12;
 
     @Test
     public void defaultBody() {

@@ -7,7 +7,7 @@ import org.minisim.simulation.V2;
 
 class TestV2Math {
 
-    private final double EPSILON = 1e-12;
+    private static final double EPSILON = 1e-12;
 
     @Test
     public void defaultIsOrigin() {
