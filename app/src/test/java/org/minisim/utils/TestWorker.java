@@ -8,12 +8,17 @@ import org.junit.jupiter.api.Test;
 
 public final class TestWorker {
 
-    private final Runnable dumbTask = () -> ThreadUtils.safeSleep(10);
+    private int tester = 0;
+    private final Runnable dumbTask = () -> {
+        ThreadUtils.safeSleep(10);
+        tester++;
+    };
     private Worker w;
 
     @BeforeEach
     public void setup() {
         w = new Worker(dumbTask);
+        tester = 0;
     }
 
     @AfterEach
@@ -38,6 +43,7 @@ public final class TestWorker {
         ThreadUtils.safeSleep(100);
         w.stop();
         assertTrue(w.isStopped());
+        assertTrue(tester > 0);
     }
 
     @Test
@@ -46,6 +52,7 @@ public final class TestWorker {
         ThreadUtils.safeSleep(100);
         w.join();
         assertTrue(w.isStopped());
+        assertTrue(tester > 0);
     }
 
     @Test
@@ -69,7 +76,9 @@ public final class TestWorker {
         w.start();
         ThreadUtils.safeSleep(100);
         w.stop();
+        assertTrue(tester > 0);
         w.stop();
+        assertTrue(tester > 0);
     }
 
     @Test
@@ -77,6 +86,8 @@ public final class TestWorker {
         w.start();
         ThreadUtils.safeSleep(100);
         w.join();
+        assertTrue(tester > 0);
         w.join();
+        assertTrue(tester > 0);
     }
 }
