@@ -1,8 +1,7 @@
 package org.minisim.utils;
 
-import static org.minisim.App.logger;
-
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 
 /**
  * This class is a wrapper of the {@link Thread} class that allows to pause the execution
@@ -11,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class Worker {
 
     private static int ID = 0;
+    private static final Logger logger = Logger.getLogger("minisim");
 
     private static int getAndIncrementID() {
         ID++;

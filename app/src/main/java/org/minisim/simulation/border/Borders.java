@@ -5,9 +5,9 @@ import org.minisim.simulation.body.Body;
 
 public abstract class Borders implements Consumer<Body> {
 
-    public final double LEFT_BORDER = 0;
+    public static final double LEFT_BORDER = 0; // TODO: refactoring needed
     public final double RIGHT_BORDER;
-    public final double BOTTOM_BORDER = 0;
+    public static final double BOTTOM_BORDER = 0; // TODO: refactoring needed
     public final double UP_BORDER;
 
     public Borders(final double width, final double height) {
