@@ -43,8 +43,8 @@ public final class TestSolidBorders {
 
     @Test
     public void cornersAreInside() {
-        for (Double x : List.of(sb.LEFT_BORDER, sb.RIGHT_BORDER)) {
-            for (Double y : List.of(sb.BOTTOM_BORDER, sb.UP_BORDER)) {
+        for (Double x : List.of(Borders.LEFT_BORDER, sb.RIGHT_BORDER)) {
+            for (Double y : List.of(Borders.BOTTOM_BORDER, sb.UP_BORDER)) {
                 final Body b = new Body(new V2(x, y), new V2(1, 2), 1, 1);
                 final V2 oldSpeed = b.speed.copy();
                 sb.accept(b);
@@ -60,8 +60,8 @@ public final class TestSolidBorders {
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
         assertEquals(b.position, new V2(10, 1));
-        assertEquals(b.speed.x, -oldSpeed.x, 1e-12);
-        assertEquals(b.speed.y, oldSpeed.y, 1e-12);
+        assertEquals(b.speed.x(), -oldSpeed.x(), 1e-12);
+        assertEquals(b.speed.y(), oldSpeed.y(), 1e-12);
     }
 
     @Test
@@ -70,8 +70,8 @@ public final class TestSolidBorders {
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
         assertEquals(b.position, new V2(0, 1));
-        assertEquals(b.speed.x, -oldSpeed.x, 1e-12);
-        assertEquals(b.speed.y, oldSpeed.y, 1e-12);
+        assertEquals(b.speed.x(), -oldSpeed.x(), 1e-12);
+        assertEquals(b.speed.y(), oldSpeed.y(), 1e-12);
     }
 
     @Test
@@ -80,8 +80,8 @@ public final class TestSolidBorders {
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
         assertEquals(b.position, new V2(1, 0));
-        assertEquals(b.speed.x, oldSpeed.x, 1e-12);
-        assertEquals(b.speed.y, -oldSpeed.y, 1e-12);
+        assertEquals(b.speed.x(), oldSpeed.x(), 1e-12);
+        assertEquals(b.speed.y(), -oldSpeed.y(), 1e-12);
     }
 
     @Test
@@ -90,8 +90,8 @@ public final class TestSolidBorders {
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
         assertEquals(b.position, new V2(1, 10));
-        assertEquals(b.speed.x, oldSpeed.x, 1e-12);
-        assertEquals(b.speed.y, -oldSpeed.y, 1e-12);
+        assertEquals(b.speed.x(), oldSpeed.x(), 1e-12);
+        assertEquals(b.speed.y(), -oldSpeed.y(), 1e-12);
     }
 
     @Test

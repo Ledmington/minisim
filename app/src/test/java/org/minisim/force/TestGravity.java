@@ -12,6 +12,7 @@ import org.minisim.simulation.force.Gravity;
 public final class TestGravity {
 
     private Gravity gravity;
+    private final double EPSILON = 1e-12;
 
     @BeforeEach
     public void setup() {
@@ -23,9 +24,9 @@ public final class TestGravity {
         final Body first = new Body(new V2(3, 5), V2.origin(), 1, 1);
         final Body second = new Body(new V2(-7, 9), V2.origin(), 1, 1);
         gravity.accept(first, second);
-        assertEquals(first.force.mod(), second.force.mod(), 1e-12);
-        assertEquals(first.force.x, -second.force.x, 1e-12);
-        assertEquals(first.force.y, -second.force.y, 1e-12);
+        assertEquals(first.force.mod(), second.force.mod(), EPSILON);
+        assertEquals(first.force.x(), -second.force.x(), EPSILON);
+        assertEquals(first.force.y(), -second.force.y(), EPSILON);
     }
 
     @Test
@@ -33,9 +34,9 @@ public final class TestGravity {
         final Body first = new Body(new V2(3, 5), V2.origin(), 2, 1);
         final Body second = new Body(new V2(-7, 9), V2.origin(), 3, 1);
         gravity.accept(first, second);
-        assertEquals(first.force.mod(), second.force.mod(), 1e-12);
-        assertEquals(first.force.x, -second.force.x, 1e-12);
-        assertEquals(first.force.y, -second.force.y, 1e-12);
+        assertEquals(first.force.mod(), second.force.mod(), EPSILON);
+        assertEquals(first.force.x(), -second.force.x(), EPSILON);
+        assertEquals(first.force.y(), -second.force.y(), EPSILON);
     }
 
     @Test
@@ -43,9 +44,9 @@ public final class TestGravity {
         final Body first = new Body(new V2(3, 5), V2.origin(), 1, 2);
         final Body second = new Body(new V2(-7, 9), V2.origin(), 1, 3);
         gravity.accept(first, second);
-        assertEquals(first.force.mod(), second.force.mod(), 1e-12);
-        assertEquals(first.force.x, -second.force.x, 1e-12);
-        assertEquals(first.force.y, -second.force.y, 1e-12);
+        assertEquals(first.force.mod(), second.force.mod(), EPSILON);
+        assertEquals(first.force.x(), -second.force.x(), EPSILON);
+        assertEquals(first.force.y(), -second.force.y(), EPSILON);
     }
 
     @Test
@@ -80,7 +81,7 @@ public final class TestGravity {
 
         final double heavyForce = middle.force.mod();
 
-        assertEquals(lighterForce * rightAndHeavy.mass, heavyForce, 1e-12);
+        assertEquals(lighterForce * rightAndHeavy.mass, heavyForce, EPSILON);
     }
 
     @Test
@@ -99,7 +100,7 @@ public final class TestGravity {
 
         final double furtherForce = middle.force.mod();
 
-        assertEquals(closerForce, furtherForce * 4, 1e-12);
+        assertEquals(closerForce, furtherForce * 4, EPSILON);
     }
 
     @Test
@@ -116,10 +117,10 @@ public final class TestGravity {
         first.applyForce();
         second.applyForce();
 
-        assertTrue(first.position.x > left);
-        assertTrue(second.position.x < right);
+        assertTrue(first.position.x() > left);
+        assertTrue(second.position.x() < right);
 
-        assertTrue(first.position.y > down);
-        assertTrue(second.position.y < up);
+        assertTrue(first.position.y() > down);
+        assertTrue(second.position.y() < up);
     }
 }

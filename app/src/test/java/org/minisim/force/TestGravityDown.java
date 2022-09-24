@@ -16,8 +16,8 @@ public final class TestGravityDown {
         final V2 oldPosition = b.position.copy();
         gravity.accept(b);
         b.applyForce();
-        assertEquals(b.position.x, oldPosition.x);
-        assertTrue(b.position.y < oldPosition.y);
+        assertEquals(b.position.x(), oldPosition.x());
+        assertTrue(b.position.y() < oldPosition.y());
     }
 
     @Test
@@ -26,7 +26,7 @@ public final class TestGravityDown {
         final GravityDown gravity = new GravityDown(0.9);
         final V2 oldForce = b.force.copy();
         gravity.accept(b);
-        assertEquals(b.force.x, oldForce.x);
-        assertTrue(b.force.y < oldForce.y);
+        assertEquals(b.force.x(), oldForce.x());
+        assertTrue(b.force.y() < oldForce.y());
     }
 }

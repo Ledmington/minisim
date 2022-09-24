@@ -23,7 +23,7 @@ class TestV2Equals {
     @Test
     public void vectorDoesNotEqualObject() {
         V2 v = new V2(3, 5);
-        assertFalse(v.equals(new Object()));
+        assertNotEquals(v, new Object());
     }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ class TestV2Equals {
     public void twoVectorsWithDifferentCoordinatesShouldNotBeEqual(double x, double y) {
         final V2 v = new V2(3, 5);
         final V2 w = new V2(x, y);
-        assertFalse(v.equals(w));
+        assertNotEquals(v, w);
     }
 
     public static Stream<Arguments> provideDifferentV2ForEquals() {
@@ -43,7 +43,7 @@ class TestV2Equals {
     public void twoVectorsWithSlightlyDifferentCoordinatesShouldNotBeEqual(double x, double y) {
         final V2 v = new V2(3, 5);
         final V2 w = new V2(x, y);
-        assertFalse(v.equals(w, EPSILON));
+        assertNotEquals(v, w);
     }
 
     public static Stream<Arguments> provideSlightlyDifferentV2ForEquals() {
@@ -61,7 +61,6 @@ class TestV2Equals {
         V2 w = new V2(3, 5);
         assertNotSame(v, w);
         assertEquals(v, w);
-        assertTrue(v.equals(w, EPSILON));
     }
 
     @ParameterizedTest
@@ -71,25 +70,11 @@ class TestV2Equals {
         V2 w = new V2(x, y);
         assertNotSame(v, w);
         assertNotEquals(v, w);
-        assertFalse(v.equals(w, EPSILON));
-    }
-
-    public static Stream<Arguments> provideV2WithEpsilons() {
-        return Stream.of(new Pair<Double, Double>(3.0, 5.0))
-                .flatMap(p -> Stream.of(
-                        new Pair<>(p.x(), p.y()),
-                        new Pair<>(p.x() + EPSILON, p.y()),
-                        new Pair<>(p.x() - EPSILON, p.y())))
-                .flatMap(p -> Stream.of(
-                        new Pair<>(p.x(), p.y()),
-                        new Pair<>(p.x(), p.y() + EPSILON),
-                        new Pair<>(p.x(), p.y() - EPSILON)))
-                .map(p -> Arguments.of(p.x(), p.y()));
     }
 
     @Test
     public void vectorToString() {
         final V2 v = new V2(3, 5);
-        assertEquals("V2(" + v.x + "," + v.y + ")", v.toString());
+        assertEquals("V2(" + v.x() + "," + v.y() + ")", v.toString());
     }
 }

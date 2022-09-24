@@ -59,10 +59,10 @@ public final class Body {
 
     public boolean collidesWith(final Body other) {
         final double Rsum = radius + other.radius;
-        if (Math.abs(position.x - other.position.x) > Rsum) {
+        if (Math.abs(position.x() - other.position.x()) > Rsum) {
             return false;
         }
-        if (Math.abs(position.y - other.position.y) > Rsum) {
+        if (Math.abs(position.y() - other.position.y()) > Rsum) {
             return false;
         }
         // return position.distsq(other.position) < Rsum * Rsum; // faster way (maybe):
