@@ -57,7 +57,7 @@ public final class Worker {
     }
 
     public void start() {
-        if (thread == null || stopped.get()) {
+        if (stopped.get()) {
             createThread();
         }
         stopped.set(false);
