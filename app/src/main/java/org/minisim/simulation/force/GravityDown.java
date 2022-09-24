@@ -13,6 +13,6 @@ public final class GravityDown implements UnaryForce {
 
     @Override
     public void accept(final Body body) {
-        body.force.sub(vectorDown);
+        body.force = body.force.sub(vectorDown);
     }
 }

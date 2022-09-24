@@ -50,9 +50,9 @@ public final class Body {
     }
 
     public void applyForce() {
-        acc = force.copy().div(mass); // * DT; // TODO fix later
-        speed.add(acc);
-        position.add(speed);
+        acc = force.div(mass); // * DT; // TODO fix later
+        speed = speed.add(acc);
+        position = position.add(speed);
 
         force = V2.origin();
     }

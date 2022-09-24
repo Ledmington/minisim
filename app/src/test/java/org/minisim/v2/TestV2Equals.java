@@ -75,6 +75,6 @@ class TestV2Equals {
     @Test
     public void vectorToString() {
         final V2 v = new V2(3, 5);
-        assertEquals("V2(" + v.x() + "," + v.y() + ")", v.toString());
+        assertEquals("V2[x=" + v.x() + ", y=" + v.y() + "]", v.toString());
     }
 }
