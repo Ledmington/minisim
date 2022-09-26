@@ -82,4 +82,4 @@ app/bin
 ./*.png
 
 # Debug videos
-./**/*.mp4
+*.mp4
