@@ -117,10 +117,10 @@ public final class TestGravity {
         first.applyForce();
         second.applyForce();
 
-        assertTrue(first.position.x() > left);
-        assertTrue(second.position.x() < right);
+        assertTrue(first.position().x() > left);
+        assertTrue(second.position().x() < right);
 
-        assertTrue(first.position.y() > down);
-        assertTrue(second.position.y() < up);
+        assertTrue(first.position().y() > down);
+        assertTrue(second.position().y() < up);
     }
 }

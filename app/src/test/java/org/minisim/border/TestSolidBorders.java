@@ -37,7 +37,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(1, 1), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(1, 1));
+        assertEquals(b.position(), new V2(1, 1));
         assertEquals(b.speed, oldSpeed);
     }
 
@@ -48,7 +48,7 @@ public final class TestSolidBorders {
                 final Body b = new Body(new V2(x, y), new V2(1, 2), 1, 1);
                 final V2 oldSpeed = b.speed.copy();
                 sb.accept(b);
-                assertEquals(b.position, new V2(x, y));
+                assertEquals(b.position(), new V2(x, y));
                 assertEquals(b.speed, oldSpeed);
             }
         }
@@ -59,7 +59,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(11, 1), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(10, 1));
+        assertEquals(b.position(), new V2(10, 1));
         assertEquals(b.speed.x(), -oldSpeed.x(), 1e-12);
         assertEquals(b.speed.y(), oldSpeed.y(), 1e-12);
     }
@@ -69,7 +69,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(-1, 1), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(0, 1));
+        assertEquals(b.position(), new V2(0, 1));
         assertEquals(b.speed.x(), -oldSpeed.x(), 1e-12);
         assertEquals(b.speed.y(), oldSpeed.y(), 1e-12);
     }
@@ -79,7 +79,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(1, -1), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(1, 0));
+        assertEquals(b.position(), new V2(1, 0));
         assertEquals(b.speed.x(), oldSpeed.x(), 1e-12);
         assertEquals(b.speed.y(), -oldSpeed.y(), 1e-12);
     }
@@ -89,7 +89,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(1, 11), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(1, 10));
+        assertEquals(b.position(), new V2(1, 10));
         assertEquals(b.speed.x(), oldSpeed.x(), 1e-12);
         assertEquals(b.speed.y(), -oldSpeed.y(), 1e-12);
     }
@@ -99,7 +99,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(11, 11), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(10, 10));
+        assertEquals(b.position(), new V2(10, 10));
         assertEquals(b.speed, oldSpeed.mul(-1));
     }
 
@@ -108,7 +108,7 @@ public final class TestSolidBorders {
         final Body b = new Body(new V2(-1, -1), new V2(1, 2), 1, 1);
         final V2 oldSpeed = b.speed.copy();
         sb.accept(b);
-        assertEquals(b.position, new V2(0, 0));
+        assertEquals(b.position(), new V2(0, 0));
         assertEquals(b.speed, oldSpeed.mul(-1));
     }
 }

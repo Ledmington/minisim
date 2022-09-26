@@ -41,8 +41,8 @@ public final class TestCollisionManager {
         bodies.add(second);
         assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
         assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
-        assertEquals(new V2(0.5, 2), first.position);
-        assertEquals(new V2(2.5, 2), second.position);
+        assertEquals(new V2(0.5, 2), first.position());
+        assertEquals(new V2(2.5, 2), second.position());
     }
 
     @Test
@@ -55,8 +55,8 @@ public final class TestCollisionManager {
         bodies.add(second);
         assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
         assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
-        assertEquals(new V2(0.5, 2), first.position);
-        assertEquals(new V2(2.5, 2), second.position);
+        assertEquals(new V2(0.5, 2), first.position());
+        assertEquals(new V2(2.5, 2), second.position());
     }
 
     @Test
@@ -67,7 +67,7 @@ public final class TestCollisionManager {
         bodies.add(second);
         assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
         assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
-        assertEquals(new V2(2, 4), first.position);
-        assertEquals(new V2(7, 4), second.position);
+        assertEquals(new V2(2, 4), first.position());
+        assertEquals(new V2(7, 4), second.position());
     }
 }

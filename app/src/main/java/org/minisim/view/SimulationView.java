@@ -98,6 +98,9 @@ public final class SimulationView extends BorderPane {
         gc.setFill(Color.RED);
         sim.getBodies()
                 .forEach(b -> gc.fillOval(
-                        b.position.x(), sim.getBounds().UP_BORDER - b.position.y(), b.radius(), b.radius()));
+                        b.position().x(),
+                        sim.getBounds().UP_BORDER - b.position().y(),
+                        b.radius(),
+                        b.radius()));
     }
 }

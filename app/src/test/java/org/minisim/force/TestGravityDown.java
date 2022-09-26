@@ -13,11 +13,11 @@ public final class TestGravityDown {
     public void stationaryObjectShouldFallDown() {
         final Body b = Body.builder().build();
         final GravityDown gravity = new GravityDown(0.9);
-        final V2 oldPosition = b.position.copy();
+        final V2 oldPosition = b.position().copy();
         gravity.accept(b);
         b.applyForce();
-        assertEquals(b.position.x(), oldPosition.x());
-        assertTrue(b.position.y() < oldPosition.y());
+        assertEquals(b.position().x(), oldPosition.x());
+        assertTrue(b.position().y() < oldPosition.y());
     }
 
     @Test

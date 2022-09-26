@@ -8,7 +8,7 @@ public final class Body {
         return new BodyBuilder();
     }
 
-    public V2 position;
+    private V2 position;
     public V2 speed;
     public V2 acc;
     public V2 force;
@@ -59,6 +59,14 @@ public final class Body {
 
     public void setRadius(final double newRadius) {
         radius = newRadius;
+    }
+
+    public V2 position() {
+        return position;
+    }
+
+    public void setPosition(final V2 newPosition) {
+        position = newPosition;
     }
 
     public double dist(final Body other) {

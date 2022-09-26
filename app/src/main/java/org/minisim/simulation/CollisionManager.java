@@ -35,7 +35,7 @@ public final class CollisionManager {
                     foundCollisions = true;
 
                     // vector pointing first (but centered in origin)
-                    final V2 diff = first.position.sub(second.position);
+                    final V2 diff = first.position().sub(second.position());
 
                     /*
                      * Computing the magnitude of the movement as result of this system. R1 = a + b;
@@ -47,8 +47,8 @@ public final class CollisionManager {
                     final double compenetration = diff.mod();
                     final double b = first.radius() + second.radius() - compenetration;
 
-                    first.position = first.position.add(diff.mul(b / 2));
-                    second.position = second.position.sub(diff.mul(b / 2));
+                    first.setPosition(first.position().add(diff.mul(b / 2)));
+                    second.setPosition(second.position().sub(diff.mul(b / 2)));
                 }
             }
         }

@@ -50,12 +50,12 @@ public final class TestFriction {
         final Body b = new Body(new V2(2, 3), V2.origin(), 1, 1);
         final Friction friction = new Friction(0.9);
 
-        final V2 oldPosition = b.position.copy();
+        final V2 oldPosition = b.position().copy();
 
         friction.accept(b);
         b.applyForce();
 
-        assertEquals(oldPosition, b.position);
+        assertEquals(oldPosition, b.position());
     }
 
     @Test

@@ -15,27 +15,27 @@ public final class SolidBorders extends Borders {
 
     @Override
     public void accept(final Body b) {
-        double newPosX = b.position.x();
-        double newPosY = b.position.y();
+        double newPosX = b.position().x();
+        double newPosY = b.position().y();
         double newSpeedX = b.speed.x();
         double newSpeedY = b.speed.y();
-        if (b.position.x() < LEFT_BORDER) {
+        if (b.position().x() < LEFT_BORDER) {
             newPosX = LEFT_BORDER;
             newSpeedX = -b.speed.x();
-        } else if (b.position.x() > RIGHT_BORDER) {
+        } else if (b.position().x() > RIGHT_BORDER) {
             newPosX = RIGHT_BORDER;
             newSpeedX = -b.speed.x();
         }
 
-        if (b.position.y() < BOTTOM_BORDER) {
+        if (b.position().y() < BOTTOM_BORDER) {
             newPosY = BOTTOM_BORDER;
             newSpeedY = -b.speed.y();
-        } else if (b.position.y() > UP_BORDER) {
+        } else if (b.position().y() > UP_BORDER) {
             newPosY = UP_BORDER;
             newSpeedY = -b.speed.y();
         }
 
-        b.position = new V2(newPosX, newPosY);
+        b.setPosition(new V2(newPosX, newPosY));
         b.speed = new V2(newSpeedX, newSpeedY);
     }
 }
