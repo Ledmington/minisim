@@ -11,7 +11,7 @@ public final class Body {
     private V2 position;
     private V2 speed;
     private V2 acceleration;
-    public V2 force;
+    private V2 force;
     private double mass;
     private double radius;
 
@@ -83,6 +83,14 @@ public final class Body {
 
     public void setAcceleration(final V2 newAcceleration) {
         acceleration = newAcceleration;
+    }
+
+    public V2 force() {
+        return force;
+    }
+
+    public void setForce(final V2 newForce) {
+        force = newForce;
     }
 
     public double dist(final Body other) {

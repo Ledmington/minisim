@@ -41,6 +41,18 @@ public final class BodyBuilder {
         return this;
     }
 
+    /**
+     * Builds a new Body with the given parameters. If not set, they will default
+     * to the following values:
+     * - position = (0,0)
+     * - speed = (0,0)
+     * - acceleration = (0,0)
+     * - force = (0,0)
+     * - mass = 1
+     * - radius = 1
+     * @return
+     *      A new Body with the given parameters.
+     */
     public Body build() {
         return new Body(position, speed, acceleration, force, mass, radius);
     }

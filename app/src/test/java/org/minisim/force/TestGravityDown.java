@@ -24,9 +24,9 @@ public final class TestGravityDown {
     public void YForceShouldAlwaysDecrease() {
         final Body b = Body.builder().force(new V2(3, 5)).build();
         final GravityDown gravity = new GravityDown(0.9);
-        final V2 oldForce = b.force.copy();
+        final V2 oldForce = b.force().copy();
         gravity.accept(b);
-        assertEquals(b.force.x(), oldForce.x());
-        assertTrue(b.force.y() < oldForce.y());
+        assertEquals(b.force().x(), oldForce.x());
+        assertTrue(b.force().y() < oldForce.y());
     }
 }

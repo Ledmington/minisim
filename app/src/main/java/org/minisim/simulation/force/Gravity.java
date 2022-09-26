@@ -26,7 +26,7 @@ public final class Gravity implements Force {
 
         final V2 diff = forceDirection.mul(force);
 
-        first.force = first.force.sub(diff);
-        second.force = second.force.add(diff);
+        first.setForce(first.force().sub(diff));
+        second.setForce(second.force().add(diff));
     }
 }
