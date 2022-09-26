@@ -9,7 +9,7 @@ public final class Body {
     }
 
     private V2 position;
-    public V2 speed;
+    private V2 speed;
     public V2 acc;
     public V2 force;
     private double mass;
@@ -67,6 +67,14 @@ public final class Body {
 
     public void setPosition(final V2 newPosition) {
         position = newPosition;
+    }
+
+    public V2 speed() {
+        return speed;
+    }
+
+    public void setSpeed(final V2 newSpeed) {
+        speed = newSpeed;
     }
 
     public double dist(final Body other) {
