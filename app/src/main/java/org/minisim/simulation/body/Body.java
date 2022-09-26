@@ -10,7 +10,7 @@ public final class Body {
 
     private V2 position;
     private V2 speed;
-    public V2 acc;
+    private V2 acceleration;
     public V2 force;
     private double mass;
     private double radius;
@@ -33,7 +33,7 @@ public final class Body {
         this.radius = radius;
         this.position = position;
         this.speed = speed;
-        this.acc = acceleration;
+        this.acceleration = acceleration;
         this.force = force;
     }
 
@@ -77,13 +77,21 @@ public final class Body {
         speed = newSpeed;
     }
 
+    public V2 acceleration() {
+        return acceleration;
+    }
+
+    public void setAcceleration(final V2 newAcceleration) {
+        acceleration = newAcceleration;
+    }
+
     public double dist(final Body other) {
         return position.dist(other.position);
     }
 
     public void applyForce() {
-        acc = force.div(mass); // * DT; // TODO fix later
-        speed = speed.add(acc);
+        acceleration = force.div(mass); // * DT; // TODO fix later
+        speed = speed.add(acceleration);
         position = position.add(speed);
 
         force = V2.origin();
