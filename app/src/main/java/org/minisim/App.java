@@ -34,7 +34,7 @@ public final class App extends Application {
     }
 
     public static Simulation sim = Simulation.builder()
-            .nBodies(1000)
+            .nBodies(100)
             .randomBodyIn(0, 500, 0, 500)
             .width(500)
             .height(500)
