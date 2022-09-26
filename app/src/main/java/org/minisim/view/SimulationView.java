@@ -1,7 +1,7 @@
 package org.minisim.view;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
@@ -9,14 +9,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.minisim.App;
 import org.minisim.simulation.Simulation;
-import org.minisim.utils.FileUtils;
 import org.minisim.utils.Worker;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
@@ -35,19 +33,18 @@ public final class SimulationView extends BorderPane {
             sim.update();
             renderSimulation(gc);
 
+            // TODO: must absolutely refactor this
+            final CompletableFuture<Void> future = new CompletableFuture<>();
             Platform.runLater(() -> {
                 final WritableImage img = canvas.snapshot(new SnapshotParameters(), null);
-                final PixelReader pixelReader = img.getPixelReader();
-                final BufferedImage theImage =
-                        new BufferedImage((int) img.getWidth(), (int) img.getHeight(), BufferedImage.TYPE_INT_RGB);
-                for (int x = 0; x < (int) img.getWidth(); x++) {
-                    for (int y = 0; y < (int) img.getHeight(); y++) {
-                        theImage.setRGB(x, y, pixelReader.getArgb(x, y));
-                    }
-                }
-                final File outputFile = new File("./frame.png");
-                FileUtils.safeWrite(theImage, "png", outputFile);
+                App.getFrameManager().saveFrame(img.getPixelReader(), (int) img.getWidth(), (int) img.getHeight());
+                future.complete(null);
             });
+            try {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         final GridPane controlButtons = new GridPane();

@@ -35,4 +35,10 @@ public final class AppConstants {
      * Shorthand field which holds the version of JavaFX MiniSim is running on.
      */
     public static final String javafxVersion = System.getProperty("javafx.version");
+
+    /**
+     * Shorthand field which holds the path where all the temporary files/folders
+     * are stored by the OS.
+     */
+    public static final String tmpDirectoryPath = System.getProperty("java.io.tmpdir");
 }

@@ -80,3 +80,6 @@ app/bin
 
 # Debug images
 ./*.png
+
+# Debug videos
+./**/*.mp4

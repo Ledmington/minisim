@@ -22,9 +22,11 @@ repositories {
 }
 
 dependencies {
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-
 	implementation 'com.google.guava:guava:31.0.1-jre'
+	implementation 'org.jcodec:jcodec:0.2.5' // video encoding
+	implementation 'org.jcodec:jcodec-javase:0.2.5' // video encoding compatible with AWT
+
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
 
 application {
