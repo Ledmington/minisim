@@ -34,7 +34,7 @@ public final class App extends Application {
     }
 
     public static Simulation sim = Simulation.builder()
-            .nBodies(100)
+            .nBodies(1000)
             .randomBodyIn(0, 500, 0, 500)
             .width(500)
             .height(500)
@@ -68,7 +68,6 @@ public final class App extends Application {
     }
 
     public static void main(final String[] args) {
-        final int x = 5;
         logger.info("MiniSim is running on:");
         logger.info(" - " + OSName + " " + OSVersion);
         logger.info(" - Java " + javaVersion);
