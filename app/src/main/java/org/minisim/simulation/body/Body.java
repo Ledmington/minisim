@@ -13,7 +13,7 @@ public final class Body {
     public V2 acc;
     public V2 force;
     private double mass;
-    public double radius;
+    private double radius;
 
     public Body(
             final V2 position,
@@ -51,6 +51,14 @@ public final class Body {
 
     public void setMass(final double newMass) {
         mass = newMass;
+    }
+
+    public double radius() {
+        return radius;
+    }
+
+    public void setRadius(final double newRadius) {
+        radius = newRadius;
     }
 
     public double dist(final Body other) {

@@ -45,7 +45,7 @@ public final class CollisionManager {
                      * resulting formula is b = R1 + R2 - compenetration = (a+b) + (b+c) - (a+b+c)
                      */
                     final double compenetration = diff.mod();
-                    final double b = first.radius + second.radius - compenetration;
+                    final double b = first.radius() + second.radius() - compenetration;
 
                     first.position = first.position.add(diff.mul(b / 2));
                     second.position = second.position.sub(diff.mul(b / 2));
