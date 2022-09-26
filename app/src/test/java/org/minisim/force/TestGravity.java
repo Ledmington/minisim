@@ -81,7 +81,7 @@ public final class TestGravity {
 
         final double heavyForce = middle.force.mod();
 
-        assertEquals(lighterForce * rightAndHeavy.mass, heavyForce, EPSILON);
+        assertEquals(lighterForce * rightAndHeavy.mass(), heavyForce, EPSILON);
     }
 
     @Test

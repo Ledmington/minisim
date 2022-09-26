@@ -18,7 +18,7 @@ public final class TestBody {
         assertEquals(0, b.position.y(), EPSILON);
         assertEquals(0, b.speed.x(), EPSILON);
         assertEquals(0, b.speed.y(), EPSILON);
-        assertEquals(1, b.mass, EPSILON);
+        assertEquals(1, b.mass(), EPSILON);
         assertEquals(1, b.radius, EPSILON);
     }
 

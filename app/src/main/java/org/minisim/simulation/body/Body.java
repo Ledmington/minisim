@@ -8,12 +8,12 @@ public final class Body {
         return new BodyBuilder();
     }
 
-    public double mass;
-    public double radius;
     public V2 position;
     public V2 speed;
     public V2 acc;
     public V2 force;
+    private double mass;
+    public double radius;
 
     public Body(
             final V2 position,
@@ -43,6 +43,14 @@ public final class Body {
 
     public Body() {
         this(new V2(0.0, 0.0), new V2(0.0, 0.0), 1.0, 1.0);
+    }
+
+    public double mass() {
+        return mass;
+    }
+
+    public void setMass(final double newMass) {
+        mass = newMass;
     }
 
     public double dist(final Body other) {

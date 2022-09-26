@@ -21,7 +21,7 @@ public final class Gravity implements Force {
     public void accept(final Body first, final Body second) {
         // TODO: can refactor the squared distance with a method inside V2
         final double distance = first.dist(second);
-        final double force = constant * first.mass * second.mass / (distance * distance);
+        final double force = constant * first.mass() * second.mass() / (distance * distance);
         final V2 forceDirection = first.position.sub(second.position).norm();
 
         final V2 diff = forceDirection.mul(force);
