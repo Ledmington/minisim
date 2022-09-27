@@ -2,6 +2,8 @@ package org.minisim.view;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
@@ -33,15 +35,18 @@ public final class SimulationView extends BorderPane {
             sim.update();
             renderSimulation(gc);
 
-            // TODO: must absolutely refactor this
+            // TODO: must absolutely refactor this, is now it light enough?
             final CompletableFuture<Void> future = new CompletableFuture<>();
+            final AtomicReference<WritableImage> img = new AtomicReference<>();
             Platform.runLater(() -> {
-                final WritableImage img = canvas.snapshot(new SnapshotParameters(), null);
-                App.getFrameManager().saveFrame(img.getPixelReader(), (int) img.getWidth(), (int) img.getHeight());
+                img.set(canvas.snapshot(new SnapshotParameters(), null));
                 future.complete(null);
             });
             try {
                 future.get();
+                App.getFrameManager()
+                        .saveFrame(img.get().getPixelReader(), (int) img.get().getWidth(), (int)
+                                img.get().getHeight());
             } catch (InterruptedException | ExecutionException e) {
                 throw new RuntimeException(e);
             }
