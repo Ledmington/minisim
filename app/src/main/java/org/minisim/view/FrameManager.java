@@ -8,6 +8,7 @@ import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.minisim.utils.EncoderUtils;
 import org.minisim.utils.FileUtils;
 
+// TODO: refactor or make singleton
 public final class FrameManager {
 
     private final String frameDirectory =

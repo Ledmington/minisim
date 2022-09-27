@@ -34,19 +34,14 @@ public final class AuthorsDialog extends Stage {
             final Contributor c = contributions.get(i);
             final Hyperlink name = new Hyperlink(c.name()) {
                 {
+                    // TODO: maybe refactor these lines inside a Factory?
                     setMaxWidth(Double.MAX_VALUE);
                     setAlignment(Pos.CENTER);
                     setFont(MinisimFonts.normal(16));
                 }
             };
             name.setOnAction(e -> hostServices.showDocument(c.link()));
-            grid.addRow(i, name, new Label(c.description()) {
-                {
-                    setMaxWidth(Double.MAX_VALUE);
-                    setAlignment(Pos.CENTER);
-                    setFont(MinisimFonts.italic(12));
-                }
-            });
+            grid.addRow(i, name, LabelFactory.getInstance().newLabel(c.description(), MinisimFonts.italic(12)));
         }
         grid.setPadding(new Insets(15));
         grid.setVgap(10);

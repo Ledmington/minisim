@@ -20,7 +20,7 @@ public final class ViewUtils {
             final Stage stage = new Stage();
             stage.setTitle("About MiniSim");
             final BorderPane pane = new BorderPane();
-            pane.setTop(new Label("About MiniSim"));
+            pane.setTop(LabelFactory.getInstance().newLabel("About Minisim", MinisimFonts.bold(12)));
             pane.setCenter(new Label(String.join(
                     "\n",
                     "MiniSim is running on:",

@@ -16,7 +16,10 @@ public final class MinisimView {
 
         bPane.setTop(topPane);
         bPane.setBottom(new BottomBar());
-        bPane.setCenter(new SimulationView(model));
+        final BorderPane mainPane = new BorderPane();
+        mainPane.setLeft(new SimulationView(model));
+        mainPane.setRight(new BodyInfoPane());
+        bPane.setCenter(mainPane);
 
         final Scene scene = new Scene(bPane);
 
