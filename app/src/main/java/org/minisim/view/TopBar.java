@@ -1,11 +1,12 @@
 package org.minisim.view;
 
+import javafx.application.HostServices;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 public final class TopBar extends MenuBar {
-    public TopBar() {
+    public TopBar(final HostServices hostServices) {
         final Menu fileMenu = new Menu("File");
         fileMenu.getItems().add(new MenuItem("New Simulation"));
         fileMenu.getItems().add(new MenuItem("Save Simulation"));
@@ -19,7 +20,7 @@ public final class TopBar extends MenuBar {
 
         final Menu helpMenu = new Menu("Help");
         final MenuItem authorsButton = new MenuItem("Authors & Contributions");
-        authorsButton.setOnAction(ViewUtils.showAuthorsDialog());
+        authorsButton.setOnAction(e -> new AuthorsDialog(hostServices).showAndWait());
         helpMenu.getItems().add(authorsButton);
         final MenuItem aboutButton = new MenuItem("About");
         aboutButton.setOnAction(ViewUtils.showAboutDialog());

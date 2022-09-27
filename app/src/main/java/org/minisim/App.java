@@ -26,10 +26,10 @@ public final class App extends Application {
 
     @Override
     public void start(final Stage stage) {
-        new Minisim(stage);
+        new Minisim(getHostServices(), stage);
     }
 
     public static void main(final String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 }

@@ -3,6 +3,8 @@ package org.minisim;
 import static org.minisim.App.logger;
 import static org.minisim.AppConstants.*;
 
+import java.awt.*;
+import javafx.application.HostServices;
 import javafx.stage.Stage;
 import org.minisim.simulation.Simulation;
 import org.minisim.simulation.force.Friction;
@@ -29,13 +31,13 @@ public final class Minisim {
     // TODO: refactor or make singleton
     private final FrameManager frameManager = new FrameManager();
 
-    public Minisim(final Stage stage) {
+    public Minisim(final HostServices hostServices, final Stage stage) {
         logger.info("MiniSim is running on:");
         logger.info(" - " + OSName + " " + OSVersion);
         logger.info(" - Java " + javaVersion);
         logger.info(" - JVM " + jvmVersion);
         logger.info(" - JavaFX " + javafxVersion);
-        new MinisimView(this, stage);
+        new MinisimView(this, hostServices, stage);
     }
 
     public Simulation getSimulation() {
