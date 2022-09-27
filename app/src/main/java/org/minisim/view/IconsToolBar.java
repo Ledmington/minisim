@@ -4,17 +4,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
-import org.minisim.App;
+import org.minisim.Minisim;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
 
 public final class IconsToolBar extends ToolBar {
-    public IconsToolBar() {
+    public IconsToolBar(final Minisim model) {
         super();
 
         final Button save = new IconButton(ImageManager.getImage(ImageName.SAVE), 20, 20);
         save.setTooltip(new Tooltip("Save simulation"));
-        save.setOnAction(event -> App.getFrameManager().createVideo());
+        save.setOnAction(event -> model.getFrameManager().createVideo());
 
         final Button load = new IconButton(ImageManager.getImage(ImageName.SAVE), 20, 20);
         load.setTooltip(new Tooltip("Load simulation"));

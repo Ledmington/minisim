@@ -3,7 +3,6 @@ package org.minisim.view;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
-
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
@@ -15,7 +14,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import org.minisim.App;
+import org.minisim.Minisim;
 import org.minisim.simulation.Simulation;
 import org.minisim.utils.Worker;
 import org.minisim.view.images.ImageManager;
@@ -24,18 +23,20 @@ import org.minisim.view.images.ImageName;
 public final class SimulationView extends BorderPane {
 
     private final Worker simulationUpdaterWorker;
+    private final Minisim model;
 
-    public SimulationView() {
+    public SimulationView(final Minisim model) {
+        this.model = model;
         final Canvas canvas = new Canvas(500, 500);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         setCenter(canvas);
 
         simulationUpdaterWorker = new Worker("simulationUpdater", () -> {
-            final Simulation sim = App.getSimulation();
+            final Simulation sim = model.getSimulation();
             sim.update();
             renderSimulation(gc);
 
-            // TODO: must absolutely refactor this, is now it light enough?
+            // TODO: must absolutely refactor this
             final CompletableFuture<Void> future = new CompletableFuture<>();
             final AtomicReference<WritableImage> img = new AtomicReference<>();
             Platform.runLater(() -> {
@@ -44,7 +45,7 @@ public final class SimulationView extends BorderPane {
             });
             try {
                 future.get();
-                App.getFrameManager()
+                model.getFrameManager()
                         .saveFrame(img.get().getPixelReader(), (int) img.get().getWidth(), (int)
                                 img.get().getHeight());
             } catch (InterruptedException | ExecutionException e) {
@@ -77,7 +78,7 @@ public final class SimulationView extends BorderPane {
     }
 
     public void renderSimulation(final GraphicsContext gc) {
-        final Simulation sim = App.getSimulation();
+        final Simulation sim = model.getSimulation();
         gc.clearRect(0, 0, sim.getBounds().RIGHT_BORDER, sim.getBounds().UP_BORDER);
         gc.setFill(Color.RED);
         sim.getBodies()

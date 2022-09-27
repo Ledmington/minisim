@@ -2,20 +2,30 @@ package org.minisim.view;
 
 import static org.minisim.AppConstants.*;
 
+import java.awt.*;
+import java.util.List;
 import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.minisim.utils.DesktopUtils;
 
 // TODO: maybe this should be a singleton?
 public final class ViewUtils {
     private ViewUtils() {}
+
+    private record Contributor(String name, String link, String description) {}
+
+    private static final List<Contributor> contributions = List.of(
+            new Contributor("Ledmington", "https://github.com/Ledmington", "Main author and developer"),
+            new Contributor("Endum", "https://github.com/Endum", "Contributions to the simulation-updater thread"));
 
     public static EventHandler<ActionEvent> showAboutDialog() {
         return event -> {
@@ -40,10 +50,39 @@ public final class ViewUtils {
     public static EventHandler<ActionEvent> showAuthorsDialog() {
         return event -> {
             final Stage stage = new Stage();
+
             stage.setTitle("MiniSim's authors and contributions");
             final BorderPane pane = new BorderPane();
-            pane.setTop(new Label("Authors and Contributions"));
-            pane.setCenter(new Label("Ledmington"));
+
+            final Label title = new Label("Authors and Contributions");
+            title.setMaxWidth(Double.MAX_VALUE);
+            title.setAlignment(Pos.CENTER);
+            title.setFont(MinisimFonts.bold(20));
+            pane.setTop(title);
+
+            final GridPane grid = new GridPane();
+            for (int i = 0; i < contributions.size(); i++) {
+                final Contributor c = contributions.get(i);
+                final Hyperlink name = new Hyperlink(c.name()) {
+                    {
+                        setMaxWidth(Double.MAX_VALUE);
+                        setAlignment(Pos.CENTER);
+                        setFont(MinisimFonts.normal(16));
+                    }
+                };
+                name.setOnAction(e -> DesktopUtils.safeBrowse(c.link()));
+                grid.addRow(i, name, new Label(c.description()) {
+                    {
+                        setMaxWidth(Double.MAX_VALUE);
+                        setAlignment(Pos.CENTER);
+                        setFont(MinisimFonts.italic(12));
+                    }
+                });
+            }
+            grid.setPadding(new Insets(15));
+            grid.setVgap(10);
+            pane.setCenter(grid);
+
             stage.setResizable(false);
             final Scene scene = new Scene(pane);
             stage.setScene(scene);
