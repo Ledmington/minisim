@@ -16,13 +16,30 @@ class TestV2Equals {
 
     @Test
     public void vectorEqualsItself() {
-        V2 v = new V2(3, 5);
+        final V2 v = new V2(3, 5);
         assertEquals(v, v);
     }
 
     @Test
+    public void equalsShouldBeSymmetric() {
+        final V2 v = new V2(3, 5);
+        final V2 w = new V2(3, 5);
+        assertEquals(v, w);
+        assertEquals(w, v);
+    }
+
+    @Test
+    public void equalsShouldBeConsistent() {
+        final V2 v = new V2(3, 5);
+        final V2 w = new V2(3, 5);
+        for (int i = 0; i < 10; i++) {
+            assertEquals(v, w);
+        }
+    }
+
+    @Test
     public void vectorDoesNotEqualObject() {
-        V2 v = new V2(3, 5);
+        final V2 v = new V2(3, 5);
         assertNotEquals(v, new Object());
     }
 
@@ -49,16 +66,16 @@ class TestV2Equals {
     public static Stream<Arguments> provideSlightlyDifferentV2ForEquals() {
         return Stream.of(new Pair<>(2, 6), new Pair<>(2, 5), new Pair<>(3, 6))
                 .flatMap(p -> Stream.of(
-                        Arguments.of(p.x() + EPSILON * 2, p.y()),
-                        Arguments.of(p.x() - EPSILON * 2, p.y()),
-                        Arguments.of(p.x(), p.y() + EPSILON * 2),
-                        Arguments.of(p.x(), p.y() - EPSILON * 2)));
+                        Arguments.of(p.first() + EPSILON * 2, p.second()),
+                        Arguments.of(p.first() - EPSILON * 2, p.second()),
+                        Arguments.of(p.first(), p.second() + EPSILON * 2),
+                        Arguments.of(p.first(), p.second() - EPSILON * 2)));
     }
 
     @Test
     public void twoVectorsWithSameCoordinatesAreTheSameVector() {
-        V2 v = new V2(3, 5);
-        V2 w = new V2(3, 5);
+        final V2 v = new V2(3, 5);
+        final V2 w = new V2(3, 5);
         assertNotSame(v, w);
         assertEquals(v, w);
     }
@@ -66,8 +83,8 @@ class TestV2Equals {
     @ParameterizedTest
     @MethodSource("provideSlightlyDifferentV2ForEquals")
     public void twoV2WithAtLeastEpsilonDifferenceAreDifferent(double x, double y) {
-        V2 v = new V2(3, 5);
-        V2 w = new V2(x, y);
+        final V2 v = new V2(3, 5);
+        final V2 w = new V2(x, y);
         assertNotSame(v, w);
         assertNotEquals(v, w);
     }

@@ -18,7 +18,7 @@ public final class TestStreams {
         final Supplier<Stream<Pair<Integer, Integer>>> bruteForceAndFilter = () -> Stream.iterate(0, i -> i + 1)
                 .limit(n)
                 .flatMap(x -> Stream.iterate(0, i -> i + 1).limit(n).map(i -> new Pair<>(x, i)))
-                .filter(p -> p.x() < p.y());
+                .filter(p -> p.first() < p.second());
 
         final Supplier<Stream<Pair<Integer, Integer>>> lessIterations = () -> Stream.iterate(0, i -> i + 1)
                 .limit(n)

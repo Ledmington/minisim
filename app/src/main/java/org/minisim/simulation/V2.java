@@ -101,7 +101,7 @@ public record V2(double x, double y) {
     }
 
     /**
-     * Creates a new V2 with the same x and y values inside.
+     * Creates a new V2 with the same first and second values inside.
      * This means that, if we have a V2 named 'v':
      * <pre>
      * v == v.copy() is false
