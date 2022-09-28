@@ -1,5 +1,7 @@
 package org.minisim.view;
 
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -16,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.minisim.Minisim;
 import org.minisim.simulation.Simulation;
+import org.minisim.simulation.V2;
+import org.minisim.simulation.body.Body;
 import org.minisim.utils.Worker;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
@@ -24,11 +28,19 @@ public final class SimulationView extends BorderPane {
 
     private final Worker simulationUpdaterWorker;
     private final Minisim model;
+    private final Canvas canvas;
+    private Optional<Body> selectedBody = Optional.empty();
 
     public SimulationView(final Minisim model) {
         this.model = model;
-        final Canvas canvas = new Canvas(500, 500);
+        canvas = new Canvas(500, 500);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
+        canvas.setOnMouseClicked(e -> {
+            final V2 mousePosition = new V2(e.getX(), canvas.getHeight() - e.getY());
+            selectedBody = Optional.of(model.getSimulation().getBodies().stream()
+                            .min(Comparator.comparingDouble(a -> a.position().dist(mousePosition))))
+                    .get();
+        });
         setCenter(canvas);
 
         simulationUpdaterWorker = new Worker("simulationUpdater", () -> {
@@ -87,5 +99,11 @@ public final class SimulationView extends BorderPane {
                         sim.getBounds().UP_BORDER - b.position().y(),
                         b.radius(),
                         b.radius()));
+        if (selectedBody.isPresent()) {
+            final Body b = selectedBody.get();
+            gc.setFill(Color.BLACK);
+            gc.fillRect(0, sim.getBounds().UP_BORDER - b.position().y(), canvas.getWidth(), 1);
+            gc.fillRect(b.position().x(), 0, 1, canvas.getHeight());
+        }
     }
 }
