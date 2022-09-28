@@ -1,6 +1,7 @@
 package org.minisim.view.images;
 
 public enum ImageName {
+    APPLICATION_ICON("/icons/atom.ico"),
     PLAY("/icons/play.png"),
     PAUSE("/icons/pause.png"),
     PLAYBACK("/icons/back.png"),
