@@ -15,4 +15,6 @@ public interface Simulation {
     Borders getBounds();
 
     List<Body> getBodies();
+
+    void addBody(final Body b);
 }

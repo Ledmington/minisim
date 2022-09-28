@@ -43,6 +43,24 @@ public final class SimulationBuilder {
         return this;
     }
 
+    public SimulationBuilder fixedBody(final Body fixedBody) {
+        final Supplier<Body> oldSupplier = bodySupplier;
+        bodySupplier = new Supplier<>() {
+            private boolean firstTime = true;
+
+            @Override
+            public Body get() {
+                if (firstTime) {
+                    firstTime = false;
+                    return fixedBody;
+                } else {
+                    return oldSupplier.get();
+                }
+            }
+        };
+        return this;
+    }
+
     public SimulationBuilder width(final int width) {
         w = width;
         return this;

@@ -8,8 +8,10 @@ import java.util.logging.Logger;
 import javafx.application.HostServices;
 import javafx.stage.Stage;
 import org.minisim.simulation.Simulation;
+import org.minisim.simulation.V2;
+import org.minisim.simulation.body.BodyBuilder;
 import org.minisim.simulation.force.Friction;
-import org.minisim.simulation.force.GravityDown;
+import org.minisim.simulation.force.Gravity;
 import org.minisim.utils.LoggerUtils;
 import org.minisim.view.FrameManager;
 import org.minisim.view.MinisimView;
@@ -24,10 +26,16 @@ public final class Minisim {
     private final Simulation sim = Simulation.builder()
             .nBodies(1000)
             .randomBodyIn(0, 500, 0, 500)
+            .fixedBody(new BodyBuilder()
+                    .fixed()
+                    .mass(100)
+                    .radius(5)
+                    .position(new V2(250, 250))
+                    .build())
             .width(500)
             .height(500)
-            // .addForce(new Gravity(1e-2))
-            .addForce(new GravityDown(0.1))
+            .addForce(new Gravity(1e-2))
+            // .addForce(new GravityDown(0.1))
             .addForce(new Friction(0.5))
             .solidBorders()
             .build();

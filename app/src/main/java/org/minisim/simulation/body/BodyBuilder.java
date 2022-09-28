@@ -10,6 +10,7 @@ public final class BodyBuilder {
     private V2 force = V2.origin();
     private double mass = 1;
     private double radius = 1;
+    private boolean fixed = false;
 
     public BodyBuilder position(final V2 position) {
         this.position = position;
@@ -41,6 +42,11 @@ public final class BodyBuilder {
         return this;
     }
 
+    public BodyBuilder fixed() {
+        this.fixed = true;
+        return this;
+    }
+
     /**
      * Builds a new Body with the given parameters. If not set, they will default
      * to the following values:
@@ -54,6 +60,10 @@ public final class BodyBuilder {
      *      A new Body with the given parameters.
      */
     public Body build() {
-        return new Body(position, speed, acceleration, force, mass, radius);
+        if (fixed) {
+            return new FixedBody(position, mass, radius);
+        } else {
+            return new Body(position, speed, acceleration, force, mass, radius);
+        }
     }
 }

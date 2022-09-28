@@ -2,7 +2,7 @@ package org.minisim.simulation.body;
 
 import org.minisim.simulation.V2;
 
-public final class Body {
+public sealed class Body permits FixedBody {
 
     public static BodyBuilder builder() {
         return new BodyBuilder();
@@ -12,8 +12,8 @@ public final class Body {
     private V2 speed;
     private V2 acceleration;
     private V2 force;
-    private double mass;
-    private double radius;
+    private final double mass;
+    private final double radius;
 
     public Body(
             final V2 position,
@@ -49,16 +49,8 @@ public final class Body {
         return mass;
     }
 
-    public void setMass(final double newMass) {
-        mass = newMass;
-    }
-
     public double radius() {
         return radius;
-    }
-
-    public void setRadius(final double newRadius) {
-        radius = newRadius;
     }
 
     public V2 position() {
@@ -79,10 +71,6 @@ public final class Body {
 
     public V2 acceleration() {
         return acceleration;
-    }
-
-    public void setAcceleration(final V2 newAcceleration) {
-        acceleration = newAcceleration;
     }
 
     public V2 force() {
