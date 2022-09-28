@@ -28,7 +28,7 @@ public final class Minisim {
             .randomBodyIn(0, 500, 0, 500)
             .fixedBody(new BodyBuilder()
                     .fixed()
-                    .mass(100)
+                    .mass(1000)
                     .radius(5)
                     .position(new V2(250, 250))
                     .build())
