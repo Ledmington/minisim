@@ -2,7 +2,6 @@ package org.minisim;
 
 import static org.minisim.AppConstants.*;
 
-import java.awt.*;
 import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;

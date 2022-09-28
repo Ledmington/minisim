@@ -3,10 +3,17 @@ package org.minisim.view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.PixelReader;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.minisim.utils.EncoderUtils;
 import org.minisim.utils.FileUtils;
+import org.minisim.utils.ThreadUtils;
 
 // TODO: refactor or make singleton
 public final class FrameManager {
@@ -36,6 +43,18 @@ public final class FrameManager {
 
     // TODO: consider looking at jcodec-streaming for live video creation
     public void createVideo() {
+        // TODO: refactor as template method
+        final Stage progressDialog = new Stage();
+        progressDialog.setTitle("Exporting video");
+        progressDialog.setResizable(false);
+        final BorderPane pane = new BorderPane();
+        final Label title = LabelFactory.getInstance().newLabel("Loading frames");
+        pane.setTop(title);
+        final ProgressBar progressBar = new ProgressBar(0);
+        pane.setCenter(progressBar);
+        final Scene scene = new Scene(pane);
+        progressDialog.setScene(scene);
+
         final int framesPerSecond = 25;
         System.out.printf("Compression %d frames in a %d fps video%n", totalFrames, framesPerSecond);
         AWTSequenceEncoder encoder =
@@ -43,11 +62,21 @@ public final class FrameManager {
         final File[] frames = new File(frameDirectory).listFiles();
         assert frames != null;
         Arrays.sort(frames, (x, y) -> x.getName().compareTo(y.getName()));
+
         for (int i = 0; i < frames.length; i++) {
-            System.out.printf("Loading frame %04d / %04d (\"%s\")%n", i, frames.length, frames[i].getName());
-            final BufferedImage img = FileUtils.safeRead(frames[i]);
-            EncoderUtils.safeEncodeImage(encoder, img);
+            final int finalI = i;
+            Platform.runLater(() -> {
+                title.setText(String.format("Encoding frame %04d / %04d", finalI, frames.length));
+                progressBar.setProgress((double) finalI / (double) frames.length);
+                System.out.printf(
+                        "Loading frame %04d / %04d (\"%s\")%n", finalI, frames.length, frames[finalI].getName());
+                final BufferedImage img = FileUtils.safeRead(frames[finalI]);
+                EncoderUtils.safeEncodeImage(encoder, img);
+            });
         }
-        EncoderUtils.safeFinish(encoder);
+
+        Platform.runLater(() -> EncoderUtils.safeFinish(encoder));
+
+        progressDialog.showAndWait();
     }
 }
