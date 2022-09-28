@@ -1,7 +1,6 @@
 package org.minisim.view;
 
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -29,7 +28,7 @@ public final class SimulationView extends BorderPane {
     private final Worker simulationUpdaterWorker;
     private final Minisim model;
     private final Canvas canvas;
-    private Optional<Body> selectedBody = Optional.empty();
+    private Body selectedBody = null;
 
     public SimulationView(final Minisim model) {
         this.model = model;
@@ -37,9 +36,10 @@ public final class SimulationView extends BorderPane {
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         canvas.setOnMouseClicked(e -> {
             final V2 mousePosition = new V2(e.getX(), canvas.getHeight() - e.getY());
-            selectedBody = Optional.of(model.getSimulation().getBodies().stream()
-                            .min(Comparator.comparingDouble(a -> a.position().dist(mousePosition))))
-                    .get();
+            selectedBody = model.getSimulation().getBodies().stream()
+                    .min(Comparator.comparingDouble(a -> a.position().dist(mousePosition)))
+                    .orElseThrow();
+            renderSimulation(gc);
         });
         setCenter(canvas);
 
@@ -99,11 +99,34 @@ public final class SimulationView extends BorderPane {
                         sim.getBounds().UP_BORDER - b.position().y(),
                         b.radius(),
                         b.radius()));
-        if (selectedBody.isPresent()) {
-            final Body b = selectedBody.get();
+        if (selectedBody != null) {
+            final int selectionRadius = 20;
             gc.setFill(Color.BLACK);
-            gc.fillRect(0, sim.getBounds().UP_BORDER - b.position().y(), canvas.getWidth(), 1);
-            gc.fillRect(b.position().x(), 0, 1, canvas.getHeight());
+            gc.fillRect(
+                    0,
+                    sim.getBounds().UP_BORDER - selectedBody.position().y(),
+                    selectedBody.position().x() - selectionRadius,
+                    1);
+            gc.fillRect(
+                    selectedBody.position().x() + selectionRadius,
+                    sim.getBounds().UP_BORDER - selectedBody.position().y(),
+                    canvas.getWidth(),
+                    1);
+            gc.fillRect(
+                    selectedBody.position().x(),
+                    0,
+                    1,
+                    canvas.getHeight() - selectedBody.position().y() - selectionRadius);
+            gc.fillRect(
+                    selectedBody.position().x(),
+                    canvas.getHeight() - selectedBody.position().y() + selectionRadius,
+                    1,
+                    canvas.getHeight());
+            gc.strokeOval(
+                    selectedBody.position().x() - (double) selectionRadius / 2,
+                    canvas.getHeight() - selectedBody.position().y() - (double) selectionRadius / 2,
+                    selectionRadius,
+                    selectionRadius);
         }
     }
 }
