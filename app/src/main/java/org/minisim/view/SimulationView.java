@@ -28,10 +28,12 @@ public final class SimulationView extends BorderPane {
     private final Worker simulationUpdaterWorker;
     private final Minisim model;
     private final Canvas canvas;
+    private final BodyInfoPane bodyInfo;
     private Body selectedBody = null;
 
-    public SimulationView(final Minisim model) {
+    public SimulationView(final Minisim model, final BodyInfoPane bodyInfo) {
         this.model = model;
+        this.bodyInfo = bodyInfo;
         canvas = new Canvas(500, 500);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         canvas.setOnMouseClicked(e -> {
@@ -39,6 +41,7 @@ public final class SimulationView extends BorderPane {
             selectedBody = model.getSimulation().getBodies().stream()
                     .min(Comparator.comparingDouble(a -> a.position().dist(mousePosition)))
                     .orElseThrow();
+            bodyInfo.updateInfo(selectedBody);
             renderSimulation(gc);
         });
         setCenter(canvas);
@@ -127,6 +130,7 @@ public final class SimulationView extends BorderPane {
                     canvas.getHeight() - selectedBody.position().y() - (double) selectionRadius / 2,
                     selectionRadius,
                     selectionRadius);
+            Platform.runLater(() -> bodyInfo.updateInfo(selectedBody));
         }
     }
 }
