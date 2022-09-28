@@ -11,8 +11,8 @@ import org.minisim.simulation.force.Gravity;
 
 public final class TestGravity {
 
+    private static final double EPSILON = 1e-12;
     private Gravity gravity;
-    private final double EPSILON = 1e-12;
 
     @BeforeEach
     public void setup() {

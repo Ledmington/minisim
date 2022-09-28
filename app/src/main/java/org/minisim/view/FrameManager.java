@@ -37,14 +37,14 @@ public final class FrameManager {
     // TODO: consider looking at jcodec-streaming for live video creation
     public void createVideo() {
         final int framesPerSecond = 25;
-        System.out.printf("Compression %d frames in a %d fps video\n", totalFrames, framesPerSecond);
+        System.out.printf("Compression %d frames in a %d fps video%n", totalFrames, framesPerSecond);
         AWTSequenceEncoder encoder =
                 EncoderUtils.safeCreateSequenceEncoder(new File("./simulation.mp4"), framesPerSecond);
         final File[] frames = new File(frameDirectory).listFiles();
         assert frames != null;
         Arrays.sort(frames, (x, y) -> x.getName().compareTo(y.getName()));
         for (int i = 0; i < frames.length; i++) {
-            System.out.printf("Loading frame %04d / %04d (\"%s\")\n", i, frames.length, frames[i].getName());
+            System.out.printf("Loading frame %04d / %04d (\"%s\")%n", i, frames.length, frames[i].getName());
             final BufferedImage img = FileUtils.safeRead(frames[i]);
             EncoderUtils.safeEncodeImage(encoder, img);
         }
