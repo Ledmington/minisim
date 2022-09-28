@@ -41,7 +41,13 @@ public final class AuthorsDialog extends Stage {
                 }
             };
             name.setOnAction(e -> hostServices.showDocument(c.link()));
-            grid.addRow(i, name, LabelFactory.getInstance().newLabel(c.description(), MinisimFonts.italic(12)));
+            grid.addRow(
+                    i,
+                    name,
+                    new LabelBuilder()
+                            .text(c.description())
+                            .font(MinisimFonts.italic(12))
+                            .build());
         }
         grid.setPadding(new Insets(15));
         grid.setVgap(10);
