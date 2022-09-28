@@ -1,4 +1,4 @@
-package org.minisim;
+package org.minisim.body;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 
-public final class TestBody {
+public class TestBody {
 
     public static final double EPSILON = 1e-12;
 
