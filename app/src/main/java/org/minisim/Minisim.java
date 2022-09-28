@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javafx.application.HostServices;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.minisim.simulation.Simulation;
 import org.minisim.simulation.force.Friction;
@@ -14,6 +13,7 @@ import org.minisim.simulation.force.GravityDown;
 import org.minisim.utils.LoggerUtils;
 import org.minisim.view.FrameManager;
 import org.minisim.view.MinisimView;
+import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
 
 /**
@@ -44,10 +44,7 @@ public final class Minisim {
         logger.info(" - Java " + javaVersion);
         logger.info(" - JVM " + jvmVersion);
         logger.info(" - JavaFX " + javafxVersion);
-        stage.getIcons()
-                .add(new Image(getClass()
-                        .getResource(ImageName.APPLICATION_ICON.path())
-                        .toExternalForm()));
+        stage.getIcons().add(ImageManager.getImage(ImageName.APPLICATION_ICON));
         new MinisimView(this, hostServices, stage);
     }
 

@@ -3,6 +3,7 @@ package org.minisim.view;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
+import java.util.Comparator;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,8 @@ import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.minisim.utils.EncoderUtils;
 import org.minisim.utils.FileUtils;
 import org.minisim.utils.ThreadUtils;
+import org.minisim.view.images.ImageManager;
+import org.minisim.view.images.ImageName;
 
 // TODO: refactor or make singleton
 public final class FrameManager {
@@ -62,6 +65,7 @@ public final class FrameManager {
         pane.setCenter(progressBar);
         final Scene scene = new Scene(pane);
         progressDialog.setScene(scene);
+        progressDialog.getIcons().add(ImageManager.getImage(ImageName.APPLICATION_ICON));
         progressDialog.setResizable(false);
 
         final Thread videoRendererThread = new Thread(
@@ -72,7 +76,7 @@ public final class FrameManager {
                             EncoderUtils.safeCreateSequenceEncoder(new File("./simulation.mp4"), framesPerSecond);
                     final File[] frames = new File(frameDirectory).listFiles();
                     assert frames != null;
-                    Arrays.sort(frames, (x, y) -> x.getName().compareTo(y.getName()));
+                    Arrays.sort(frames, Comparator.comparing(File::getName));
 
                     for (int i = 0; i < frames.length; i++) {
                         final int finalI = i;

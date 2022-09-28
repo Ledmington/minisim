@@ -1,7 +1,7 @@
 package org.minisim.view.images;
 
 public enum ImageName {
-    APPLICATION_ICON("/icons/atom.ico"),
+    APPLICATION_ICON("/icons/atom.png"),
     PLAY("/icons/play.png"),
     PAUSE("/icons/pause.png"),
     PLAYBACK("/icons/back.png"),
@@ -10,7 +10,7 @@ public enum ImageName {
 
     private final String path;
 
-    private ImageName(final String path) {
+    ImageName(final String path) {
         this.path = path;
     }
 
