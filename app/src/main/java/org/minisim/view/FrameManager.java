@@ -52,10 +52,12 @@ public final class FrameManager {
         final Stage progressDialog = new Stage();
         progressDialog.setTitle("Exporting video");
         final BorderPane pane = new BorderPane();
-        final Label title = new LabelBuilder()
-                .text("Loading frames")
-                .alignment(Pos.CENTER_LEFT)
-                .build();
+        final Label title = new Label() {
+            {
+                setText("Loading frames");
+                setAlignment(Pos.CENTER_LEFT);
+            }
+        };
         title.setPadding(new Insets(15));
         pane.setTop(title);
         final ProgressBar progressBar = new ProgressBar(0);

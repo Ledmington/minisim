@@ -1,5 +1,6 @@
 package org.minisim.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import org.minisim.simulation.body.Body;
 import org.minisim.utils.Pair;
@@ -7,43 +8,66 @@ import org.minisim.utils.SmartGridPane;
 
 public final class BodyInfoPane extends SmartGridPane {
 
-    private final Pair<Label, Label> position = new Pair<>(
-            new LabelBuilder().text("N/A").build(),
-            new LabelBuilder().text("N/A").build());
-    private final Pair<Label, Label> speed = new Pair<>(
-            new LabelBuilder().text("N/A").build(),
-            new LabelBuilder().text("N/A").build());
-    private final Pair<Label, Label> acceleration = new Pair<>(
-            new LabelBuilder().text("N/A").build(),
-            new LabelBuilder().text("N/A").build());
-    private final Pair<Label, Label> force = new Pair<>(
-            new LabelBuilder().text("N/A").build(),
-            new LabelBuilder().text("N/A").build());
-    private final Label mass = new LabelBuilder().text("N/A").build();
-    private final Label radius = new LabelBuilder().text("N/A").build();
+    private final Pair<Label, Label> position = new Pair<>(getDefaultLabel(), getDefaultLabel());
+    private final Pair<Label, Label> speed = new Pair<>(getDefaultLabel(), getDefaultLabel());
+    private final Pair<Label, Label> acceleration = new Pair<>(getDefaultLabel(), getDefaultLabel());
+    private final Pair<Label, Label> force = new Pair<>(getDefaultLabel(), getDefaultLabel());
+    private final Label mass = getDefaultLabel();
+    private final Label radius = getDefaultLabel();
 
     public BodyInfoPane() {
         super();
 
-        add(new LabelBuilder().text("Position").font(MinisimFonts.bold(12)).build(), 2);
-        addRow(new LabelBuilder().text("X:").build(), position.first());
-        addRow(new LabelBuilder().text("Y:").build(), position.second());
+        add(getBoldLabel("Position"), 2);
+        addRow(getDefaultLabel("X:"), position.first());
+        addRow(getDefaultLabel("Y:"), position.second());
 
-        add(new LabelBuilder().text("Speed").font(MinisimFonts.bold(12)).build(), 2);
-        addRow(new LabelBuilder().text("X:").build(), speed.first());
-        addRow(new LabelBuilder().text("Y:").build(), speed.second());
+        add(getBoldLabel("Speed"), 2);
+        addRow(getDefaultLabel("X:"), speed.first());
+        addRow(getDefaultLabel("Y:"), speed.second());
 
-        add(new LabelBuilder().text("Acceleration").font(MinisimFonts.bold(12)).build(), 2);
-        addRow(new LabelBuilder().text("X:").build(), acceleration.first());
-        addRow(new LabelBuilder().text("Y:").build(), acceleration.second());
+        add(getBoldLabel("Acceleration"), 2);
+        addRow(getDefaultLabel("X:"), acceleration.first());
+        addRow(getDefaultLabel("Y:"), acceleration.second());
 
-        add(new LabelBuilder().text("Force").font(MinisimFonts.bold(12)).build(), 2);
-        addRow(new LabelBuilder().text("X:").build(), force.first());
-        addRow(new LabelBuilder().text("Y:").build(), force.second());
+        add(getBoldLabel("Force"), 2);
+        addRow(getDefaultLabel("X:"), force.first());
+        addRow(getDefaultLabel("Y:"), force.second());
 
-        addRow(new LabelBuilder().text("Mass:").font(MinisimFonts.bold(12)).build(), mass);
+        addRow(getBoldLabel("Mass:"), mass);
 
-        addRow(new LabelBuilder().text("Radius:").font(MinisimFonts.bold(12)).build(), radius);
+        addRow(getBoldLabel("Radius:"), radius);
+    }
+
+    private Label getDefaultLabel() {
+        return new Label() {
+            {
+                setText("N/A");
+                setAlignment(Pos.CENTER);
+                setMaxWidth(Double.MAX_VALUE);
+            }
+        };
+    }
+
+    private Label getDefaultLabel(final String text) {
+        return new Label() {
+            {
+                setText(text);
+                setAlignment(Pos.CENTER);
+                setMaxWidth(Double.MAX_VALUE);
+            }
+        };
+    }
+
+    private Label getBoldLabel(final String text) {
+        return new Label() {
+            {
+                setText(text);
+                setAlignment(Pos.CENTER);
+                setMaxWidth(Double.MAX_VALUE);
+                setFont(MinisimFonts.bold(12));
+            }
+        };
     }
 
     public void updateInfo(final Body selectedBody) {
