@@ -2,38 +2,51 @@ package org.minisim.simulation.body;
 
 import org.minisim.simulation.V2;
 
-/**
- * Extension of {@link Body} which does nothing when trying to modify
- * its position, speed or force.
- */
-public final class FixedBody extends Body {
+final class FixedBody extends AbstractBody {
+
+    private final V2 position;
+    private final double mass;
+    private final double radius;
 
     public FixedBody(final V2 position, final double mass, final double radius) {
-        super(position, V2.origin(), V2.origin(), V2.origin(), mass, radius);
+        // TODO: null checks and positive mass and radius
+        this.position = position;
+        this.mass = mass;
+        this.radius = radius;
     }
 
     @Override
-    public void setPosition(final V2 newPosition) {
-        // intentionally left empty
+    public V2 position() {
+        return position;
     }
 
     @Override
-    public void setPosition(final double x, final double y) {
-        // intentionally left empty
+    public V2 speed() {
+        return V2.origin();
     }
 
     @Override
-    public void setSpeed(final double x, final double y) {
-        // intentionally left empty
+    public V2 acceleration() {
+        return V2.origin();
     }
 
     @Override
-    public void setForce(final V2 newForce) {
-        // intentionally left empty
+    public V2 force() {
+        return V2.origin();
+    }
+
+    @Override
+    public double mass() {
+        return mass;
+    }
+
+    @Override
+    public double radius() {
+        return radius;
     }
 
     @Override
     public void applyForce() {
-        // intentionally left empty
+        // intentionally left blank
     }
 }
