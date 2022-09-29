@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.minisim.simulation.V2;
-import org.minisim.simulation.body.FixedBody;
 
 public final class TestFixedBody extends TestBody {
 

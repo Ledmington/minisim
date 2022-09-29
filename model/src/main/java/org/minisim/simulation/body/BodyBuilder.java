@@ -68,7 +68,7 @@ public final class BodyBuilder {
         if (fixed) {
             return new FixedBody(position, mass, radius);
         } else {
-            return new Body(position, speed, acceleration, force, mass, radius);
+            return new MovableBody(position, speed, acceleration, force, mass, radius);
         }
     }
 }
