@@ -1,2 +1,3 @@
 rootProject.name = 'minisim'
-include('app')
+include('minisim-model')
+include('minisim-view')

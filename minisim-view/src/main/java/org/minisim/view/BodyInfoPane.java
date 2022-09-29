@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import org.minisim.simulation.body.Body;
 import org.minisim.utils.Pair;
-import org.minisim.utils.SmartGridPane;
+import org.minisim.view.utils.SmartGridPane;
 
 public final class BodyInfoPane extends SmartGridPane {
 

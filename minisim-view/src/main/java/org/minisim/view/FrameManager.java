@@ -14,11 +14,11 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jcodec.api.awt.AWTSequenceEncoder;
-import org.minisim.utils.EncoderUtils;
 import org.minisim.utils.FileUtils;
 import org.minisim.utils.ThreadUtils;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;
+import org.minisim.view.utils.EncoderUtils;
 
 // TODO: refactor or make singleton
 public final class FrameManager {

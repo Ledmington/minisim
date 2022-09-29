@@ -1,7 +1,5 @@
 package org.minisim.view;
 
-import static org.minisim.AppConstants.*;
-
 import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.minisim.AppConstants;
 
 // TODO: maybe this should be a singleton?
 public final class ViewUtils {
@@ -29,10 +28,10 @@ public final class ViewUtils {
             pane.setCenter(new Label(String.join(
                     "\n",
                     "MiniSim is running on:",
-                    " - " + OSName + " " + OSVersion,
-                    " - Java " + javaVersion,
-                    " - JVM " + jvmVersion,
-                    " - JavaFX " + javafxVersion)));
+                    " - " + AppConstants.OSName + " " + AppConstants.OSVersion,
+                    " - Java " + AppConstants.javaVersion,
+                    " - JVM " + AppConstants.jvmVersion,
+                    " - JavaFX " + AppConstants.javafxVersion)));
             stage.setResizable(false);
             final Scene scene = new Scene(pane);
             stage.setScene(scene);

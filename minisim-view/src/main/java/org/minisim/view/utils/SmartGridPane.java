@@ -1,4 +1,4 @@
-package org.minisim.utils;
+package org.minisim.view.utils;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;

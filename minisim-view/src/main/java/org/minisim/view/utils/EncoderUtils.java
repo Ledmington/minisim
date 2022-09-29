@@ -1,4 +1,4 @@
-package org.minisim.utils;
+package org.minisim.view.utils;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

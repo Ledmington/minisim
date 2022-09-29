@@ -1,0 +1,75 @@
+plugins {
+	id 'java'
+	id 'jacoco'
+	id 'com.diffplug.spotless' version '6.11.0'
+	id "com.github.spotbugs" version "5.0.12"
+	id 'pmd'
+
+	// For mutation testing
+	id 'info.solidsoft.pitest' version '1.7.4'
+}
+
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'com.google.guava:guava:31.0.1-jre'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+jacoco {
+	toolVersion = '0.8.8'
+}
+
+// Format code always before compiling
+tasks.compileJava.dependsOn(spotlessApply)
+
+spotless {
+	// optional: limit format enforcement to just the files changed by this feature branch
+	//ratchetFrom 'origin/main'
+
+	format 'misc', {
+		// define the files to apply `misc` to
+		target '*.gradle', '*.md', '.gitignore'
+
+		// define the steps to apply to those files
+		trimTrailingWhitespace()
+		indentWithTabs()
+		endWithNewline()
+		setEncoding('utf-8')
+	}
+
+	java {
+		importOrder()
+		removeUnusedImports()
+		formatAnnotations()
+		palantirJavaFormat('2.26.0')
+	}
+}
+
+pitest {
+	targetClasses = [ 'org.minisim.simulation.*', 'org.minisim.utils.*']  //by default "${project.group}.*"
+	//targetTests = []
+	pitestVersion = '1.7.4' //not needed when a default PIT version should be used
+	junit5PluginVersion = '0.15'
+	//threads = 4
+	outputFormats = ['HTML']
+	//verbose = true
+	timestampedReports = false
+}
+
+pmd {
+	consoleOutput = true
+	toolVersion = "6.21.0"
+	rulesMinimumPriority = 5
+	ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+	//threads = 4
+}
