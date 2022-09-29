@@ -14,7 +14,6 @@ public final class SerialSimulation implements Simulation {
     private final List<Force> forces = new ArrayList<>();
     private final List<UnaryForce> unaryForces = new ArrayList<>();
     private final Borders bounds;
-    private final CollisionManager collisionManager = new CollisionManager(false, false);
 
     public SerialSimulation(
             final int nBodies,
@@ -54,7 +53,7 @@ public final class SerialSimulation implements Simulation {
         // TODO: if you do too many iterations, some body will be pushed outside the
         // domain borders
         for (int i = 0; i < 10; i++) {
-            if (!collisionManager.detectAndResolveCollisions(bodies)) {
+            if (!CollisionManager.detectAndResolveCollisions(bodies)) {
                 break;
             }
         }

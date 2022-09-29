@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
@@ -14,12 +13,6 @@ import org.minisim.simulation.collision.CollisionManager;
 public final class TestCollisionsNoOverlapNoBounce {
 
     private final List<Body> bodies = new LinkedList<>();
-    private CollisionManager cm;
-
-    @BeforeEach
-    public void setup() {
-        cm = new CollisionManager(false, false);
-    }
 
     @AfterEach
     public void teardown() {
@@ -30,14 +23,14 @@ public final class TestCollisionsNoOverlapNoBounce {
     public void canDetectCollisions() {
         bodies.add(Body.builder().position(1, 1).build());
         bodies.add(Body.builder().position(2, 2).build());
-        assertTrue(cm.detectAndResolveCollisions(bodies));
+        assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
     }
 
     @Test
     public void noCollisions() {
         bodies.add(Body.builder().position(1, 1).build());
         bodies.add(Body.builder().position(3, 3).build());
-        assertFalse(cm.detectAndResolveCollisions(bodies));
+        assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
     }
 
     @Test
@@ -46,8 +39,8 @@ public final class TestCollisionsNoOverlapNoBounce {
         final Body second = Body.builder().position(2, 2).build();
         bodies.add(first);
         bodies.add(second);
-        assertTrue(cm.detectAndResolveCollisions(bodies));
-        assertFalse(cm.detectAndResolveCollisions(bodies));
+        assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
+        assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
         assertEquals(V2.of(0.5, 2), first.position());
         assertEquals(V2.of(2.5, 2), second.position());
     }
@@ -60,8 +53,8 @@ public final class TestCollisionsNoOverlapNoBounce {
         final Body second = Body.builder().position(2, 2).mass(3).build();
         bodies.add(first);
         bodies.add(second);
-        assertTrue(cm.detectAndResolveCollisions(bodies));
-        assertFalse(cm.detectAndResolveCollisions(bodies));
+        assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
+        assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
         assertEquals(V2.of(0.5, 2), first.position());
         assertEquals(V2.of(2.5, 2), second.position());
     }
@@ -72,8 +65,8 @@ public final class TestCollisionsNoOverlapNoBounce {
         final Body second = Body.builder().position(5, 4).radius(3).build();
         bodies.add(first);
         bodies.add(second);
-        assertTrue(cm.detectAndResolveCollisions(bodies));
-        assertFalse(cm.detectAndResolveCollisions(bodies));
+        assertTrue(CollisionManager.detectAndResolveCollisions(bodies));
+        assertFalse(CollisionManager.detectAndResolveCollisions(bodies));
         assertEquals(V2.of(2, 4), first.position());
         assertEquals(V2.of(7, 4), second.position());
     }
