@@ -13,7 +13,7 @@ sourceCompatibility = '17'
 def mainClassFullName = 'org.minisim.App'
 
 dependencies {
-	implementation project(':minisim-model')
+	implementation project(':model')
 	//implementation 'com.google.guava:guava:31.0.1-jre'
 	implementation 'org.jcodec:jcodec-javase:0.2.5' // video encoding compatible with AWT
 }
