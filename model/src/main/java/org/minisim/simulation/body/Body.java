@@ -22,6 +22,16 @@ public sealed interface Body permits AbstractBody {
 
     double radius();
 
+    void setPosition(final V2 newPosition);
+
+    void setPosition(final double x, final double y);
+
+    void setSpeed(final V2 newSpeed);
+
+    void setSpeed(final double x, final double y);
+
+    void setForce(final V2 newForce);
+
     // TODO: write doc
     boolean collidesWith(final Body other);
 

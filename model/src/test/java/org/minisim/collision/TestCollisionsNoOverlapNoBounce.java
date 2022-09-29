@@ -28,22 +28,22 @@ public final class TestCollisionsNoOverlapNoBounce {
 
     @Test
     public void canDetectCollisions() {
-        bodies.add(new Body(V2.of(1, 1), V2.of(0, 0), 1, 1));
-        bodies.add(new Body(V2.of(2, 2), V2.of(0, 0), 1, 1));
+        bodies.add(Body.builder().position(1, 1).build());
+        bodies.add(Body.builder().position(2, 2).build());
         assertTrue(cm.detectAndResolveCollisions(bodies));
     }
 
     @Test
     public void noCollisions() {
-        bodies.add(new Body(V2.of(1, 1), V2.of(0, 0), 1, 1));
-        bodies.add(new Body(V2.of(3, 3), V2.of(0, 0), 1, 1));
+        bodies.add(Body.builder().position(1, 1).build());
+        bodies.add(Body.builder().position(3, 3).build());
         assertFalse(cm.detectAndResolveCollisions(bodies));
     }
 
     @Test
     public void canResolveCollisions() {
-        final Body first = new Body(V2.of(1, 2), V2.of(0, 0), 1, 1);
-        final Body second = new Body(V2.of(2, 2), V2.of(0, 0), 1, 1);
+        final Body first = Body.builder().position(1, 2).build();
+        final Body second = Body.builder().position(2, 2).build();
         bodies.add(first);
         bodies.add(second);
         assertTrue(cm.detectAndResolveCollisions(bodies));
@@ -56,8 +56,8 @@ public final class TestCollisionsNoOverlapNoBounce {
     public void canResolveCollisionsDifferentMasses() {
         // this test is a copy-paste of "can_resolve_collisions" because mass
         // must not interfere with collisions
-        final Body first = new Body(V2.of(1, 2), V2.of(0, 0), 2, 1);
-        final Body second = new Body(V2.of(2, 2), V2.of(0, 0), 3, 1);
+        final Body first = Body.builder().position(1, 2).mass(2).build();
+        final Body second = Body.builder().position(2, 2).mass(3).build();
         bodies.add(first);
         bodies.add(second);
         assertTrue(cm.detectAndResolveCollisions(bodies));
@@ -68,8 +68,8 @@ public final class TestCollisionsNoOverlapNoBounce {
 
     @Test
     public void canResolveCollisionsDifferentRadii() {
-        final Body first = new Body(V2.of(4, 4), V2.of(0, 0), 1, 2);
-        final Body second = new Body(V2.of(5, 4), V2.of(0, 0), 1, 3);
+        final Body first = Body.builder().position(4, 4).radius(2).build();
+        final Body second = Body.builder().position(5, 4).radius(3).build();
         bodies.add(first);
         bodies.add(second);
         assertTrue(cm.detectAndResolveCollisions(bodies));

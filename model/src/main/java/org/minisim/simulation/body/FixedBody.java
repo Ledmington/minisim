@@ -46,7 +46,22 @@ final class FixedBody extends AbstractBody {
     }
 
     @Override
+    public void setPosition(final V2 newPosition) {
+        // intentionally left empty
+    }
+
+    @Override
+    public void setSpeed(final V2 newSpeed) {
+        // intentionally left empty
+    }
+
+    @Override
+    public void setForce(final V2 newForce) {
+        // intentionally left empty
+    }
+
+    @Override
     public void applyForce() {
-        // intentionally left blank
+        // intetionally left empty
     }
 }

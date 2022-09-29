@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import javafx.application.HostServices;
 import javafx.stage.Stage;
 import org.minisim.simulation.Simulation;
-import org.minisim.simulation.body.BodyBuilder;
+import org.minisim.simulation.body.Body;
 import org.minisim.simulation.force.Friction;
 import org.minisim.simulation.force.Gravity;
 import org.minisim.utils.LoggerUtils;
@@ -25,7 +25,7 @@ public final class Minisim {
     private final Simulation sim = Simulation.builder()
             .nBodies(1000)
             .randomBodyIn(0, 500, 0, 500)
-            .fixedBody(new BodyBuilder()
+            .fixedBody(Body.builder()
                     .fixed()
                     .mass(1000)
                     .radius(5)

@@ -34,7 +34,7 @@ public final class TestSolidBorders {
 
     @Test
     public void noChangesIfInside() {
-        final Body b = new Body(V2.of(1, 1), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(1, 1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(1, 1));
@@ -45,7 +45,7 @@ public final class TestSolidBorders {
     public void cornersAreInside() {
         for (Double x : List.of(Borders.LEFT_BORDER, sb.RIGHT_BORDER)) {
             for (Double y : List.of(Borders.BOTTOM_BORDER, sb.UP_BORDER)) {
-                final Body b = new Body(V2.of(x, y), V2.of(1, 2), 1, 1);
+                final Body b = Body.builder().position(x, y).speed(1, 2).build();
                 final V2 oldSpeed = b.speed().copy();
                 sb.accept(b);
                 assertEquals(b.position(), V2.of(x, y));
@@ -56,7 +56,7 @@ public final class TestSolidBorders {
 
     @Test
     public void outOnRight() {
-        final Body b = new Body(V2.of(11, 1), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(11, 1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(10, 1));
@@ -66,7 +66,7 @@ public final class TestSolidBorders {
 
     @Test
     public void outOnLeft() {
-        final Body b = new Body(V2.of(-1, 1), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(-1, 1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(0, 1));
@@ -76,7 +76,7 @@ public final class TestSolidBorders {
 
     @Test
     public void outOnTop() {
-        final Body b = new Body(V2.of(1, -1), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(1, -1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(1, 0));
@@ -86,7 +86,7 @@ public final class TestSolidBorders {
 
     @Test
     public void outOnBottom() {
-        final Body b = new Body(V2.of(1, 11), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(1, 11).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(1, 10));
@@ -96,7 +96,7 @@ public final class TestSolidBorders {
 
     @Test
     public void bottomRightCorner() {
-        final Body b = new Body(V2.of(11, 11), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(11, 11).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(10, 10));
@@ -105,7 +105,7 @@ public final class TestSolidBorders {
 
     @Test
     public void topLeftCorner() {
-        final Body b = new Body(V2.of(-1, -1), V2.of(1, 2), 1, 1);
+        final Body b = Body.builder().position(-1, -1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
         sb.accept(b);
         assertEquals(b.position(), V2.of(0, 0));

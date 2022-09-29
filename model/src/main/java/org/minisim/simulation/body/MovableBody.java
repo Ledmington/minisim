@@ -45,20 +45,18 @@ final class MovableBody extends AbstractBody {
         return position;
     }
 
+    @Override
     public void setPosition(final V2 newPosition) {
         position = newPosition;
     }
 
-    public void setPosition(final double x, final double y) {
-        position = V2.of(x, y);
+    @Override
+    public void setSpeed(final V2 newSpeed) {
+        speed = newSpeed;
     }
 
     public V2 speed() {
         return speed;
-    }
-
-    public void setSpeed(final double x, final double y) {
-        speed = V2.of(x, y);
     }
 
     public V2 acceleration() {
@@ -69,10 +67,12 @@ final class MovableBody extends AbstractBody {
         return force;
     }
 
+    @Override
     public void setForce(final V2 newForce) {
         force = newForce;
     }
 
+    @Override
     public void applyForce() {
         acceleration = force.div(mass); // * DT; // TODO fix later
         speed = speed.add(acceleration);

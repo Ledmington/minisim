@@ -13,7 +13,7 @@ public class TestBody {
 
     @Test
     public void defaultBody() {
-        Body b = new Body();
+        Body b = Body.builder().build();
         assertEquals(0, b.position().x(), EPSILON);
         assertEquals(0, b.position().y(), EPSILON);
         assertEquals(0, b.speed().x(), EPSILON);
@@ -24,27 +24,31 @@ public class TestBody {
 
     @Test
     public void illegalMass() {
-        assertThrows(IllegalArgumentException.class, () -> new Body(V2.origin(), V2.origin(), 0, 1));
-        assertThrows(IllegalArgumentException.class, () -> new Body(V2.origin(), V2.origin(), -1, 1));
+        assertThrows(
+                IllegalArgumentException.class, () -> Body.builder().mass(0).build());
+        assertThrows(
+                IllegalArgumentException.class, () -> Body.builder().mass(-1).build());
     }
 
     @Test
     public void illegalRadius() {
-        assertThrows(IllegalArgumentException.class, () -> new Body(V2.origin(), V2.origin(), 1, 0));
-        assertThrows(IllegalArgumentException.class, () -> new Body(V2.origin(), V2.origin(), 1, -1));
+        assertThrows(
+                IllegalArgumentException.class, () -> Body.builder().radius(0).build());
+        assertThrows(
+                IllegalArgumentException.class, () -> Body.builder().radius(-1).build());
     }
 
     @Test
     public void twoBodyCollision() {
-        Body a = new Body(V2.of(0, 0), V2.of(0, 0), 1, 1);
-        Body b = new Body(V2.of(1, 1), V2.of(0, 0), 1, 1);
+        final Body a = Body.builder().position(0, 0).build();
+        final Body b = Body.builder().position(1, 1).build();
         assertTrue(a.collidesWith(b));
     }
 
     @Test
     public void twoBodyNoCollision() {
-        Body a = new Body(V2.of(0, 0), V2.of(0, 0), 1, 1);
-        Body b = new Body(V2.of(2, 2), V2.of(0, 0), 1, 1);
+        final Body a = Body.builder().position(0, 0).build();
+        final Body b = Body.builder().position(2, 2).build();
         assertFalse(a.collidesWith(b));
     }
 
@@ -55,8 +59,8 @@ public class TestBody {
 
         for (V2 firstPosition : positions) {
             for (V2 secondPosition : positions) {
-                final Body first = new Body(firstPosition, V2.origin(), 1, 1);
-                final Body second = new Body(secondPosition, V2.origin(), 1, 1);
+                final Body first = Body.builder().position(firstPosition).build();
+                final Body second = Body.builder().position(secondPosition).build();
                 final double firstDistance = first.dist(second);
                 final double secondDistance = second.dist(first);
                 assertEquals(

@@ -1,10 +1,20 @@
 package org.minisim.simulation.body;
 
+import org.minisim.simulation.V2;
+
 /**
  * This class exists only to allow to have two final methods
  * inside every Body.
  */
 abstract sealed class AbstractBody implements Body permits FixedBody, MovableBody {
+
+    public final void setPosition(final double x, final double y) {
+        setPosition(V2.of(x, y));
+    }
+
+    public final void setSpeed(final double x, final double y) {
+        setSpeed(V2.of(x, y));
+    }
 
     public final boolean collidesWith(final Body other) {
         final double Rsum = radius() + other.radius();
