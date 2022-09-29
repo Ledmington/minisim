@@ -1,6 +1,5 @@
 package org.minisim.simulation.border;
 
-import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 
 /**
@@ -35,7 +34,7 @@ public final class SolidBorders extends Borders {
             newSpeedY = -b.speed().y();
         }
 
-        b.setPosition(new V2(newPosX, newPosY));
-        b.setSpeed(new V2(newSpeedX, newSpeedY));
+        b.setPosition(newPosX, newPosY);
+        b.setSpeed(newSpeedX, newSpeedY);
     }
 }

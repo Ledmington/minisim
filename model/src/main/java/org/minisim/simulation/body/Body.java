@@ -61,12 +61,16 @@ public sealed class Body permits FixedBody {
         position = newPosition;
     }
 
+    public void setPosition(final double x, final double y) {
+        position = V2.of(x, y);
+    }
+
     public V2 speed() {
         return speed;
     }
 
-    public void setSpeed(final V2 newSpeed) {
-        speed = newSpeed;
+    public void setSpeed(final double x, final double y) {
+        speed = V2.of(x, y);
     }
 
     public V2 acceleration() {

@@ -22,7 +22,7 @@ public final class TestGravityDown {
 
     @Test
     public void YForceShouldAlwaysDecrease() {
-        final Body b = Body.builder().force(new V2(3, 5)).build();
+        final Body b = Body.builder().force(3, 5).build();
         final GravityDown gravity = new GravityDown(0.9);
         final V2 oldForce = b.force().copy();
         gravity.accept(b);

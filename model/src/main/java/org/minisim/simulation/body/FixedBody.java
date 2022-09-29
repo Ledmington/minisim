@@ -18,7 +18,12 @@ public final class FixedBody extends Body {
     }
 
     @Override
-    public void setSpeed(final V2 newSpeed) {
+    public void setPosition(final double x, final double y) {
+        // intentionally left empty
+    }
+
+    @Override
+    public void setSpeed(final double x, final double y) {
         // intentionally left empty
     }
 

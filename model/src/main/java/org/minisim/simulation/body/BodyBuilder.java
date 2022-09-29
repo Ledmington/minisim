@@ -12,23 +12,28 @@ public final class BodyBuilder {
     private double radius = 1;
     private boolean fixed = false;
 
-    public BodyBuilder position(final V2 position) {
-        this.position = position;
+    public BodyBuilder position(final double x, final double y) {
+        this.position = V2.of(x, y);
         return this;
     }
 
-    public BodyBuilder speed(final V2 speed) {
-        this.speed = speed;
+    public BodyBuilder speed(final double x, final double y) {
+        this.speed = V2.of(x, y);
         return this;
     }
 
-    public BodyBuilder acceleration(final V2 acceleration) {
-        this.acceleration = acceleration;
+    public BodyBuilder acceleration(final double x, final double y) {
+        this.acceleration = V2.of(x, y);
         return this;
     }
 
-    public BodyBuilder force(final V2 force) {
-        this.force = force;
+    public BodyBuilder force(final V2 newForce) {
+        this.force = newForce;
+        return this;
+    }
+
+    public BodyBuilder force(final double x, final double y) {
+        this.force = V2.of(x, y);
         return this;
     }
 

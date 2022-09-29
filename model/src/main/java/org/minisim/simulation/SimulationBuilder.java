@@ -37,7 +37,7 @@ public final class SimulationBuilder {
     public SimulationBuilder randomBodyIn(final double xmin, final double xmax, final double ymin, final double ymax) {
         final Random rnd = new Random();
         bodySupplier = () -> Body.builder()
-                .position(new V2(rnd.nextDouble(xmin, xmax), rnd.nextDouble(ymin, ymax)))
+                .position(rnd.nextDouble(xmin, xmax), rnd.nextDouble(ymin, ymax))
                 .radius(1)
                 .build();
         return this;

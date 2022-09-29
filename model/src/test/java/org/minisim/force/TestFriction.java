@@ -22,8 +22,7 @@ public final class TestFriction {
 
     @Test
     public void frictionConstantZeroIsAllowed() {
-        final Body b =
-                Body.builder().position(new V2(2, 3)).force(new V2(3, -5)).build();
+        final Body b = Body.builder().position(2, 3).force(3, -5).build();
         final Friction friction = new Friction(0);
 
         friction.accept(b);
@@ -33,10 +32,10 @@ public final class TestFriction {
 
     @Test
     public void frictionConstantOneIsAllowed() {
-        final Body b = Body.builder().position(new V2(2, 3)).build();
+        final Body b = Body.builder().position(2, 3).build();
         final Friction friction = new Friction(1);
 
-        final V2 oldForce = new V2(3, -5);
+        final V2 oldForce = V2.of(3, -5);
         b.setForce(oldForce.copy());
 
         friction.accept(b);
@@ -46,7 +45,7 @@ public final class TestFriction {
 
     @Test
     public void stationaryObjectShouldRemainStationary() {
-        final Body b = Body.builder().position(new V2(2, 3)).build();
+        final Body b = Body.builder().position(2, 3).build();
         final Friction friction = new Friction(0.9);
 
         final V2 oldPosition = b.position().copy();
@@ -59,9 +58,8 @@ public final class TestFriction {
 
     @Test
     public void alreadyPresentForceShouldDecreaseInModulo() {
-        final V2 oldForce = new V2(3, -5);
-        final Body b =
-                Body.builder().position(new V2(2, 3)).force(oldForce.copy()).build();
+        final V2 oldForce = V2.of(3, -5);
+        final Body b = Body.builder().position(2, 3).force(oldForce.copy()).build();
         final Friction friction = new Friction(0.9);
 
         friction.accept(b);
@@ -71,17 +69,11 @@ public final class TestFriction {
 
     @Test
     public void heavierObjectsForceShouldDecreaseMore() {
-        final V2 oldForce = new V2(3, -5);
-        final Body light = Body.builder()
-                .position(new V2(2, 3))
-                .force(oldForce.copy())
-                .mass(2)
-                .build();
-        final Body heavy = Body.builder()
-                .position(new V2(7, 4))
-                .force(oldForce.copy())
-                .mass(4)
-                .build();
+        final V2 oldForce = V2.of(3, -5);
+        final Body light =
+                Body.builder().position(2, 3).force(oldForce.copy()).mass(2).build();
+        final Body heavy =
+                Body.builder().position(7, 4).force(oldForce.copy()).mass(4).build();
         final Friction friction = new Friction(0.9);
 
         friction.accept(light);

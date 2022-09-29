@@ -16,22 +16,22 @@ class TestV2Equals {
 
     @Test
     public void vectorEqualsItself() {
-        final V2 v = new V2(3, 5);
+        final V2 v = V2.of(3, 5);
         assertEquals(v, v);
     }
 
     @Test
     public void equalsShouldBeSymmetric() {
-        final V2 v = new V2(3, 5);
-        final V2 w = new V2(3, 5);
+        final V2 v = V2.of(3, 5);
+        final V2 w = V2.of(3, 5);
         assertEquals(v, w);
         assertEquals(w, v);
     }
 
     @Test
     public void equalsShouldBeConsistent() {
-        final V2 v = new V2(3, 5);
-        final V2 w = new V2(3, 5);
+        final V2 v = V2.of(3, 5);
+        final V2 w = V2.of(3, 5);
         for (int i = 0; i < 10; i++) {
             assertEquals(v, w);
         }
@@ -39,15 +39,15 @@ class TestV2Equals {
 
     @Test
     public void vectorDoesNotEqualObject() {
-        final V2 v = new V2(3, 5);
+        final V2 v = V2.of(3, 5);
         assertNotEquals(v, new Object());
     }
 
     @ParameterizedTest
     @MethodSource("provideDifferentV2ForEquals")
     public void twoVectorsWithDifferentCoordinatesShouldNotBeEqual(double x, double y) {
-        final V2 v = new V2(3, 5);
-        final V2 w = new V2(x, y);
+        final V2 v = V2.of(3, 5);
+        final V2 w = V2.of(x, y);
         assertNotEquals(v, w);
     }
 
@@ -58,8 +58,8 @@ class TestV2Equals {
     @ParameterizedTest
     @MethodSource("provideSlightlyDifferentV2ForEquals")
     public void twoVectorsWithSlightlyDifferentCoordinatesShouldNotBeEqual(double x, double y) {
-        final V2 v = new V2(3, 5);
-        final V2 w = new V2(x, y);
+        final V2 v = V2.of(3, 5);
+        final V2 w = V2.of(x, y);
         assertNotEquals(v, w);
     }
 
@@ -74,8 +74,8 @@ class TestV2Equals {
 
     @Test
     public void twoVectorsWithSameCoordinatesAreTheSameVector() {
-        final V2 v = new V2(3, 5);
-        final V2 w = new V2(3, 5);
+        final V2 v = V2.of(3, 5);
+        final V2 w = V2.of(3, 5);
         assertNotSame(v, w);
         assertEquals(v, w);
     }
@@ -83,15 +83,15 @@ class TestV2Equals {
     @ParameterizedTest
     @MethodSource("provideSlightlyDifferentV2ForEquals")
     public void twoV2WithAtLeastEpsilonDifferenceAreDifferent(double x, double y) {
-        final V2 v = new V2(3, 5);
-        final V2 w = new V2(x, y);
+        final V2 v = V2.of(3, 5);
+        final V2 w = V2.of(x, y);
         assertNotSame(v, w);
         assertNotEquals(v, w);
     }
 
     @Test
     public void vectorToString() {
-        final V2 v = new V2(3, 5);
+        final V2 v = V2.of(3, 5);
         assertEquals("V2[x=" + v.x() + ", y=" + v.y() + "]", v.toString());
     }
 }

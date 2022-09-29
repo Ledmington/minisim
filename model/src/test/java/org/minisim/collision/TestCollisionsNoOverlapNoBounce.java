@@ -28,53 +28,53 @@ public final class TestCollisionsNoOverlapNoBounce {
 
     @Test
     public void canDetectCollisions() {
-        bodies.add(new Body(new V2(1, 1), new V2(0, 0), 1, 1));
-        bodies.add(new Body(new V2(2, 2), new V2(0, 0), 1, 1));
+        bodies.add(new Body(V2.of(1, 1), V2.of(0, 0), 1, 1));
+        bodies.add(new Body(V2.of(2, 2), V2.of(0, 0), 1, 1));
         assertTrue(cm.detectAndResolveCollisions(bodies));
     }
 
     @Test
     public void noCollisions() {
-        bodies.add(new Body(new V2(1, 1), new V2(0, 0), 1, 1));
-        bodies.add(new Body(new V2(3, 3), new V2(0, 0), 1, 1));
+        bodies.add(new Body(V2.of(1, 1), V2.of(0, 0), 1, 1));
+        bodies.add(new Body(V2.of(3, 3), V2.of(0, 0), 1, 1));
         assertFalse(cm.detectAndResolveCollisions(bodies));
     }
 
     @Test
     public void canResolveCollisions() {
-        final Body first = new Body(new V2(1, 2), new V2(0, 0), 1, 1);
-        final Body second = new Body(new V2(2, 2), new V2(0, 0), 1, 1);
+        final Body first = new Body(V2.of(1, 2), V2.of(0, 0), 1, 1);
+        final Body second = new Body(V2.of(2, 2), V2.of(0, 0), 1, 1);
         bodies.add(first);
         bodies.add(second);
         assertTrue(cm.detectAndResolveCollisions(bodies));
         assertFalse(cm.detectAndResolveCollisions(bodies));
-        assertEquals(new V2(0.5, 2), first.position());
-        assertEquals(new V2(2.5, 2), second.position());
+        assertEquals(V2.of(0.5, 2), first.position());
+        assertEquals(V2.of(2.5, 2), second.position());
     }
 
     @Test
     public void canResolveCollisionsDifferentMasses() {
         // this test is a copy-paste of "can_resolve_collisions" because mass
         // must not interfere with collisions
-        final Body first = new Body(new V2(1, 2), new V2(0, 0), 2, 1);
-        final Body second = new Body(new V2(2, 2), new V2(0, 0), 3, 1);
+        final Body first = new Body(V2.of(1, 2), V2.of(0, 0), 2, 1);
+        final Body second = new Body(V2.of(2, 2), V2.of(0, 0), 3, 1);
         bodies.add(first);
         bodies.add(second);
         assertTrue(cm.detectAndResolveCollisions(bodies));
         assertFalse(cm.detectAndResolveCollisions(bodies));
-        assertEquals(new V2(0.5, 2), first.position());
-        assertEquals(new V2(2.5, 2), second.position());
+        assertEquals(V2.of(0.5, 2), first.position());
+        assertEquals(V2.of(2.5, 2), second.position());
     }
 
     @Test
     public void canResolveCollisionsDifferentRadii() {
-        final Body first = new Body(new V2(4, 4), new V2(0, 0), 1, 2);
-        final Body second = new Body(new V2(5, 4), new V2(0, 0), 1, 3);
+        final Body first = new Body(V2.of(4, 4), V2.of(0, 0), 1, 2);
+        final Body second = new Body(V2.of(5, 4), V2.of(0, 0), 1, 3);
         bodies.add(first);
         bodies.add(second);
         assertTrue(cm.detectAndResolveCollisions(bodies));
         assertFalse(cm.detectAndResolveCollisions(bodies));
-        assertEquals(new V2(2, 4), first.position());
-        assertEquals(new V2(7, 4), second.position());
+        assertEquals(V2.of(2, 4), first.position());
+        assertEquals(V2.of(7, 4), second.position());
     }
 }

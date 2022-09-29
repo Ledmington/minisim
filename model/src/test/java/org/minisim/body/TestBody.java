@@ -36,22 +36,22 @@ public class TestBody {
 
     @Test
     public void twoBodyCollision() {
-        Body a = new Body(new V2(0, 0), new V2(0, 0), 1, 1);
-        Body b = new Body(new V2(1, 1), new V2(0, 0), 1, 1);
+        Body a = new Body(V2.of(0, 0), V2.of(0, 0), 1, 1);
+        Body b = new Body(V2.of(1, 1), V2.of(0, 0), 1, 1);
         assertTrue(a.collidesWith(b));
     }
 
     @Test
     public void twoBodyNoCollision() {
-        Body a = new Body(new V2(0, 0), new V2(0, 0), 1, 1);
-        Body b = new Body(new V2(2, 2), new V2(0, 0), 1, 1);
+        Body a = new Body(V2.of(0, 0), V2.of(0, 0), 1, 1);
+        Body b = new Body(V2.of(2, 2), V2.of(0, 0), 1, 1);
         assertFalse(a.collidesWith(b));
     }
 
     @Test
     void distanceShouldAlwaysBeCommutative() {
         final List<V2> positions =
-                List.of(V2.origin(), new V2(1, 2), new V2(3, 5), new V2(-2, 2), new V2(10, -10), new V2(-7, -6));
+                List.of(V2.origin(), V2.of(1, 2), V2.of(3, 5), V2.of(-2, 2), V2.of(10, -10), V2.of(-7, -6));
 
         for (V2 firstPosition : positions) {
             for (V2 secondPosition : positions) {

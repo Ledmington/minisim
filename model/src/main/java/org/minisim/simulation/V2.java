@@ -6,6 +6,19 @@ package org.minisim.simulation;
 public record V2(double x, double y) {
 
     /**
+     * Less verbose static method that replaces the constructor.
+     * @param x
+     *      The first coordinate.
+     * @param y
+     *      The second coordinate.
+     * @return
+     *      A new V2(x,y).
+     */
+    public static V2 of(final double x, final double y) {
+        return new V2(x, y);
+    }
+
+    /**
      * Returns a new V2 object representing the origin (0,0).
      * @return
      *      V2(0,0)
