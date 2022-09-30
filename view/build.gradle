@@ -22,6 +22,10 @@ application {
 	mainClass = mainClassFullName
 }
 
+compileJava {
+	options.compilerArgs << '-Werror'
+}
+
 // Format code always before compiling
 tasks.compileJava.dependsOn(spotlessApply)
 
