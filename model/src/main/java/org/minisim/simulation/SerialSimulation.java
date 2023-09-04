@@ -49,9 +49,10 @@ public final class SerialSimulation implements Simulation {
     }
 
     public void update() {
+        final long start = System.nanoTime();
+
         // while(detectAndResolveCollisions()) {}
-        // TODO: if you do too many iterations, some body will be pushed outside the
-        // domain borders
+        // TODO: if you do too many iterations, some body will be pushed outside the domain borders
         for (int i = 0; i < 10; i++) {
             if (!CollisionManager.detectAndResolveCollisions(bodies)) {
                 break;
@@ -66,6 +67,8 @@ public final class SerialSimulation implements Simulation {
             b.applyForce();
             bounds.accept(b);
         }
+
+        System.out.printf("Done one iteration in %,d ms\n", (int) ((double) (System.nanoTime() - start) / 1_000_000.0));
     }
 
     private void computeAllForces() {

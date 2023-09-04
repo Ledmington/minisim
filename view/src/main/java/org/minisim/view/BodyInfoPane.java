@@ -71,20 +71,24 @@ public final class BodyInfoPane extends SmartGridPane {
     }
 
     public void updateInfo(final Body selectedBody) {
-        position.first().setText(String.valueOf(selectedBody.position().x()));
-        position.second().setText(String.valueOf(selectedBody.position().y()));
+        position.first().setText(String.format("%.3f", selectedBody.position().x()));
+        position.second().setText(String.format("%.3f", selectedBody.position().y()));
 
-        speed.first().setText(String.valueOf(selectedBody.speed().x()));
-        speed.second().setText(String.valueOf(selectedBody.speed().y()));
+        speed.first().setText(String.format("%.3f", selectedBody.speed().x()));
+        speed.second().setText(String.format("%.3f", selectedBody.speed().y()));
 
-        acceleration.first().setText(String.valueOf(selectedBody.acceleration().x()));
-        acceleration.second().setText(String.valueOf(selectedBody.acceleration().y()));
+        acceleration
+                .first()
+                .setText(String.format("%.3f", selectedBody.acceleration().x()));
+        acceleration
+                .second()
+                .setText(String.format("%.3f", selectedBody.acceleration().y()));
 
-        force.first().setText(String.valueOf(selectedBody.force().x()));
-        force.second().setText(String.valueOf(selectedBody.force().y()));
+        force.first().setText(String.format("%.3f", selectedBody.force().x()));
+        force.second().setText(String.format("%.3f", selectedBody.force().y()));
 
-        mass.setText(String.valueOf(selectedBody.mass()));
+        mass.setText(String.format("%.3f", selectedBody.mass()));
 
-        radius.setText(String.valueOf(selectedBody.radius()));
+        radius.setText(String.format("%.3f", selectedBody.radius()));
     }
 }

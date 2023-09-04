@@ -23,7 +23,7 @@ public final class Worker {
     private final AtomicBoolean stopped = new AtomicBoolean(true);
 
     /**
-     * Full-fledged constuctor of Worker. Creates a Worker, that will execute the given task
+     * Full-fledged constructor of Worker. Creates a Worker, that will execute the given task
      * indefinitely (unless stopped or join-ed), without starting it.
      * @param name
      *      The name of the Worker.
@@ -40,8 +40,9 @@ public final class Worker {
         thread = new Thread(
                 () -> {
                     while (!stopped.get()) {
-                        final long ms = Profiler.profile(task);
-                        logger.info(String.format("[%s] executed its task in %d ms", name, ms));
+                        final long ns = Profiler.profile(task);
+                        // logger.info(String.format("[%s] executed its task in %.3f ns", name,
+                        // (double)ns/1_000_000.0));
                     }
                 },
                 name);

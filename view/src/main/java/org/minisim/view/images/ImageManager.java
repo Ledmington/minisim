@@ -14,8 +14,8 @@ public final class ImageManager {
 
     public static Image getImage(final ImageName imageName) {
         if (!images.containsKey(imageName.path())) {
-            final long ms = Profiler.profile(() -> images.put(imageName.path(), new Image(imageName.path())));
-            logger.info(String.format("Loaded image \"%s\" (%d ms)", imageName.path(), ms));
+            final long ns = Profiler.profile(() -> images.put(imageName.path(), new Image(imageName.path())));
+            logger.info(String.format("Loaded image \"%s\" (%.3f ms)", imageName.path(), (double) ns / 1_000_000.0));
         }
         return images.get(imageName.path());
     }

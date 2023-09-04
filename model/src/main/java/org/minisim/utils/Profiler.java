@@ -17,6 +17,6 @@ public final class Profiler {
     public static long profile(Runnable task) {
         final long start = System.nanoTime();
         task.run();
-        return (System.nanoTime() - start) / 1_000_000;
+        return System.nanoTime() - start;
     }
 }

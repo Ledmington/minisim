@@ -2,8 +2,9 @@ package org.minisim.simulation;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.border.CyclicBorders;
@@ -35,9 +36,9 @@ public final class SimulationBuilder {
     }
 
     public SimulationBuilder randomBodyIn(final double xmin, final double xmax, final double ymin, final double ymax) {
-        final Random rnd = new Random();
+        final RandomGenerator rng = RandomGeneratorFactory.getDefault().create(System.nanoTime());
         bodySupplier = () -> Body.builder()
-                .position(rnd.nextDouble(xmin, xmax), rnd.nextDouble(ymin, ymax))
+                .position(rng.nextDouble(xmin, xmax), rng.nextDouble(ymin, ymax))
                 .radius(1)
                 .build();
         return this;
