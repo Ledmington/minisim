@@ -1,36 +1,88 @@
 plugins {
 	id 'java'
 	id 'jacoco'
-	id 'com.diffplug.spotless' version '6.11.0'
 	id "com.github.spotbugs" version "5.0.12"
 	id 'pmd'
 
-	// For mutation testing
-	id 'info.solidsoft.pitest' version '1.7.4'
+	id 'com.adarshr.test-logger' version '3.2.0'
+	id 'com.diffplug.spotless' version '6.21.0'
+	id 'com.github.ben-manes.versions' version '0.47.0'
+	id 'de.undercouch.download' version '5.5.0'
+	id 'info.solidsoft.pitest' version '1.9.11'
 }
-
-sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
 }
 
+ext.junitVersion = "5.10.0"
+
 dependencies {
-	//implementation 'com.google.guava:guava:31.0.1-jre'
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+	testImplementation "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+		because("required for pitest")
+	}
 }
 
-compileJava {
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs << '-Xdiags:verbose'
+	options.compilerArgs << '-Xlint:all'
 	options.compilerArgs << '-Werror'
+	options.deprecation = true
+	options.encoding = 'UTF-8'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
+	// failFast true
+	finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+	dependsOn test // tests are required to run before generating the report
+	reports {
+		xml.required = true
+		csv.required = true
+		html.required = true
+		html.outputLocation = layout.buildDirectory.dir('jacoco')
+	}
+}
+jacoco {
+	toolVersion = "0.8.9"
+	reportsDirectory = layout.buildDirectory.dir('jacoco')
 }
 
-jacoco {
-	toolVersion = '0.8.8'
+testlogger {
+	theme 'standard'
+
+	showExceptions true
+	showStackTraces true
+	showFullStackTraces false
+	showCauses true
+
+	slowThreshold 2000
+
+	showSummary true
+	showSimpleNames false
+	showPassed true
+	showSkipped true
+	showFailed true
+	showOnlySlow false
+
+	showStandardStreams true
+	showPassedStandardStreams true
+	showSkippedStandardStreams true
+	showFailedStandardStreams true
+
+	logLevel 'lifecycle'
 }
 
 // Format code always before compiling
@@ -60,13 +112,13 @@ spotless {
 }
 
 pitest {
-	targetClasses = [ 'org.minisim.simulation.*', 'org.minisim.utils.*']  //by default "${project.group}.*"
-	//targetTests = []
-	pitestVersion = '1.7.4' //not needed when a default PIT version should be used
-	junit5PluginVersion = '0.15'
-	//threads = 4
-	outputFormats = ['HTML']
-	//verbose = true
+	targetClasses.set([ 'org.minisim.simulation.*', 'org.minisim.utils.*'])
+	targetTests.set(['com.ledmington.gal.*'])
+	pitestVersion = '1.14.4'
+	junit5PluginVersion = '1.2.0'
+	threads = 4
+	outputFormats.set(['HTML'])
+	verbose = true
 	timestampedReports = false
 }
 
@@ -75,5 +127,4 @@ pmd {
 	toolVersion = "6.21.0"
 	rulesMinimumPriority = 5
 	ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
-	//threads = 4
 }
