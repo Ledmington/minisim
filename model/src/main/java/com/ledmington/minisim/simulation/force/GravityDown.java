@@ -18,7 +18,6 @@
 package com.ledmington.minisim.simulation.force;
 
 import com.ledmington.minisim.simulation.V2;
-import com.ledmington.minisim.simulation.body.Body;
 
 public final class GravityDown implements UnaryForce {
 
@@ -29,7 +28,9 @@ public final class GravityDown implements UnaryForce {
     }
 
     @Override
-    public void accept(final Body body) {
-        body.setForce(body.force().sub(vectorDown));
+    public void apply(final double[] forcex, final double[] forcey, final double[] masses) {
+        for (int i = 0; i < forcex.length; i++) {
+            forcey[i] -= vectorDown.y();
+        }
     }
 }

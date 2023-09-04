@@ -49,8 +49,8 @@ public final class Minisim {
             .addForce(new Gravity(1e-2))
             // .addForce(new GravityDown(0.1))
             .addForce(new Friction(0.5))
-            // .solidBorders()
-            .cyclicBorders()
+            .solidBorders()
+            // .cyclicBorders()
             .build();
 
     // TODO: refactor or make singleton

@@ -17,14 +17,21 @@
 */
 package com.ledmington.minisim.simulation.collision;
 
-import java.util.List;
-
-import com.ledmington.minisim.simulation.V2;
-import com.ledmington.minisim.simulation.body.Body;
-
 public final class CollisionManager {
 
     private CollisionManager() {}
+
+    private static boolean collidesWith(final double[] posx, final double[] posy, final double[] radii, int i, int j) {
+        final double Rsum = radii[i] + radii[j];
+        if (Math.abs(posx[i] - posx[j]) > Rsum) {
+            return false;
+        }
+        if (Math.abs(posy[i] - posy[j]) > Rsum) {
+            return false;
+        }
+
+        return Math.hypot(posx[i] - posx[j], posy[i] - posy[j]) < Rsum;
+    }
 
     /**
      * Looks for collisions between the given bodies. If at least one collision is
@@ -36,25 +43,21 @@ public final class CollisionManager {
      * }
      * </pre>
      *
-     * @param bodies
-     *            The list of bodies to check and update.
-     *
      * @return True if there were any collisions.
      */
-    public static boolean detectAndResolveCollisions(final List<Body> bodies) {
+    public static boolean detectAndResolveCollisions(final double[] posx, final double[] posy, final double[] radii) {
         boolean foundCollisions = false;
-        final int n = bodies.size();
+        final int n = posx.length;
         for (int i = 0; i < n; i++) {
-            final Body first = bodies.get(i);
             for (int j = i + 1; j < n; j++) {
-                final Body second = bodies.get(j);
 
-                if (first.collidesWith(second)) {
+                if (collidesWith(posx, posy, radii, i, j)) {
                     // we have found a collision
                     foundCollisions = true;
 
                     // vector pointing first (but centered in origin)
-                    final V2 diff = first.position().sub(second.position());
+                    final double x_diff = posx[i] - posx[j];
+                    final double y_diff = posy[i] - posy[j];
 
                     /*
                      * Computing the magnitude of the movement as result of this system. R1 = a + b;
@@ -63,11 +66,13 @@ public final class CollisionManager {
                      * was zero, we would have no collisions. b can be as high as min(R1, R2). The
                      * resulting formula is b = R1 + R2 - compenetration = (a+b) + (b+c) - (a+b+c)
                      */
-                    final double compenetration = diff.mod();
-                    final double b = first.radius() + second.radius() - compenetration;
+                    final double compenetration = Math.hypot(x_diff, y_diff);
+                    final double b = radii[i] + radii[j] - compenetration;
 
-                    first.setPosition(first.position().add(diff.mul(b / 2)));
-                    second.setPosition(second.position().sub(diff.mul(b / 2)));
+                    posx[i] += x_diff * b / 2;
+                    posy[i] += y_diff * b / 2;
+                    posx[j] -= x_diff * b / 2;
+                    posy[j] -= y_diff * b / 2;
                 }
             }
         }

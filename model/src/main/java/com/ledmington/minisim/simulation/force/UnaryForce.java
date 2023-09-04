@@ -17,8 +17,6 @@
 */
 package com.ledmington.minisim.simulation.force;
 
-import java.util.function.Consumer;
-
-import com.ledmington.minisim.simulation.body.Body;
-
-public interface UnaryForce extends Consumer<Body> {}
+public interface UnaryForce {
+    void apply(final double[] forcex, final double[] forcey, final double[] masses);
+}

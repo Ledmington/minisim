@@ -17,8 +17,6 @@
 */
 package com.ledmington.minisim.simulation.border;
 
-import com.ledmington.minisim.simulation.body.Body;
-
 /**
  * By using SolidBorders, bodies will stick on simulation's borders and bounce
  * back.
@@ -30,28 +28,32 @@ public final class SolidBorders extends Borders {
     }
 
     @Override
-    public void accept(final Body b) {
-        double newPosX = b.position().x();
-        double newPosY = b.position().y();
-        double newSpeedX = b.speed().x();
-        double newSpeedY = b.speed().y();
-        if (b.position().x() < LEFT_BORDER) {
-            newPosX = LEFT_BORDER;
-            newSpeedX = -b.speed().x();
-        } else if (b.position().x() > RIGHT_BORDER) {
-            newPosX = RIGHT_BORDER;
-            newSpeedX = -b.speed().x();
-        }
+    public void apply(final double[] posx, final double[] posy, final double[] speedx, final double[] speedy) {
+        for (int i = 0; i < posx.length; i++) {
+            double newPosX = posx[i];
+            double newPosY = posy[i];
+            double newSpeedX = speedx[i];
+            double newSpeedY = speedy[i];
+            if (posx[i] < LEFT_BORDER) {
+                newPosX = LEFT_BORDER;
+                newSpeedX = -speedx[i];
+            } else if (posx[i] > RIGHT_BORDER) {
+                newPosX = RIGHT_BORDER;
+                newSpeedX = -speedx[i];
+            }
 
-        if (b.position().y() < BOTTOM_BORDER) {
-            newPosY = BOTTOM_BORDER;
-            newSpeedY = -b.speed().y();
-        } else if (b.position().y() > UP_BORDER) {
-            newPosY = UP_BORDER;
-            newSpeedY = -b.speed().y();
-        }
+            if (posy[i] < BOTTOM_BORDER) {
+                newPosY = BOTTOM_BORDER;
+                newSpeedY = -speedy[i];
+            } else if (posy[i] > UP_BORDER) {
+                newPosY = UP_BORDER;
+                newSpeedY = -speedy[i];
+            }
 
-        b.setPosition(newPosX, newPosY);
-        b.setSpeed(newSpeedX, newSpeedY);
+            posx[i] = newPosX;
+            posy[i] = newPosY;
+            speedx[i] = newSpeedX;
+            speedy[i] = newSpeedY;
+        }
     }
 }

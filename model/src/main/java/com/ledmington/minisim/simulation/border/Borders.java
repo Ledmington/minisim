@@ -17,11 +17,7 @@
 */
 package com.ledmington.minisim.simulation.border;
 
-import java.util.function.Consumer;
-
-import com.ledmington.minisim.simulation.body.Body;
-
-public abstract class Borders implements Consumer<Body> {
+public abstract class Borders {
 
     public static final double LEFT_BORDER = 0; // TODO: refactoring needed
     public final double RIGHT_BORDER;
@@ -35,4 +31,6 @@ public abstract class Borders implements Consumer<Body> {
         RIGHT_BORDER = width;
         UP_BORDER = height;
     }
+
+    public abstract void apply(final double[] posx, final double[] posy, final double[] speedx, final double[] speedy);
 }

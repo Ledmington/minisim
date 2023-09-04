@@ -18,10 +18,10 @@
 package com.ledmington.minisim.simulation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 import com.ledmington.minisim.simulation.body.Body;
 import com.ledmington.minisim.simulation.border.Borders;
@@ -32,7 +32,17 @@ import com.ledmington.minisim.utils.MiniLogger;
 
 public final class SerialSimulation implements Simulation {
 
-    private final List<Body> bodies = new ArrayList<>();
+    private final int nBodies;
+    private final double[] posx;
+    private final double[] posy;
+    private final double[] speedx;
+    private final double[] speedy;
+    private final double[] accx;
+    private final double[] accy;
+    private final double[] forcex;
+    private final double[] forcey;
+    private final double[] masses;
+    private final double[] radii;
     private final List<Force> forces = new ArrayList<>();
     private final List<UnaryForce> unaryForces = new ArrayList<>();
     private final Borders bounds;
@@ -41,30 +51,57 @@ public final class SerialSimulation implements Simulation {
     public SerialSimulation(
             final int nBodies,
             final Supplier<Body> createBody,
-            final Borders b,
+            final Borders bounds,
             final List<Force> forces,
             final List<UnaryForce> unaryForces) {
         if (nBodies < 0) {
             throw new IllegalArgumentException("Can't have negative bodies");
         }
-        Objects.requireNonNull(b);
+        Objects.requireNonNull(bounds);
         Objects.requireNonNull(forces);
         Objects.requireNonNull(unaryForces);
         this.forces.addAll(forces);
         this.unaryForces.addAll(unaryForces);
 
-        bounds = b;
+        this.bounds = bounds;
+
+        this.nBodies = nBodies;
+        this.posx = new double[nBodies];
+        this.posy = new double[nBodies];
+        this.speedx = new double[nBodies];
+        this.speedy = new double[nBodies];
+        this.accx = new double[nBodies];
+        this.accy = new double[nBodies];
+        this.forcex = new double[nBodies];
+        this.forcey = new double[nBodies];
+        this.masses = new double[nBodies];
+        this.radii = new double[nBodies];
         for (int i = 0; i < nBodies; i++) {
-            bodies.add(createBody.get());
+            final Body b = createBody.get();
+            this.posx[i] = b.position().x();
+            this.posy[i] = b.position().y();
+            this.speedx[i] = b.speed().x();
+            this.speedy[i] = b.speed().y();
+            this.accx[i] = b.acceleration().x();
+            this.accy[i] = b.acceleration().y();
+            this.forcex[i] = b.force().x();
+            this.forcey[i] = b.force().y();
+            this.masses[i] = b.mass();
+            this.radii[i] = b.radius();
         }
     }
 
-    public void addBody(final Body b) {
-        bodies.add(b);
-    }
-
     public List<Body> getBodies() {
-        return Collections.unmodifiableList(bodies);
+        return IntStream.range(0, nBodies)
+                .mapToObj(i -> Body.builder()
+                        .position(posx[i], posy[i])
+                        .speed(speedx[i], speedy[i])
+                        .acceleration(accx[i], accy[i])
+                        .force(forcex[i], forcey[i])
+                        .mass(masses[i])
+                        .radius(radii[i])
+                        .build())
+                .toList();
     }
 
     public Borders getBounds() {
@@ -77,7 +114,7 @@ public final class SerialSimulation implements Simulation {
         // while(detectAndResolveCollisions()) {}
         // TODO: if you do too many iterations, some body will be pushed outside the domain borders
         for (int i = 0; i < 10; i++) {
-            if (!CollisionManager.detectAndResolveCollisions(bodies)) {
+            if (!CollisionManager.detectAndResolveCollisions(posx, posy, radii)) {
                 break;
             }
         }
@@ -86,32 +123,31 @@ public final class SerialSimulation implements Simulation {
         computeAllForces();
 
         // apply forces
-        for (Body b : bodies) {
-            b.applyForce();
-            bounds.accept(b);
+        for (int i = 0; i < nBodies; i++) {
+            accx[i] = forcex[i] / masses[i];
+            accy[i] = forcey[i] / masses[i];
+            speedx[i] += accx[i];
+            speedy[i] += accy[i];
+            posx[i] += speedx[i];
+            posy[i] += speedy[i];
+            forcex[i] = 0;
+            forcey[i] = 0;
         }
+
+        bounds.apply(posx, posy, speedx, speedy);
 
         logger.info("Done one iteration in %,d ms", (int) ((double) (System.nanoTime() - start) / 1_000_000.0));
     }
 
     private void computeAllForces() {
         // All "double" forces
-        for (int i = 0; i < bodies.size(); i++) {
-            final Body first = bodies.get(i);
-            for (int j = i + 1; j < bodies.size(); j++) {
-                final Body second = bodies.get(j);
-                for (Force f : forces) {
-                    f.accept(first, second);
-                }
-            }
+        for (final Force f : forces) {
+            f.apply(posx, posy, forcex, forcey, masses);
         }
 
         // All unary forces
-        // TODO: embarassingly parallel
-        for (Body b : bodies) {
-            for (UnaryForce uf : unaryForces) {
-                uf.accept(b);
-            }
+        for (final UnaryForce uf : unaryForces) {
+            uf.apply(forcex, forcey, masses);
         }
     }
 }

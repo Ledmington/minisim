@@ -17,8 +17,6 @@
 */
 package com.ledmington.minisim.simulation.force;
 
-import com.ledmington.minisim.simulation.body.Body;
-
 public final class Friction implements UnaryForce {
 
     private final double constant;
@@ -31,7 +29,10 @@ public final class Friction implements UnaryForce {
     }
 
     @Override
-    public void accept(final Body body) {
-        body.setForce(body.force().sub(body.force().mul(body.mass() * constant)));
+    public void apply(final double[] forcex, final double[] forcey, final double[] masses) {
+        for (int i = 0; i < forcex.length; i++) {
+            forcex[i] -= forcex[i] * masses[i] * constant;
+            forcey[i] -= forcey[i] * masses[i] * constant;
+        }
     }
 }

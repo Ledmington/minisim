@@ -17,8 +17,11 @@
 */
 package com.ledmington.minisim.simulation.force;
 
-import java.util.function.BiConsumer;
-
-import com.ledmington.minisim.simulation.body.Body;
-
-public interface Force extends BiConsumer<Body, Body> {}
+public interface Force {
+    void apply(
+            final double[] posx,
+            final double[] posy,
+            final double[] forcex,
+            final double[] forcey,
+            final double[] masses);
+}

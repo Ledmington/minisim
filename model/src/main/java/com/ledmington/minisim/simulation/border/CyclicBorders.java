@@ -17,9 +17,6 @@
 */
 package com.ledmington.minisim.simulation.border;
 
-import com.ledmington.minisim.simulation.V2;
-import com.ledmington.minisim.simulation.body.Body;
-
 /**
  * By using CyclicBorders, each body that would otherwise go out of bounds,
  * will come back on the other side of the domain (Pac-Man effect).
@@ -31,23 +28,21 @@ public final class CyclicBorders extends Borders {
     }
 
     @Override
-    public void accept(final Body b) {
-        double x = b.position().x();
-        while (x < LEFT_BORDER) {
-            x += RIGHT_BORDER;
-        }
-        while (x > RIGHT_BORDER) {
-            x -= RIGHT_BORDER;
-        }
+    public void apply(final double[] posx, final double[] posy, final double[] speedx, final double[] speedy) {
+        for (int i = 0; i < posx.length; i++) {
+            while (posx[i] < LEFT_BORDER) {
+                posx[i] += RIGHT_BORDER;
+            }
+            while (posx[i] > RIGHT_BORDER) {
+                posx[i] -= RIGHT_BORDER;
+            }
 
-        double y = b.position().y();
-        while (y < BOTTOM_BORDER) {
-            y += UP_BORDER;
+            while (posy[i] < BOTTOM_BORDER) {
+                posy[i] += UP_BORDER;
+            }
+            while (posy[i] > UP_BORDER) {
+                posy[i] -= UP_BORDER;
+            }
         }
-        while (y > UP_BORDER) {
-            y -= UP_BORDER;
-        }
-
-        b.setPosition(new V2(x, y));
     }
 }
