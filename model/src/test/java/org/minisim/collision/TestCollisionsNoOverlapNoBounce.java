@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.collision.CollisionManager;
@@ -45,12 +47,13 @@ public final class TestCollisionsNoOverlapNoBounce {
         assertEquals(V2.of(2.5, 2), second.position());
     }
 
-    @Test
-    public void canResolveCollisionsDifferentMasses() {
-        // this test is a copy-paste of "can_resolve_collisions" because mass
+    @ParameterizedTest
+    @ValueSource(doubles = {0.01, 0.1, 1, 2, 3, 4, 5, 10})
+    public void canResolveCollisionsDifferentMasses(double m) {
+        // this test is a copy-paste of "canResolveCollisions" because the mass
         // must not interfere with collisions
         final Body first = Body.builder().position(1, 2).mass(2).build();
-        final Body second = Body.builder().position(2, 2).mass(3).build();
+        final Body second = Body.builder().position(2, 2).mass(m).build();
         bodies.add(first);
         bodies.add(second);
         assertTrue(CollisionManager.detectAndResolveCollisions(bodies));

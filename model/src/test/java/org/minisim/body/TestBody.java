@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 
@@ -22,20 +24,18 @@ public class TestBody {
         assertEquals(1, b.radius(), EPSILON);
     }
 
-    @Test
-    public void illegalMass() {
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, 0})
+    public void illegalMass(double m) {
         assertThrows(
-                IllegalArgumentException.class, () -> Body.builder().mass(0).build());
-        assertThrows(
-                IllegalArgumentException.class, () -> Body.builder().mass(-1).build());
+                IllegalArgumentException.class, () -> Body.builder().mass(m).build());
     }
 
-    @Test
-    public void illegalRadius() {
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, 0})
+    public void illegalRadius(double r) {
         assertThrows(
-                IllegalArgumentException.class, () -> Body.builder().radius(0).build());
-        assertThrows(
-                IllegalArgumentException.class, () -> Body.builder().radius(-1).build());
+                IllegalArgumentException.class, () -> Body.builder().radius(r).build());
     }
 
     @Test

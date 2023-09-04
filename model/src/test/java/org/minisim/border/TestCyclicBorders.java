@@ -4,7 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
@@ -13,70 +14,79 @@ import org.minisim.simulation.border.CyclicBorders;
 public final class TestCyclicBorders {
 
     private Borders cb;
+    private final double width = 10;
+    private final double height = 10;
 
     @BeforeEach
     public void setup() {
-        cb = new CyclicBorders(10, 10);
+        cb = new CyclicBorders(width, height);
     }
 
-    @Test
-    public void illegalWidth() {
-        assertThrows(IllegalArgumentException.class, () -> new CyclicBorders(0, 10));
-        assertThrows(IllegalArgumentException.class, () -> new CyclicBorders(-1, 10));
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, 0})
+    public void illegalWidth(double w) {
+        assertThrows(IllegalArgumentException.class, () -> new CyclicBorders(w, 10));
     }
 
-    @Test
-    public void illegalHeight() {
-        assertThrows(IllegalArgumentException.class, () -> new CyclicBorders(10, 0));
-        assertThrows(IllegalArgumentException.class, () -> new CyclicBorders(10, -1));
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, 0})
+    public void illegalHeight(double h) {
+        assertThrows(IllegalArgumentException.class, () -> new CyclicBorders(10, h));
     }
 
-    @Test
-    public void noChangesIfInside() {
-        final Body b = Body.builder().position(1, 1).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {1, 2, 3, 4, 5, 6, 7, 8, 9})
+    public void noChangesIfInside(double n) {
+        final Body b = Body.builder().position(n, n).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(1, 1));
+        assertEquals(V2.of(n, n), b.position());
     }
 
-    @Test
-    public void outOnRight() {
-        final Body b = Body.builder().position(11, 1).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {11, 22, 33, 44, 55, 66, 77, 88, 99})
+    public void outOnRight(double x) {
+        final Body b = Body.builder().position(x, 1).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(1, 1));
+        assertEquals(V2.of(x % width, 1), b.position());
     }
 
-    @Test
-    public void outOnLeft() {
-        final Body b = Body.builder().position(-1, 1).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, -11, -22, -33, -44, -55, -66, -77, -88, -99})
+    public void outOnLeft(double x) {
+        final Body b = Body.builder().position(x, 1).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(9, 1));
+        assertEquals(V2.of((x + 100 * width) % width, 1), b.position());
     }
 
-    @Test
-    public void outOnTop() {
-        final Body b = Body.builder().position(1, -1).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, -11, -22, -33, -44, -55, -66, -77, -88, -99})
+    public void outOnTop(double y) {
+        final Body b = Body.builder().position(1, y).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(1, 9));
+        assertEquals(V2.of(1, (y + 100 * height) % height), b.position());
     }
 
-    @Test
-    public void outOnBottom() {
-        final Body b = Body.builder().position(1, 11).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {11, 22, 33, 44, 55, 66, 77, 88, 99})
+    public void outOnBottom(double y) {
+        final Body b = Body.builder().position(1, y).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(1, 1));
+        assertEquals(V2.of(1, y % height), b.position());
     }
 
-    @Test
-    public void bottomRightCorner() {
-        final Body b = Body.builder().position(11, 11).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {11, 22, 33, 44, 55, 66, 77, 88, 99})
+    public void bottomRightCorner(double n) {
+        final Body b = Body.builder().position(n, n).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(1, 1));
+        assertEquals(V2.of(n % width, n % height), b.position());
     }
 
-    @Test
-    public void topLeftCorner() {
-        final Body b = Body.builder().position(-1, -1).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {-1, -11, -22, -33, -44, -55, -66, -77, -88, -99})
+    public void topLeftCorner(double n) {
+        final Body b = Body.builder().position(n, n).build();
         cb.accept(b);
-        assertEquals(b.position(), V2.of(9, 9));
+        assertEquals(V2.of((n + 100 * width) % width, (n + 100 * height) % height), b.position());
     }
 }
