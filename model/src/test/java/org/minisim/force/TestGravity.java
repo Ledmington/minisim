@@ -3,8 +3,15 @@ package org.minisim.force;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.minisim.simulation.V2;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.force.Gravity;
@@ -19,40 +26,57 @@ public final class TestGravity {
         gravity = new Gravity();
     }
 
-    @Test
-    public void forceShouldBeEqual() {
-        final Body first = Body.builder().position(3, 5).build();
-        final Body second = Body.builder().position(-7, 9).build();
+    private static Stream<Arguments> randomPairOfVectors() {
+        final RandomGenerator rng = RandomGeneratorFactory.getDefault().create(System.nanoTime());
+        return Stream.generate(() -> Arguments.of(
+                        rng.nextDouble(-10.0, 10.0),
+                        rng.nextDouble(-10.0, 10.0),
+                        rng.nextDouble(-10.0, 10.0),
+                        rng.nextDouble(-10.0, 10.0)))
+                .limit(10);
+    }
+
+    @ParameterizedTest
+    @MethodSource("randomPairOfVectors")
+    public void forceShouldBeEqual(double x1, double y1, double x2, double y2) {
+        final Body first = Body.builder().position(x1, y1).build();
+        final Body second = Body.builder().position(x2, y2).build();
         gravity.accept(first, second);
         assertEquals(first.force().mod(), second.force().mod(), EPSILON);
         assertEquals(first.force().x(), -second.force().x(), EPSILON);
         assertEquals(first.force().y(), -second.force().y(), EPSILON);
     }
 
-    @Test
-    public void forceShouldBeEqualWithDifferentMasses() {
-        final Body first = Body.builder().position(3, 5).mass(2).build();
-        final Body second = Body.builder().position(-7, 9).mass(3).build();
+    @ParameterizedTest
+    @MethodSource("randomPairOfVectors")
+    public void forceShouldBeEqualWithDifferentMasses(double x1, double y1, double x2, double y2) {
+        final Body first = Body.builder().position(x1, y1).mass(2).build();
+        final Body second = Body.builder().position(x2, y2).mass(3).build();
         gravity.accept(first, second);
         assertEquals(first.force().mod(), second.force().mod(), EPSILON);
         assertEquals(first.force().x(), -second.force().x(), EPSILON);
         assertEquals(first.force().y(), -second.force().y(), EPSILON);
     }
 
-    @Test
-    public void forceShouldBeEqualWithDifferentRadii() {
+    @ParameterizedTest
+    @ValueSource(doubles = {0.01, 0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    public void forceShouldBeEqualWithDifferentRadii(double r) {
+        /*
+        The radius should not interfere with gravity.
+         */
         final Body first = Body.builder().position(3, 5).radius(2).build();
-        final Body second = Body.builder().position(-7, 9).radius(3).build();
+        final Body second = Body.builder().position(-7, 9).radius(r).build();
         gravity.accept(first, second);
         assertEquals(first.force().mod(), second.force().mod(), EPSILON);
         assertEquals(first.force().x(), -second.force().x(), EPSILON);
         assertEquals(first.force().y(), -second.force().y(), EPSILON);
     }
 
-    @Test
-    public void distanceShouldDecrease() {
-        final Body first = Body.builder().position(3, 5).build();
-        final Body second = Body.builder().position(-7, 9).build();
+    @ParameterizedTest
+    @MethodSource("randomPairOfVectors")
+    public void distanceShouldDecrease(double x1, double y1, double x2, double y2) {
+        final Body first = Body.builder().position(x1, y1).build();
+        final Body second = Body.builder().position(x2, y2).build();
 
         final double initialDistance = first.dist(second);
 
@@ -65,11 +89,12 @@ public final class TestGravity {
         assertTrue(finalDistance < initialDistance);
     }
 
-    @Test
-    public void heavierObjectsShouldProduceStrongerForce() {
-        final Body left = Body.builder().position(-6, 5).build();
-        final Body middle = Body.builder().position(0, 5).mass(2).build();
-        final Body rightAndHeavy = Body.builder().position(6, 5).mass(6).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    public void heavierObjectsShouldProduceStrongerForce(double x) {
+        final Body left = Body.builder().position(x - 6, 5).build();
+        final Body middle = Body.builder().position(x, 5).mass(2).build();
+        final Body rightAndHeavy = Body.builder().position(x + 6, 5).mass(6).build();
 
         gravity.accept(left, middle);
 
@@ -84,11 +109,12 @@ public final class TestGravity {
         assertEquals(lighterForce * rightAndHeavy.mass(), heavyForce, EPSILON);
     }
 
-    @Test
-    public void furtherObjectsShouldProduceWeakerForce() {
-        final Body left = Body.builder().position(-1, 5).build();
-        final Body middle = Body.builder().position(0, 5).build();
-        final Body rightAndFurther = Body.builder().position(2, 5).build();
+    @ParameterizedTest
+    @ValueSource(doubles = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    public void furtherObjectsShouldProduceWeakerForce(double x) {
+        final Body left = Body.builder().position(x - 1, 5).build();
+        final Body middle = Body.builder().position(x, 5).build();
+        final Body rightAndFurther = Body.builder().position(x + 2, 5).build();
 
         gravity.accept(left, middle);
 
@@ -103,12 +129,13 @@ public final class TestGravity {
         assertEquals(closerForce, furtherForce * 4, EPSILON);
     }
 
-    @Test
-    public void twoBodies() {
-        final double up = 40;
-        final double down = -40;
-        final double left = -30;
-        final double right = 30;
+    @ParameterizedTest
+    @MethodSource("randomPairOfVectors")
+    public void twoBodies(double x1, double y1, double x2, double y2) {
+        final double up = Math.max(y1, y2);
+        final double down = Math.min(y1, y2);
+        final double left = Math.min(x1, x2);
+        final double right = Math.max(x1, x2);
 
         final Body first = Body.builder().position(left, down).build();
         final Body second = Body.builder().position(right, up).build();

@@ -2,17 +2,31 @@ package org.minisim.v2;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.minisim.simulation.V2;
 
 class TestV2Math {
 
     private static final double EPSILON = 1e-12;
 
-    @Test
-    public void simpleAdd() {
+    private static Stream<Arguments> randomVectors() {
+        final RandomGenerator rng = RandomGeneratorFactory.getDefault().create(System.nanoTime());
+        return Stream.generate(() -> Arguments.of(rng.nextDouble(-10.0, 10.0), rng.nextDouble(-10.0, 10.0)))
+                .limit(10);
+    }
+
+    @ParameterizedTest
+    @MethodSource("randomVectors")
+    public void simpleAdd(double x, double y) {
         final V2 v = V2.origin();
-        final V2 w = V2.of(1, 1);
+        final V2 w = V2.of(x, y);
         final V2 r = v.add(w);
         assertEquals(r.x(), w.x(), EPSILON);
         assertEquals(r.y(), w.y(), EPSILON);
