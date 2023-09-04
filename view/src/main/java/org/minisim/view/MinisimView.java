@@ -4,6 +4,7 @@ import javafx.application.HostServices;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import org.minisim.Minisim;
 
 public final class MinisimView {

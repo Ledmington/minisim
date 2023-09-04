@@ -2,11 +2,13 @@ package org.minisim.simulation;
 
 import java.util.*;
 import java.util.function.Supplier;
+
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.border.Borders;
 import org.minisim.simulation.collision.CollisionManager;
 import org.minisim.simulation.force.Force;
 import org.minisim.simulation.force.UnaryForce;
+import org.minisim.utils.MiniLogger;
 
 public final class SerialSimulation implements Simulation {
 
@@ -14,6 +16,7 @@ public final class SerialSimulation implements Simulation {
     private final List<Force> forces = new ArrayList<>();
     private final List<UnaryForce> unaryForces = new ArrayList<>();
     private final Borders bounds;
+    private static final MiniLogger logger = MiniLogger.getLogger("SerialSimulation");
 
     public SerialSimulation(
             final int nBodies,
@@ -68,7 +71,7 @@ public final class SerialSimulation implements Simulation {
             bounds.accept(b);
         }
 
-        System.out.printf("Done one iteration in %,d ms\n", (int) ((double) (System.nanoTime() - start) / 1_000_000.0));
+        logger.info("Done one iteration in %,d ms", (int) ((double) (System.nanoTime() - start) / 1_000_000.0));
     }
 
     private void computeAllForces() {
@@ -84,7 +87,7 @@ public final class SerialSimulation implements Simulation {
         }
 
         // All unary forces
-        // TODO: highly parallelizable
+        // TODO: embarassingly parallel
         for (Body b : bodies) {
             for (UnaryForce uf : unaryForces) {
                 uf.accept(b);

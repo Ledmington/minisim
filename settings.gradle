@@ -1,3 +1,4 @@
 rootProject.name = 'minisim'
+
 include('model')
 include('view')

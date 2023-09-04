@@ -1,29 +1,45 @@
 plugins {
 	id 'application'
-	id 'com.diffplug.spotless' version '6.11.0'
 	id 'org.openjfx.javafxplugin' version '0.0.13'
 	id "com.github.spotbugs" version "5.0.12"
 	id 'pmd'
 
-	// For .exe creation
-	id 'edu.sc.seis.launch4j' version '2.5.3'
+	id 'com.diffplug.spotless' version '6.21.0'
+	id 'com.github.ben-manes.versions' version '0.47.0'
+	id 'de.undercouch.download' version '5.5.0'
 }
 
-sourceCompatibility = '17'
+repositories {
+	mavenCentral()
+}
+
+static def path(String... args) {
+	return String.join(File.separator, args)
+}
+
 def mainClassFullName = 'org.minisim.App'
 
 dependencies {
 	implementation project(':model')
-	//implementation 'com.google.guava:guava:31.0.1-jre'
-	implementation 'org.jcodec:jcodec-javase:0.2.5' // video encoding compatible with AWT
+	implementation 'org.jcodec:jcodec-javase:0.2.5'
 }
 
 application {
 	mainClass = mainClassFullName
 }
 
-compileJava {
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs << '-Xdiags:verbose'
+	options.compilerArgs << '-Xlint:all'
 	options.compilerArgs << '-Werror'
+	options.deprecation = true
+	options.encoding = 'UTF-8'
 }
 
 // Format code always before compiling
@@ -35,14 +51,8 @@ javafx {
 }
 
 spotless {
-	// optional: limit format enforcement to just the files changed by this feature branch
-	//ratchetFrom 'origin/main'
-
 	format 'misc', {
-		// define the files to apply `misc` to
-		target '*.gradle', '*.md', '.gitignore'
-
-		// define the steps to apply to those files
+		target '*.md', '.gitignore', '.gitattributes'
 		trimTrailingWhitespace()
 		indentWithTabs()
 		endWithNewline()
@@ -50,23 +60,29 @@ spotless {
 	}
 
 	java {
-		importOrder()
+		target fileTree('.') {
+			include path('**', '*.java')
+			exclude path('**', 'build', '**'), path('**', 'build-*', '**'), path('**', 'bin', '**')
+		}
 		removeUnusedImports()
 		formatAnnotations()
+		trimTrailingWhitespace()
+		endWithNewline()
+		setEncoding('utf-8')
 		palantirJavaFormat('2.26.0')
-	}
-}
 
-launch4j {
-	mainClassName = mainClassFullName
-	headerType = 'console'
-	icon = '${projectDir}/src/main/resources/icons/atom.ico'
-	outfile = 'MiniSim.exe'
-	windowTitle = 'MiniSim'
-	productName = 'MiniSim'
-	fileDescription = 'MiniSim'
-	language = 'ENGLISH_US'
-	//bundledJrePath = '/Users/user/Downloads/jdk' // TODO solve problem of bundling JRE into exe file
+		// check https://javadoc.io/doc/com.diffplug.spotless/spotless-plugin-gradle/latest/com/diffplug/gradle/spotless/JavaExtension.html
+		importOrder('java', 'javax', 'javafx', 'com', 'com.ledmington', 'org', group as String)
+
+		/*licenseHeader String.join("\n", "/*",
+				" * Copyright (C) 2022-${new Date().format('yyyy')} ${author} <${authorMail}>",
+				" *",
+				" * This file is part of ${appName}.",
+				" *",
+				" * ${appName} can not be copied and/or distributed without",
+				" * the explicit permission of ${author}.",
+				" *///")
+	}
 }
 
 pmd {
@@ -74,5 +90,5 @@ pmd {
 	toolVersion = "6.21.0"
 	rulesMinimumPriority = 5
 	ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
-	//threads = 4
+	threads = 4
 }

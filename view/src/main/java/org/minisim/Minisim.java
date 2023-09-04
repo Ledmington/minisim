@@ -1,17 +1,13 @@
 package org.minisim;
 
-import static org.minisim.AppConstants.*;
-
-import java.io.InputStream;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 import javafx.application.HostServices;
 import javafx.stage.Stage;
+
 import org.minisim.simulation.Simulation;
 import org.minisim.simulation.body.Body;
 import org.minisim.simulation.force.Friction;
 import org.minisim.simulation.force.Gravity;
-import org.minisim.utils.LoggerUtils;
+import org.minisim.utils.MiniLogger;
 import org.minisim.view.FrameManager;
 import org.minisim.view.MinisimView;
 import org.minisim.view.images.ImageManager;
@@ -44,20 +40,14 @@ public final class Minisim {
     private final FrameManager frameManager = new FrameManager();
 
     public Minisim(final HostServices hostServices, final Stage stage) {
-        InputStream stream = App.class.getClassLoader().getResourceAsStream("logging.properties");
-        LoggerUtils.safeReadConfiguration(LogManager.getLogManager(), stream);
-        final Logger logger = getLogger();
+        final MiniLogger logger = MiniLogger.getLogger("minisim");
         logger.info("MiniSim is running on:");
-        logger.info(" - " + OSName + " " + OSVersion);
-        logger.info(" - Java " + javaVersion);
-        logger.info(" - JVM " + jvmVersion);
-        logger.info(" - JavaFX " + javafxVersion);
+        logger.info(" - %s %s", AppConstants.OSName, AppConstants.OSVersion);
+        logger.info(" - Java %s", AppConstants.javaVersion);
+        logger.info(" - JVM %s", AppConstants.jvmVersion);
+        logger.info(" - JavaFX %s", AppConstants.javafxVersion);
         stage.getIcons().add(ImageManager.getImage(ImageName.APPLICATION_ICON));
         new MinisimView(this, hostServices, stage);
-    }
-
-    public static Logger getLogger() {
-        return Logger.getLogger("minisim");
     }
 
     public Simulation getSimulation() {

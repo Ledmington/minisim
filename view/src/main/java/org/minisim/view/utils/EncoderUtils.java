@@ -3,6 +3,7 @@ package org.minisim.view.utils;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import org.jcodec.api.awt.AWTSequenceEncoder;
 
 // TODO: maybe convert this to a SafeAWTSequenceEncoder

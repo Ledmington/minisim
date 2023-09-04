@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
+
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.PixelReader;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import org.jcodec.api.awt.AWTSequenceEncoder;
 import org.minisim.utils.FileUtils;
 import org.minisim.utils.ThreadUtils;

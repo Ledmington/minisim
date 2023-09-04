@@ -1,6 +1,7 @@
 package org.minisim.view;
 
 import java.util.List;
+
 import javafx.application.HostServices;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

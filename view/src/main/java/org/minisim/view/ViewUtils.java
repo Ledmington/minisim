@@ -1,6 +1,7 @@
 package org.minisim.view;
 
 import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import org.minisim.AppConstants;
 
 // TODO: maybe this should be a singleton?

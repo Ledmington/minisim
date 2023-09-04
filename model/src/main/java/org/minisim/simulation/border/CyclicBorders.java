@@ -16,7 +16,7 @@ public final class CyclicBorders extends Borders {
     @Override
     public void accept(final Body b) {
         double x = b.position().x();
-        while (x < 0.0) {
+        while (x < LEFT_BORDER) {
             x += RIGHT_BORDER;
         }
         while (x > RIGHT_BORDER) {
@@ -24,7 +24,7 @@ public final class CyclicBorders extends Borders {
         }
 
         double y = b.position().y();
-        while (y < 0.0) {
+        while (y < BOTTOM_BORDER) {
             y += UP_BORDER;
         }
         while (y > UP_BORDER) {

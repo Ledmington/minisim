@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
+
 import org.minisim.Minisim;
 import org.minisim.view.images.ImageManager;
 import org.minisim.view.images.ImageName;

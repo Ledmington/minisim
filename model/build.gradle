@@ -15,6 +15,10 @@ repositories {
 	mavenCentral()
 }
 
+static def path(String... args) {
+	return String.join(File.separator, args)
+}
+
 ext.junitVersion = "5.10.0"
 
 dependencies {
@@ -89,14 +93,8 @@ testlogger {
 tasks.compileJava.dependsOn(spotlessApply)
 
 spotless {
-	// optional: limit format enforcement to just the files changed by this feature branch
-	//ratchetFrom 'origin/main'
-
 	format 'misc', {
-		// define the files to apply `misc` to
-		target '*.gradle', '*.md', '.gitignore'
-
-		// define the steps to apply to those files
+		target '*.md', '.gitignore', '.gitattributes'
 		trimTrailingWhitespace()
 		indentWithTabs()
 		endWithNewline()
@@ -104,16 +102,34 @@ spotless {
 	}
 
 	java {
-		importOrder()
+		target fileTree('.') {
+			include path('**', '*.java')
+			exclude path('**', 'build', '**'), path('**', 'build-*', '**'), path('**', 'bin', '**')
+		}
 		removeUnusedImports()
 		formatAnnotations()
+		trimTrailingWhitespace()
+		endWithNewline()
+		setEncoding('utf-8')
 		palantirJavaFormat('2.26.0')
+
+		// check https://javadoc.io/doc/com.diffplug.spotless/spotless-plugin-gradle/latest/com/diffplug/gradle/spotless/JavaExtension.html
+		importOrder('java', 'javax', 'javafx', 'com', 'com.ledmington', 'org', group as String)
+
+		/*licenseHeader String.join("\n", "/*",
+				" * Copyright (C) 2022-${new Date().format('yyyy')} ${author} <${authorMail}>",
+				" *",
+				" * This file is part of ${appName}.",
+				" *",
+				" * ${appName} can not be copied and/or distributed without",
+				" * the explicit permission of ${author}.",
+				" *///")
 	}
 }
 
 pitest {
-	targetClasses.set([ 'org.minisim.simulation.*', 'org.minisim.utils.*'])
-	targetTests.set(['com.ledmington.gal.*'])
+	targetClasses.set(['org.minisim.simulation.*', 'org.minisim.utils.*'])
+	targetTests.set(['org.minisim.*'])
 	pitestVersion = '1.14.4'
 	junit5PluginVersion = '1.2.0'
 	threads = 4
@@ -127,4 +143,5 @@ pmd {
 	toolVersion = "6.21.0"
 	rulesMinimumPriority = 5
 	ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+	threads = 4
 }

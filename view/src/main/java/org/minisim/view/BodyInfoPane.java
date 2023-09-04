@@ -2,6 +2,7 @@ package org.minisim.view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+
 import org.minisim.simulation.body.Body;
 import org.minisim.utils.Pair;
 import org.minisim.view.utils.SmartGridPane;
