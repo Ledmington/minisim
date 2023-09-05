@@ -17,6 +17,8 @@
 */
 package com.ledmington.minisim.simulation.border;
 
+import com.ledmington.minisim.simulation.SimulationState;
+
 /**
  * By using CyclicBorders, each body that would otherwise go out of bounds,
  * will come back on the other side of the domain (Pac-Man effect).
@@ -28,7 +30,9 @@ public final class CyclicBorders extends Borders {
     }
 
     @Override
-    public void apply(final double[] posx, final double[] posy, final double[] speedx, final double[] speedy) {
+    public void accept(final SimulationState state) {
+        final double[] posx = state.posx();
+        final double[] posy = state.posy();
         for (int i = 0; i < posx.length; i++) {
             while (posx[i] < LEFT_BORDER) {
                 posx[i] += RIGHT_BORDER;

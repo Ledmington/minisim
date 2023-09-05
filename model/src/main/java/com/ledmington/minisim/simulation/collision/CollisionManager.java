@@ -17,6 +17,8 @@
 */
 package com.ledmington.minisim.simulation.collision;
 
+import com.ledmington.minisim.simulation.SimulationState;
+
 public final class CollisionManager {
 
     private CollisionManager() {}
@@ -45,8 +47,12 @@ public final class CollisionManager {
      *
      * @return True if there were any collisions.
      */
-    public static boolean detectAndResolveCollisions(final double[] posx, final double[] posy, final double[] radii) {
+    public static boolean detectAndResolveCollisions(final SimulationState state) {
         boolean foundCollisions = false;
+        final double[] posx = state.posx();
+        final double[] posy = state.posy();
+        final double[] radii = state.radii();
+        final boolean[] fixed = state.fixed();
         final int n = posx.length;
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -69,10 +75,14 @@ public final class CollisionManager {
                     final double compenetration = Math.hypot(x_diff, y_diff);
                     final double b = radii[i] + radii[j] - compenetration;
 
-                    posx[i] += x_diff * b / 2;
-                    posy[i] += y_diff * b / 2;
-                    posx[j] -= x_diff * b / 2;
-                    posy[j] -= y_diff * b / 2;
+                    if (!fixed[i]) {
+                        posx[i] += x_diff * b / 2;
+                        posy[i] += y_diff * b / 2;
+                    }
+                    if (!fixed[j]) {
+                        posx[j] -= x_diff * b / 2;
+                        posy[j] -= y_diff * b / 2;
+                    }
                 }
             }
         }

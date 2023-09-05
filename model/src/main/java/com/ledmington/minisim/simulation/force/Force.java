@@ -17,11 +17,8 @@
 */
 package com.ledmington.minisim.simulation.force;
 
-public interface Force {
-    void apply(
-            final double[] posx,
-            final double[] posy,
-            final double[] forcex,
-            final double[] forcey,
-            final double[] masses);
-}
+import java.util.function.Consumer;
+
+import com.ledmington.minisim.simulation.SimulationState;
+
+public interface Force extends Consumer<SimulationState> {}

@@ -97,4 +97,9 @@ final class MovableBody extends AbstractBody {
 
         force = V2.origin();
     }
+
+    @Override
+    public boolean isFixed() {
+        return false;
+    }
 }

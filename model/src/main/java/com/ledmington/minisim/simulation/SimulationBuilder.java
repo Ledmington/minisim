@@ -28,7 +28,6 @@ import com.ledmington.minisim.simulation.border.Borders;
 import com.ledmington.minisim.simulation.border.CyclicBorders;
 import com.ledmington.minisim.simulation.border.SolidBorders;
 import com.ledmington.minisim.simulation.force.Force;
-import com.ledmington.minisim.simulation.force.UnaryForce;
 
 public final class SimulationBuilder {
 
@@ -37,7 +36,6 @@ public final class SimulationBuilder {
     private int h;
     private Supplier<Body> bodySupplier;
     private final List<Force> forces = new LinkedList<>();
-    private final List<UnaryForce> unaryForces = new LinkedList<>();
 
     private enum BorderType {
         SOLID,
@@ -95,11 +93,6 @@ public final class SimulationBuilder {
         return this;
     }
 
-    public SimulationBuilder addForce(final UnaryForce force) {
-        unaryForces.add(force);
-        return this;
-    }
-
     public SimulationBuilder solidBorders() {
         borderType = BorderType.SOLID;
         return this;
@@ -117,6 +110,6 @@ public final class SimulationBuilder {
             case CYCLIC -> b = new CyclicBorders(w, h);
             default -> b = null;
         }
-        return new SerialSimulation(n, bodySupplier, b, forces, unaryForces);
+        return new SerialSimulation(n, bodySupplier, b, forces);
     }
 }

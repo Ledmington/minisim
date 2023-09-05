@@ -17,6 +17,8 @@
 */
 package com.ledmington.minisim.simulation.border;
 
+import com.ledmington.minisim.simulation.SimulationState;
+
 /**
  * By using SolidBorders, bodies will stick on simulation's borders and bounce
  * back.
@@ -28,7 +30,11 @@ public final class SolidBorders extends Borders {
     }
 
     @Override
-    public void apply(final double[] posx, final double[] posy, final double[] speedx, final double[] speedy) {
+    public void accept(final SimulationState state) {
+        final double[] posx = state.posx();
+        final double[] posy = state.posy();
+        final double[] speedx = state.speedx();
+        final double[] speedy = state.speedy();
         for (int i = 0; i < posx.length; i++) {
             double newPosX = posx[i];
             double newPosY = posy[i];

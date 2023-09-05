@@ -17,6 +17,8 @@
 */
 package com.ledmington.minisim.simulation.force;
 
+import com.ledmington.minisim.simulation.SimulationState;
+
 public final class Gravity implements Force {
 
     public static final double NEWTON_GRAVITY = 6.6743e-11;
@@ -32,15 +34,14 @@ public final class Gravity implements Force {
     }
 
     @Override
-    public void apply(
-            final double[] posx,
-            final double[] posy,
-            final double[] forcex,
-            final double[] forcey,
-            final double[] masses) {
+    public void accept(final SimulationState state) {
+        final double[] posx = state.posx();
+        final double[] posy = state.posy();
+        final double[] forcex = state.forcex();
+        final double[] forcey = state.forcey();
+        final double[] masses = state.masses();
         for (int i = 0; i < posx.length; i++) {
             for (int j = i + 1; j < posx.length; j++) {
-                // TODO: can refactor the squared distance with a method inside V2
                 final double distance = Math.hypot(posx[i] - posx[j], posy[i] - posy[j]);
                 final double forceModulo = constant * masses[i] * masses[j] / (distance * distance);
                 final double forceDirectionX = (posx[i] - posx[j]) / distance * forceModulo;

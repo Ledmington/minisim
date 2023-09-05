@@ -21,87 +21,64 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 import com.ledmington.minisim.simulation.body.Body;
 import com.ledmington.minisim.simulation.border.Borders;
 import com.ledmington.minisim.simulation.collision.CollisionManager;
 import com.ledmington.minisim.simulation.force.Force;
-import com.ledmington.minisim.simulation.force.UnaryForce;
 import com.ledmington.minisim.utils.MiniLogger;
 
 public final class SerialSimulation implements Simulation {
 
     private final int nBodies;
-    private final double[] posx;
-    private final double[] posy;
-    private final double[] speedx;
-    private final double[] speedy;
-    private final double[] accx;
-    private final double[] accy;
-    private final double[] forcex;
-    private final double[] forcey;
-    private final double[] masses;
-    private final double[] radii;
+    private final SimulationState state;
     private final List<Force> forces = new ArrayList<>();
-    private final List<UnaryForce> unaryForces = new ArrayList<>();
     private final Borders bounds;
     private static final MiniLogger logger = MiniLogger.getLogger("SerialSimulation");
 
     public SerialSimulation(
-            final int nBodies,
-            final Supplier<Body> createBody,
-            final Borders bounds,
-            final List<Force> forces,
-            final List<UnaryForce> unaryForces) {
+            final int nBodies, final Supplier<Body> createBody, final Borders bounds, final List<Force> forces) {
         if (nBodies < 0) {
             throw new IllegalArgumentException("Can't have negative bodies");
         }
         Objects.requireNonNull(bounds);
         Objects.requireNonNull(forces);
-        Objects.requireNonNull(unaryForces);
         this.forces.addAll(forces);
-        this.unaryForces.addAll(unaryForces);
 
         this.bounds = bounds;
 
         this.nBodies = nBodies;
-        this.posx = new double[nBodies];
-        this.posy = new double[nBodies];
-        this.speedx = new double[nBodies];
-        this.speedy = new double[nBodies];
-        this.accx = new double[nBodies];
-        this.accy = new double[nBodies];
-        this.forcex = new double[nBodies];
-        this.forcey = new double[nBodies];
-        this.masses = new double[nBodies];
-        this.radii = new double[nBodies];
+        final double[] posx = new double[nBodies];
+        final double[] posy = new double[nBodies];
+        final double[] speedx = new double[nBodies];
+        final double[] speedy = new double[nBodies];
+        final double[] accx = new double[nBodies];
+        final double[] accy = new double[nBodies];
+        final double[] forcex = new double[nBodies];
+        final double[] forcey = new double[nBodies];
+        final double[] masses = new double[nBodies];
+        final double[] radii = new double[nBodies];
+        final boolean[] fixed = new boolean[nBodies];
         for (int i = 0; i < nBodies; i++) {
             final Body b = createBody.get();
-            this.posx[i] = b.position().x();
-            this.posy[i] = b.position().y();
-            this.speedx[i] = b.speed().x();
-            this.speedy[i] = b.speed().y();
-            this.accx[i] = b.acceleration().x();
-            this.accy[i] = b.acceleration().y();
-            this.forcex[i] = b.force().x();
-            this.forcey[i] = b.force().y();
-            this.masses[i] = b.mass();
-            this.radii[i] = b.radius();
+            posx[i] = b.position().x();
+            posy[i] = b.position().y();
+            speedx[i] = b.speed().x();
+            speedy[i] = b.speed().y();
+            accx[i] = b.acceleration().x();
+            accy[i] = b.acceleration().y();
+            forcex[i] = b.force().x();
+            forcey[i] = b.force().y();
+            masses[i] = b.mass();
+            radii[i] = b.radius();
+            fixed[i] = b.isFixed();
         }
+
+        this.state = new SimulationState(posx, posy, speedx, speedy, accx, accy, forcex, forcey, masses, radii, fixed);
     }
 
-    public List<Body> getBodies() {
-        return IntStream.range(0, nBodies)
-                .mapToObj(i -> Body.builder()
-                        .position(posx[i], posy[i])
-                        .speed(speedx[i], speedy[i])
-                        .acceleration(accx[i], accy[i])
-                        .force(forcex[i], forcey[i])
-                        .mass(masses[i])
-                        .radius(radii[i])
-                        .build())
-                .toList();
+    public SimulationState getState() {
+        return state;
     }
 
     public Borders getBounds() {
@@ -114,40 +91,42 @@ public final class SerialSimulation implements Simulation {
         // while(detectAndResolveCollisions()) {}
         // TODO: if you do too many iterations, some body will be pushed outside the domain borders
         for (int i = 0; i < 10; i++) {
-            if (!CollisionManager.detectAndResolveCollisions(posx, posy, radii)) {
+            if (!CollisionManager.detectAndResolveCollisions(state)) {
                 break;
             }
         }
 
         // compute forces
-        computeAllForces();
+        for (final Force f : forces) {
+            f.accept(state);
+        }
 
         // apply forces
+        final double[] accx = state.accx();
+        final double[] accy = state.accy();
+        final double[] forcex = state.forcex();
+        final double[] forcey = state.forcey();
+        final double[] speedx = state.speedx();
+        final double[] speedy = state.speedy();
+        final double[] posx = state.posx();
+        final double[] posy = state.posy();
+        final double[] masses = state.masses();
+        final boolean[] fixed = state.fixed();
         for (int i = 0; i < nBodies; i++) {
-            accx[i] = forcex[i] / masses[i];
-            accy[i] = forcey[i] / masses[i];
-            speedx[i] += accx[i];
-            speedy[i] += accy[i];
-            posx[i] += speedx[i];
-            posy[i] += speedy[i];
+            if (!fixed[i]) {
+                accx[i] = forcex[i] / masses[i];
+                accy[i] = forcey[i] / masses[i];
+                speedx[i] += accx[i];
+                speedy[i] += accy[i];
+                posx[i] += speedx[i];
+                posy[i] += speedy[i];
+            }
             forcex[i] = 0;
             forcey[i] = 0;
         }
 
-        bounds.apply(posx, posy, speedx, speedy);
+        bounds.accept(state);
 
         logger.info("Done one iteration in %,d ms", (int) ((double) (System.nanoTime() - start) / 1_000_000.0));
-    }
-
-    private void computeAllForces() {
-        // All "double" forces
-        for (final Force f : forces) {
-            f.apply(posx, posy, forcex, forcey, masses);
-        }
-
-        // All unary forces
-        for (final UnaryForce uf : unaryForces) {
-            uf.apply(forcex, forcey, masses);
-        }
     }
 }

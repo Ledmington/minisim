@@ -81,4 +81,9 @@ final class FixedBody extends AbstractBody {
     public void applyForce() {
         // intetionally left empty
     }
+
+    @Override
+    public boolean isFixed() {
+        return true;
+    }
 }

@@ -60,4 +60,6 @@ public sealed interface Body permits AbstractBody {
      * After this call, Body.force() should be V2(0,0).
      */
     void applyForce();
+
+    boolean isFixed();
 }

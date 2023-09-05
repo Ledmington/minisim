@@ -18,9 +18,12 @@
 package com.ledmington.minisim.view;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -36,8 +39,7 @@ import javafx.scene.paint.Color;
 
 import com.ledmington.minisim.Minisim;
 import com.ledmington.minisim.simulation.Simulation;
-import com.ledmington.minisim.simulation.V2;
-import com.ledmington.minisim.simulation.body.Body;
+import com.ledmington.minisim.simulation.SimulationState;
 import com.ledmington.minisim.utils.Worker;
 import com.ledmington.minisim.view.images.ImageManager;
 import com.ledmington.minisim.view.images.ImageName;
@@ -48,7 +50,7 @@ public final class SimulationView extends BorderPane {
     private final Minisim model;
     private final Canvas canvas;
     private final BodyInfoPane bodyInfo;
-    private Body selectedBody = null;
+    private Optional<Integer> selectedBody = Optional.empty();
 
     public SimulationView(final Minisim model, final BodyInfoPane bodyInfo) {
         this.model = model;
@@ -56,11 +58,15 @@ public final class SimulationView extends BorderPane {
         canvas = new Canvas(500, 500);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         canvas.setOnMouseClicked(e -> {
-            final V2 mousePosition = new V2(e.getX(), canvas.getHeight() - e.getY());
-            selectedBody = model.getSimulation().getBodies().stream()
-                    .min(Comparator.comparingDouble(a -> a.position().dist(mousePosition)))
-                    .orElseThrow();
-            bodyInfo.updateInfo(selectedBody);
+            final double mouseX = e.getX();
+            final double mouseY = canvas.getHeight() - e.getY();
+            final SimulationState state = model.getSimulation().getState();
+            final int nBodies = state.posx().length;
+            selectedBody = Stream.iterate(0, i -> i + 1)
+                    .limit(nBodies)
+                    .min(Comparator.comparingDouble(
+                            i -> Math.hypot(state.posx()[i] - mouseX, state.posy()[i] - mouseY)));
+            bodyInfo.updateInfo(state, selectedBody);
             renderSimulation(gc);
         });
         setCenter(canvas);
@@ -115,41 +121,40 @@ public final class SimulationView extends BorderPane {
         final Simulation sim = model.getSimulation();
         gc.clearRect(0, 0, sim.getBounds().RIGHT_BORDER, sim.getBounds().UP_BORDER);
         gc.setFill(Color.RED);
-        sim.getBodies()
-                .forEach(b -> gc.fillOval(
-                        b.position().x(),
-                        sim.getBounds().UP_BORDER - b.position().y(),
-                        b.radius(),
-                        b.radius()));
-        if (selectedBody != null) {
-            final int selectionRadius = 20;
-            gc.setFill(Color.BLACK);
-            gc.fillRect(
-                    0,
-                    sim.getBounds().UP_BORDER - selectedBody.position().y(),
-                    selectedBody.position().x() - selectionRadius,
-                    1);
-            gc.fillRect(
-                    selectedBody.position().x() + selectionRadius,
-                    sim.getBounds().UP_BORDER - selectedBody.position().y(),
-                    canvas.getWidth(),
-                    1);
-            gc.fillRect(
-                    selectedBody.position().x(),
-                    0,
-                    1,
-                    canvas.getHeight() - selectedBody.position().y() - selectionRadius);
-            gc.fillRect(
-                    selectedBody.position().x(),
-                    canvas.getHeight() - selectedBody.position().y() + selectionRadius,
-                    1,
-                    canvas.getHeight());
-            gc.strokeOval(
-                    selectedBody.position().x() - (double) selectionRadius / 2,
-                    canvas.getHeight() - selectedBody.position().y() - (double) selectionRadius / 2,
-                    selectionRadius,
-                    selectionRadius);
-            Platform.runLater(() -> bodyInfo.updateInfo(selectedBody));
+        final SimulationState state = model.getSimulation().getState();
+        final int nBodies = state.posx().length;
+        IntStream.range(0, nBodies)
+                .forEach(i -> gc.fillOval(
+                        state.posx()[i],
+                        sim.getBounds().UP_BORDER - state.posy()[i],
+                        state.radii()[i],
+                        state.radii()[i]));
+
+        if (selectedBody.isEmpty()) {
+            return;
         }
+
+        final int selected = selectedBody.orElseThrow();
+        final int selectionRadius = 20;
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, sim.getBounds().UP_BORDER - state.posy()[selected], state.posx()[selected] - selectionRadius, 1);
+        gc.fillRect(
+                state.posx()[selected] + selectionRadius,
+                sim.getBounds().UP_BORDER - state.posy()[selected],
+                canvas.getWidth(),
+                1);
+        gc.fillRect(state.posx()[selected], 0, 1, canvas.getHeight() - state.posy()[selected] - selectionRadius);
+        gc.fillRect(
+                state.posx()[selected],
+                canvas.getHeight() - state.posy()[selected] + selectionRadius,
+                1,
+                canvas.getHeight());
+        gc.strokeOval(
+                state.posx()[selected] - (double) selectionRadius / 2,
+                canvas.getHeight() - state.posy()[selected] - (double) selectionRadius / 2,
+                selectionRadius,
+                selectionRadius);
+
+        Platform.runLater(() -> bodyInfo.updateInfo(state, selectedBody));
     }
 }

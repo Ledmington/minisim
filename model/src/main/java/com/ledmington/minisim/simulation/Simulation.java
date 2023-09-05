@@ -17,9 +17,6 @@
 */
 package com.ledmington.minisim.simulation;
 
-import java.util.List;
-
-import com.ledmington.minisim.simulation.body.Body;
 import com.ledmington.minisim.simulation.border.Borders;
 
 public interface Simulation {
@@ -32,5 +29,5 @@ public interface Simulation {
 
     Borders getBounds();
 
-    List<Body> getBodies();
+    SimulationState getState();
 }

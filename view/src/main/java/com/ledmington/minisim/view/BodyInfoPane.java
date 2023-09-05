@@ -17,10 +17,12 @@
 */
 package com.ledmington.minisim.view;
 
+import java.util.Optional;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 
-import com.ledmington.minisim.simulation.body.Body;
+import com.ledmington.minisim.simulation.SimulationState;
 import com.ledmington.minisim.utils.Pair;
 import com.ledmington.minisim.view.utils.SmartGridPane;
 
@@ -88,25 +90,27 @@ public final class BodyInfoPane extends SmartGridPane {
         };
     }
 
-    public void updateInfo(final Body selectedBody) {
-        position.first().setText(String.format("%.3f", selectedBody.position().x()));
-        position.second().setText(String.format("%.3f", selectedBody.position().y()));
+    public void updateInfo(final SimulationState state, final Optional<Integer> selectedBodyIndex) {
+        if (selectedBodyIndex.isEmpty()) {
+            return;
+        }
 
-        speed.first().setText(String.format("%.3f", selectedBody.speed().x()));
-        speed.second().setText(String.format("%.3f", selectedBody.speed().y()));
+        final int i = selectedBodyIndex.orElseThrow();
 
-        acceleration
-                .first()
-                .setText(String.format("%.3f", selectedBody.acceleration().x()));
-        acceleration
-                .second()
-                .setText(String.format("%.3f", selectedBody.acceleration().y()));
+        position.first().setText(String.format("%.3f", state.posx()[i]));
+        position.second().setText(String.format("%.3f", state.posy()[i]));
 
-        force.first().setText(String.format("%.3f", selectedBody.force().x()));
-        force.second().setText(String.format("%.3f", selectedBody.force().y()));
+        speed.first().setText(String.format("%.3f", state.speedx()[i]));
+        speed.second().setText(String.format("%.3f", state.speedy()[i]));
 
-        mass.setText(String.format("%.3f", selectedBody.mass()));
+        acceleration.first().setText(String.format("%.3f", state.accx()[i]));
+        acceleration.second().setText(String.format("%.3f", state.accy()[i]));
 
-        radius.setText(String.format("%.3f", selectedBody.radius()));
+        force.first().setText(String.format("%.3f", state.forcex()[i]));
+        force.second().setText(String.format("%.3f", state.forcey()[i]));
+
+        mass.setText(String.format("%.3f", state.masses()[i]));
+
+        radius.setText(String.format("%.3f", state.radii()[i]));
     }
 }
