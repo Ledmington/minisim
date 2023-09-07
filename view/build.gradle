@@ -32,6 +32,12 @@ application {
 	mainClass = mainClassFullName
 }
 
+run {
+	jvmArgs = [
+	        '--add-modules', 'jdk.incubator.vector'
+	]
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)

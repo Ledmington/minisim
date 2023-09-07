@@ -18,22 +18,35 @@
 package com.ledmington.minisim.simulation.force;
 
 import com.ledmington.minisim.simulation.SimulationState;
-import com.ledmington.minisim.simulation.V2;
+
+import jdk.incubator.vector.DoubleVector;
+import jdk.incubator.vector.VectorMask;
+import jdk.incubator.vector.VectorSpecies;
 
 public final class GravityDown implements Force {
 
-    private final V2 vectorDown;
+    private static final VectorSpecies<Double> species = DoubleVector.SPECIES_PREFERRED;
+    private static final int lanes = species.length();
+    private final DoubleVector vectorDown;
 
     public GravityDown(final double modulo) {
-        this.vectorDown = new V2(0, modulo);
+        this.vectorDown = DoubleVector.broadcast(species, modulo);
     }
 
     @Override
     public void accept(final SimulationState state) {
-        final double[] forcex = state.forcex();
         final double[] forcey = state.forcey();
-        for (int i = 0; i < forcex.length; i++) {
-            forcey[i] -= vectorDown.y();
+        int i = 0;
+        for (; i + (lanes - 1) < forcey.length; i += lanes) {
+            DoubleVector forcey_i = DoubleVector.fromArray(species, forcey, i);
+            forcey_i = forcey_i.sub(vectorDown);
+            forcey_i.intoArray(forcey, i);
+        }
+        if (i < forcey.length) {
+            VectorMask<Double> mask = species.indexInRange(i, forcey.length);
+            DoubleVector forcey_i = DoubleVector.fromArray(species, forcey, i, mask);
+            forcey_i = forcey_i.sub(vectorDown);
+            forcey_i.intoArray(forcey, i, mask);
         }
     }
 }
