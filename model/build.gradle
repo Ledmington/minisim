@@ -1,14 +1,14 @@
 plugins {
 	id 'java'
 	id 'jacoco'
-	id "com.github.spotbugs" version "5.0.12"
+	id "com.github.spotbugs" version "6.0.8"
 	id 'pmd'
 
-	id 'com.adarshr.test-logger' version '3.2.0'
-	id 'com.diffplug.spotless' version '6.21.0'
-	id 'com.github.ben-manes.versions' version '0.47.0'
-	id 'de.undercouch.download' version '5.5.0'
-	id 'info.solidsoft.pitest' version '1.9.11'
+	id 'com.adarshr.test-logger' version '4.0.0'
+	id 'com.diffplug.spotless' version '6.25.0'
+	id 'com.github.ben-manes.versions' version '0.51.0'
+	id 'de.undercouch.download' version '5.6.0'
+	id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 repositories {
@@ -24,7 +24,7 @@ String appDescription = "Minimalistic N-Body simulation"
 String author = "Filippo Barbari"
 String authorMail = "filippo.barbari@gmail.com"
 
-ext.junitVersion = "5.10.0"
+ext.junitVersion = "5.10.2"
 
 dependencies {
 	testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
@@ -116,7 +116,7 @@ spotless {
 		trimTrailingWhitespace()
 		endWithNewline()
 		setEncoding('utf-8')
-		palantirJavaFormat('2.35.0')
+		palantirJavaFormat('2.41.0')
 
 		// check https://javadoc.io/doc/com.diffplug.spotless/spotless-plugin-gradle/latest/com/diffplug/gradle/spotless/JavaExtension.html
 		importOrder('java', 'javax', 'javafx', 'com', 'com.ledmington', 'org', group as String)
