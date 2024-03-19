@@ -20,12 +20,16 @@ package com.ledmington.minisim.force;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.random.RandomGenerator;
 import java.util.random.RandomGeneratorFactory;
 import java.util.stream.Stream;
 
+import com.ledmington.minisim.simulation.SerialSimulation;
+import com.ledmington.minisim.simulation.SimulationState;
 import com.ledmington.minisim.simulation.V2;
 import com.ledmington.minisim.simulation.body.Body;
+import com.ledmington.minisim.simulation.border.CyclicBorders;
 import com.ledmington.minisim.simulation.force.Gravity;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +63,9 @@ public final class TestGravity {
     public void forceShouldBeEqual(double x1, double y1, double x2, double y2) {
         final Body first = Body.builder().position(x1, y1).build();
         final Body second = Body.builder().position(x2, y2).build();
-        gravity.accept(first, second);
+        final SimulationState ss =
+                new SerialSimulation(List.of(first, second), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         assertEquals(first.force().mod(), second.force().mod(), EPSILON);
         assertEquals(first.force().x(), -second.force().x(), EPSILON);
         assertEquals(first.force().y(), -second.force().y(), EPSILON);
@@ -70,7 +76,9 @@ public final class TestGravity {
     public void forceShouldBeEqualWithDifferentMasses(double x1, double y1, double x2, double y2) {
         final Body first = Body.builder().position(x1, y1).mass(2).build();
         final Body second = Body.builder().position(x2, y2).mass(3).build();
-        gravity.accept(first, second);
+        final SimulationState ss =
+                new SerialSimulation(List.of(first, second), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         assertEquals(first.force().mod(), second.force().mod(), EPSILON);
         assertEquals(first.force().x(), -second.force().x(), EPSILON);
         assertEquals(first.force().y(), -second.force().y(), EPSILON);
@@ -84,7 +92,9 @@ public final class TestGravity {
          */
         final Body first = Body.builder().position(3, 5).radius(2).build();
         final Body second = Body.builder().position(-7, 9).radius(r).build();
-        gravity.accept(first, second);
+        final SimulationState ss =
+                new SerialSimulation(List.of(first, second), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         assertEquals(first.force().mod(), second.force().mod(), EPSILON);
         assertEquals(first.force().x(), -second.force().x(), EPSILON);
         assertEquals(first.force().y(), -second.force().y(), EPSILON);
@@ -98,7 +108,9 @@ public final class TestGravity {
 
         final double initialDistance = first.dist(second);
 
-        gravity.accept(first, second);
+        final SimulationState ss =
+                new SerialSimulation(List.of(first, second), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         first.applyForce();
         second.applyForce();
 
@@ -113,14 +125,18 @@ public final class TestGravity {
         final Body left = Body.builder().position(x - 6, 5).build();
         final Body middle = Body.builder().position(x, 5).mass(2).build();
         final Body rightAndHeavy = Body.builder().position(x + 6, 5).mass(6).build();
+        final SimulationState ss =
+                new SerialSimulation(List.of(left, middle), new CyclicBorders(10, 10), List.of()).getState();
 
-        gravity.accept(left, middle);
+        gravity.accept(ss);
 
         final double lighterForce = middle.force().mod();
 
         middle.setForce(V2.origin());
 
-        gravity.accept(middle, rightAndHeavy);
+        final SimulationState ss2 =
+                new SerialSimulation(List.of(middle, rightAndHeavy), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss2);
 
         final double heavyForce = middle.force().mod();
 
@@ -133,14 +149,18 @@ public final class TestGravity {
         final Body left = Body.builder().position(x - 1, 5).build();
         final Body middle = Body.builder().position(x, 5).build();
         final Body rightAndFurther = Body.builder().position(x + 2, 5).build();
+        final SimulationState ss =
+                new SerialSimulation(List.of(left, middle), new CyclicBorders(10, 10), List.of()).getState();
 
-        gravity.accept(left, middle);
+        gravity.accept(ss);
 
         final double closerForce = middle.force().mod();
 
         middle.setForce(V2.origin());
 
-        gravity.accept(middle, rightAndFurther);
+        final SimulationState ss2 =
+                new SerialSimulation(List.of(middle, rightAndFurther), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss2);
 
         final double furtherForce = middle.force().mod();
 
@@ -158,7 +178,9 @@ public final class TestGravity {
         final Body first = Body.builder().position(left, down).build();
         final Body second = Body.builder().position(right, up).build();
 
-        gravity.accept(first, second);
+        final SimulationState ss =
+                new SerialSimulation(List.of(first, second), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         first.applyForce();
         second.applyForce();
 

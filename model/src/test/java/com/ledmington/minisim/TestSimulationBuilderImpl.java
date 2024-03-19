@@ -35,7 +35,7 @@ public final class TestSimulationBuilderImpl {
                 .addForce(new Friction(0.99))
                 .solidBorders()
                 .build();
-        assertEquals(0, sim.getBodies().size());
+        assertEquals(0, sim.getState().radii().length);
     }
 
     @Test
@@ -49,6 +49,6 @@ public final class TestSimulationBuilderImpl {
                 .addForce(new Friction(0.99))
                 .solidBorders()
                 .build();
-        assertEquals(2, sim.getBodies().size());
+        assertEquals(2, sim.getState().radii().length);
     }
 }

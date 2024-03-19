@@ -19,12 +19,16 @@ package com.ledmington.minisim.force;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.random.RandomGenerator;
 import java.util.random.RandomGeneratorFactory;
 import java.util.stream.Stream;
 
+import com.ledmington.minisim.simulation.SerialSimulation;
+import com.ledmington.minisim.simulation.SimulationState;
 import com.ledmington.minisim.simulation.V2;
 import com.ledmington.minisim.simulation.body.Body;
+import com.ledmington.minisim.simulation.border.CyclicBorders;
 import com.ledmington.minisim.simulation.force.GravityDown;
 
 import org.junit.jupiter.api.Test;
@@ -39,7 +43,8 @@ public final class TestGravityDown {
         final Body b = Body.builder().build();
         final GravityDown gravity = new GravityDown(0.9);
         final V2 oldPosition = b.position().copy();
-        gravity.accept(b);
+        final SimulationState ss = new SerialSimulation(List.of(b), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         b.applyForce();
         assertEquals(b.position().x(), oldPosition.x());
         assertTrue(b.position().y() < oldPosition.y());
@@ -57,7 +62,8 @@ public final class TestGravityDown {
         final Body b = Body.builder().force(x, y).build();
         final GravityDown gravity = new GravityDown(0.9);
         final V2 oldForce = b.force().copy();
-        gravity.accept(b);
+        final SimulationState ss = new SerialSimulation(List.of(b), new CyclicBorders(10, 10), List.of()).getState();
+        gravity.accept(ss);
         assertEquals(b.force().x(), oldForce.x());
         assertTrue(b.force().y() < oldForce.y());
     }

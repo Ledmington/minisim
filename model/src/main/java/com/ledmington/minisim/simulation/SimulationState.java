@@ -29,18 +29,7 @@ public record SimulationState(
         double[] masses,
         double[] radii,
         boolean[] fixed) {
-    public SimulationState(
-            final double[] posx,
-            final double[] posy,
-            final double[] speedx,
-            final double[] speedy,
-            final double[] accx,
-            final double[] accy,
-            final double[] forcex,
-            final double[] forcey,
-            final double[] masses,
-            final double[] radii,
-            final boolean[] fixed) {
+    public SimulationState {
         if (posx.length != posy.length
                 || posx.length != speedx.length
                 || posx.length != speedy.length
@@ -53,16 +42,5 @@ public record SimulationState(
                 || posx.length != fixed.length) {
             throw new IllegalArgumentException("Given arrays were not of the same size");
         }
-        this.posx = posx;
-        this.posy = posy;
-        this.speedx = speedx;
-        this.speedy = speedy;
-        this.accx = accx;
-        this.accy = accy;
-        this.forcex = forcex;
-        this.forcey = forcey;
-        this.masses = masses;
-        this.radii = radii;
-        this.fixed = fixed;
     }
 }

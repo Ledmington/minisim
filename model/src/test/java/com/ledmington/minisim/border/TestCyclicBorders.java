@@ -20,6 +20,9 @@ package com.ledmington.minisim.border;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
+
+import com.ledmington.minisim.simulation.SerialSimulation;
 import com.ledmington.minisim.simulation.V2;
 import com.ledmington.minisim.simulation.body.Body;
 import com.ledmington.minisim.simulation.border.Borders;
@@ -56,7 +59,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {1, 2, 3, 4, 5, 6, 7, 8, 9})
     public void noChangesIfInside(double n) {
         final Body b = Body.builder().position(n, n).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of(n, n), b.position());
     }
 
@@ -64,7 +67,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {11, 22, 33, 44, 55, 66, 77, 88, 99})
     public void outOnRight(double x) {
         final Body b = Body.builder().position(x, 1).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of(x % width, 1), b.position());
     }
 
@@ -72,7 +75,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {-1, -11, -22, -33, -44, -55, -66, -77, -88, -99})
     public void outOnLeft(double x) {
         final Body b = Body.builder().position(x, 1).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of((x + 100 * width) % width, 1), b.position());
     }
 
@@ -80,7 +83,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {-1, -11, -22, -33, -44, -55, -66, -77, -88, -99})
     public void outOnTop(double y) {
         final Body b = Body.builder().position(1, y).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of(1, (y + 100 * height) % height), b.position());
     }
 
@@ -88,7 +91,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {11, 22, 33, 44, 55, 66, 77, 88, 99})
     public void outOnBottom(double y) {
         final Body b = Body.builder().position(1, y).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of(1, y % height), b.position());
     }
 
@@ -96,7 +99,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {11, 22, 33, 44, 55, 66, 77, 88, 99})
     public void bottomRightCorner(double n) {
         final Body b = Body.builder().position(n, n).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of(n % width, n % height), b.position());
     }
 
@@ -104,7 +107,7 @@ public final class TestCyclicBorders {
     @ValueSource(doubles = {-1, -11, -22, -33, -44, -55, -66, -77, -88, -99})
     public void topLeftCorner(double n) {
         final Body b = Body.builder().position(n, n).build();
-        cb.accept(b);
+        cb.accept(new SerialSimulation(List.of(b), cb, List.of()).getState());
         assertEquals(V2.of((n + 100 * width) % width, (n + 100 * height) % height), b.position());
     }
 }

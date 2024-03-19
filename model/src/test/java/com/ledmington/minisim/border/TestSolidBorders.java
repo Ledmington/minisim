@@ -20,8 +20,10 @@ package com.ledmington.minisim.border;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.List;
 import java.util.stream.Stream;
 
+import com.ledmington.minisim.simulation.SerialSimulation;
 import com.ledmington.minisim.simulation.V2;
 import com.ledmington.minisim.simulation.body.Body;
 import com.ledmington.minisim.simulation.border.Borders;
@@ -61,7 +63,7 @@ public final class TestSolidBorders {
     public void noChangesIfInside(double n) {
         final Body b = Body.builder().position(n, n).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(V2.of(n, n), b.position());
         assertEquals(oldSpeed, b.speed());
     }
@@ -76,7 +78,7 @@ public final class TestSolidBorders {
     public void cornersAreInside(double xBorder, double yBorder) {
         final Body b = Body.builder().position(xBorder, yBorder).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(xBorder, yBorder));
         assertEquals(b.speed(), oldSpeed);
     }
@@ -86,7 +88,7 @@ public final class TestSolidBorders {
     public void outOnRight(double x) {
         final Body b = Body.builder().position(x, 1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(width, 1));
         assertEquals(b.speed().x(), -oldSpeed.x(), 1e-12);
         assertEquals(b.speed().y(), oldSpeed.y(), 1e-12);
@@ -97,7 +99,7 @@ public final class TestSolidBorders {
     public void outOnLeft(double x) {
         final Body b = Body.builder().position(x, 1).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(0, 1));
         assertEquals(b.speed().x(), -oldSpeed.x(), 1e-12);
         assertEquals(b.speed().y(), oldSpeed.y(), 1e-12);
@@ -108,7 +110,7 @@ public final class TestSolidBorders {
     public void outOnTop(double y) {
         final Body b = Body.builder().position(1, y).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(1, 0));
         assertEquals(b.speed().x(), oldSpeed.x(), 1e-12);
         assertEquals(b.speed().y(), -oldSpeed.y(), 1e-12);
@@ -119,7 +121,7 @@ public final class TestSolidBorders {
     public void outOnBottom(double y) {
         final Body b = Body.builder().position(1, y).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(1, height));
         assertEquals(b.speed().x(), oldSpeed.x(), 1e-12);
         assertEquals(b.speed().y(), -oldSpeed.y(), 1e-12);
@@ -130,7 +132,7 @@ public final class TestSolidBorders {
     public void bottomRightCorner(double n) {
         final Body b = Body.builder().position(n, n).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(width, height));
         assertEquals(b.speed(), oldSpeed.mul(-1));
     }
@@ -140,7 +142,7 @@ public final class TestSolidBorders {
     public void topLeftCorner(double n) {
         final Body b = Body.builder().position(n, n).speed(1, 2).build();
         final V2 oldSpeed = b.speed().copy();
-        sb.accept(b);
+        sb.accept(new SerialSimulation(List.of(b), sb, List.of()).getState());
         assertEquals(b.position(), V2.of(0, 0));
         assertEquals(b.speed(), oldSpeed.mul(-1));
     }

@@ -36,6 +36,47 @@ public final class SerialSimulation implements Simulation {
     private final Borders bounds;
     private static final MiniLogger logger = MiniLogger.getLogger("SerialSimulation");
 
+    public SerialSimulation(final List<Body> bodies, final Borders bounds, final List<Force> forces) {
+        Objects.requireNonNull(bodies);
+        Objects.requireNonNull(bounds);
+        Objects.requireNonNull(forces);
+        if (bodies.isEmpty()) {
+            throw new IllegalArgumentException("Empty bodies list");
+        }
+
+        this.forces.addAll(forces);
+        this.bounds = bounds;
+        this.nBodies = bodies.size();
+
+        final double[] posx = new double[nBodies];
+        final double[] posy = new double[nBodies];
+        final double[] speedx = new double[nBodies];
+        final double[] speedy = new double[nBodies];
+        final double[] accx = new double[nBodies];
+        final double[] accy = new double[nBodies];
+        final double[] forcex = new double[nBodies];
+        final double[] forcey = new double[nBodies];
+        final double[] masses = new double[nBodies];
+        final double[] radii = new double[nBodies];
+        final boolean[] fixed = new boolean[nBodies];
+        for (int i = 0; i < nBodies; i++) {
+            final Body b = bodies.get(i);
+            posx[i] = b.position().x();
+            posy[i] = b.position().y();
+            speedx[i] = b.speed().x();
+            speedy[i] = b.speed().y();
+            accx[i] = b.acceleration().x();
+            accy[i] = b.acceleration().y();
+            forcex[i] = b.force().x();
+            forcey[i] = b.force().y();
+            masses[i] = b.mass();
+            radii[i] = b.radius();
+            fixed[i] = b.isFixed();
+        }
+
+        this.state = new SimulationState(posx, posy, speedx, speedy, accx, accy, forcex, forcey, masses, radii, fixed);
+    }
+
     public SerialSimulation(
             final int nBodies, final Supplier<Body> createBody, final Borders bounds, final List<Force> forces) {
         if (nBodies < 0) {
@@ -43,11 +84,11 @@ public final class SerialSimulation implements Simulation {
         }
         Objects.requireNonNull(bounds);
         Objects.requireNonNull(forces);
+
         this.forces.addAll(forces);
-
         this.bounds = bounds;
-
         this.nBodies = nBodies;
+
         final double[] posx = new double[nBodies];
         final double[] posy = new double[nBodies];
         final double[] speedx = new double[nBodies];

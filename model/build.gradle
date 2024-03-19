@@ -54,6 +54,7 @@ test {
 	useJUnitPlatform()
 	// failFast true
 	finalizedBy jacocoTestReport
+	jvmArgs = ['--add-modules', 'jdk.incubator.vector']
 }
 jacocoTestReport {
 	dependsOn test // tests are required to run before generating the report

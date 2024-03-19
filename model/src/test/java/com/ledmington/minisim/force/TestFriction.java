@@ -19,12 +19,16 @@ package com.ledmington.minisim.force;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.random.RandomGenerator;
 import java.util.random.RandomGeneratorFactory;
 import java.util.stream.Stream;
 
+import com.ledmington.minisim.simulation.SerialSimulation;
+import com.ledmington.minisim.simulation.SimulationState;
 import com.ledmington.minisim.simulation.V2;
 import com.ledmington.minisim.simulation.body.Body;
+import com.ledmington.minisim.simulation.border.CyclicBorders;
 import com.ledmington.minisim.simulation.force.Friction;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -53,7 +57,8 @@ public final class TestFriction {
         final Body b = Body.builder().position(2, 3).force(x, y).build();
         final Friction friction = new Friction(0);
 
-        friction.accept(b);
+        final SimulationState ss = new SerialSimulation(List.of(b), new CyclicBorders(10, 10), List.of()).getState();
+        friction.accept(ss);
 
         assertEquals(0, b.force().mod());
     }
@@ -67,7 +72,8 @@ public final class TestFriction {
         final V2 oldForce = V2.of(x, y);
         b.setForce(oldForce.copy());
 
-        friction.accept(b);
+        final SimulationState ss = new SerialSimulation(List.of(b), new CyclicBorders(10, 10), List.of()).getState();
+        friction.accept(ss);
 
         assertEquals(oldForce, b.force());
     }
@@ -80,7 +86,8 @@ public final class TestFriction {
 
         final V2 oldPosition = b.position().copy();
 
-        friction.accept(b);
+        final SimulationState ss = new SerialSimulation(List.of(b), new CyclicBorders(10, 10), List.of()).getState();
+        friction.accept(ss);
         b.applyForce();
 
         assertEquals(oldPosition, b.position());
@@ -93,7 +100,8 @@ public final class TestFriction {
         final Body b = Body.builder().position(2, 3).force(oldForce.copy()).build();
         final Friction friction = new Friction(0.9);
 
-        friction.accept(b);
+        final SimulationState ss = new SerialSimulation(List.of(b), new CyclicBorders(10, 10), List.of()).getState();
+        friction.accept(ss);
 
         assertTrue(b.force().mod() < oldForce.mod());
     }
@@ -108,8 +116,12 @@ public final class TestFriction {
                 Body.builder().position(7, 4).force(oldForce.copy()).mass(4).build();
         final Friction friction = new Friction(0.9);
 
-        friction.accept(light);
-        friction.accept(heavy);
+        final SimulationState ss =
+                new SerialSimulation(List.of(light), new CyclicBorders(10, 10), List.of()).getState();
+        friction.accept(ss);
+        final SimulationState ss2 =
+                new SerialSimulation(List.of(heavy), new CyclicBorders(10, 10), List.of()).getState();
+        friction.accept(ss2);
 
         assertTrue(light.force().mod() > heavy.force().mod());
     }
