@@ -17,7 +17,6 @@
 */
 package com.ledmington.minisim.simulation;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -35,7 +34,6 @@ public final class SimulationBuilder {
     private int n = 0;
     private int w;
     private int h;
-    private final List<Body> bodies = new ArrayList<>();
     private Supplier<Body> bodySupplier;
     private final List<Force> forces = new LinkedList<>();
 
@@ -58,6 +56,7 @@ public final class SimulationBuilder {
         bodySupplier = () -> Body.builder()
                 .position(rng.nextDouble(xmin, xmax), rng.nextDouble(ymin, ymax))
                 .radius(1)
+                .mass(1)
                 .build();
         return this;
     }
