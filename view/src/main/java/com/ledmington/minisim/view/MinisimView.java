@@ -18,6 +18,7 @@
 package com.ledmington.minisim.view;
 
 import javafx.application.HostServices;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -45,5 +46,7 @@ public final class MinisimView {
         stage.setTitle("MiniSim");
         stage.setScene(scene);
         stage.show();
+
+        Platform.runLater(stage::requestFocus);
     }
 }

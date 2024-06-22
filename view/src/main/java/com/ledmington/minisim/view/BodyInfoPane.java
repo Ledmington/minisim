@@ -96,21 +96,22 @@ public final class BodyInfoPane extends SmartGridPane {
         }
 
         final int i = selectedBodyIndex.orElseThrow();
+        final String fmt = "%+.6e";
 
-        position.first().setText(String.format("%.3f", state.posx()[i]));
-        position.second().setText(String.format("%.3f", state.posy()[i]));
+        position.first().setText(String.format(fmt, state.posx()[i]));
+        position.second().setText(String.format(fmt, state.posy()[i]));
 
-        speed.first().setText(String.format("%.3f", state.speedx()[i]));
-        speed.second().setText(String.format("%.3f", state.speedy()[i]));
+        speed.first().setText(String.format(fmt, state.speedx()[i]));
+        speed.second().setText(String.format(fmt, state.speedy()[i]));
 
-        acceleration.first().setText(String.format("%.3f", state.accx()[i]));
-        acceleration.second().setText(String.format("%.3f", state.accy()[i]));
+        acceleration.first().setText(String.format(fmt, state.accx()[i]));
+        acceleration.second().setText(String.format(fmt, state.accy()[i]));
 
-        force.first().setText(String.format("%.3f", state.forcex()[i]));
-        force.second().setText(String.format("%.3f", state.forcey()[i]));
+        force.first().setText(String.format(fmt, state.forcex()[i]));
+        force.second().setText(String.format(fmt, state.forcey()[i]));
 
-        mass.setText(String.format("%.3f", state.masses()[i]));
+        mass.setText(String.format(fmt, state.masses()[i]));
 
-        radius.setText(String.format("%.3f", state.radii()[i]));
+        radius.setText(String.format(fmt, state.radii()[i]));
     }
 }

@@ -36,6 +36,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 
 import com.ledmington.minisim.Minisim;
 import com.ledmington.minisim.simulation.Simulation;
@@ -55,7 +56,8 @@ public final class SimulationView extends BorderPane {
     public SimulationView(final Minisim model, final BodyInfoPane bodyInfo) {
         this.model = model;
         this.bodyInfo = bodyInfo;
-        canvas = new Canvas(1000, 1000);
+        canvas = new Canvas((int) (Screen.getPrimary().getBounds().getWidth() * 0.75), (int)
+                (Screen.getPrimary().getBounds().getHeight() * 0.75));
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         canvas.setOnMouseClicked(e -> {
             final double mouseX = e.getX();
